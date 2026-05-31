@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>דוח מודיעין נדל"ן - לרנקה, קפריסין 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root {
+  --primary: #1a2332;
+  --secondary: #2d3748;
+  --accent: #3182ce;
+  --accent-light: #ebf4ff;
+  --success: #38a169;
+  --warning: #d69e2e;
+  --danger: #e53e3e;
+  --text: #2d3748;
+  --text-light: #718096;
+  --bg: #f7fafc;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --gold: #b7791f;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  direction: rtl;
+  text-align: right;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--primary) 0%, #2a4365 100%);
+  color: white;
+  padding: 60px 0 40px;
+  border-bottom: 4px solid var(--accent);
+}
+.header h1 { font-size: 2.2em; margin-bottom: 10px; font-weight: 700; }
+.header .subtitle { font-size: 1.1em; opacity: 0.85; margin-bottom: 5px; }
+.header .meta { font-size: 0.85em; opacity: 0.6; margin-top: 15px; }
+
+/* Navigation */
+.nav-sticky {
+  position: sticky;
+  top: 0;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 12px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.nav-sticky .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.nav-sticky a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.8em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: var(--bg);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-sticky a:hover { background: var(--accent); color: white; }
+
+/* Sections */
+.section {
+  padding: 50px 0;
+  border-bottom: 1px solid var(--border);
+}
+.section-title {
+  font-size: 1.8em;
+  color: var(--primary);
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--accent);
+  display: inline-block;
+}
+.section-subtitle {
+  font-size: 1.3em;
+  color: var(--secondary);
+  margin: 30px 0 15px;
+  font-weight: 600;
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border-radius: 8px;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid var(--border);
+}
+.card-title {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+/* Grid */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.9em;
+  direction: rtl;
+}
+th, td {
+  padding: 12px 15px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+}
+tr:nth-child(even) { background: #f8fafc; }
+tr:hover { background: var(--accent-light); }
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.75em;
+  font-weight: 600;
+}
+.badge-high { background: #c6f6d5; color: #22543d; }
+.badge-medium { background: #fefcbf; color: #744210; }
+.badge-low { background: #fed7d7; color: #742a2a; }
+.badge-confirmed { background: #c6f6d5; color: #22543d; }
+.badge-announced { background: #bee3f8; color: #2a4365; }
+.badge-delayed { background: #fefcbf; color: #744210; }
+.badge-cancelled { background: #fed7d7; color: #742a2a; }
+.badge-speculative { background: #e9d8fd; color: #44337a; }
+
+/* Confidence Labels */
+.confidence { font-size: 0.8em; margin-top: 5px; }
+.conf-high { color: var(--success); }
+.conf-medium { color: var(--warning); }
+.conf-low { color: var(--danger); }
+
+/* Alert boxes */
+.alert {
+  padding: 15px 20px;
+  border-radius: 6px;
+  margin: 15px 0;
+  border-right: 4px solid;
+}
+.alert-warning { background: #fffbeb; border-color: var(--warning); }
+.alert-danger { background: #fff5f5; border-color: var(--danger); }
+.alert-info { background: #ebf8ff; border-color: var(--accent); }
+.alert-success { background: #f0fff4; border-color: var(--success); }
+
+/* Scorecard */
+.scorecard {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin: 15px 0;
+}
+.score-item {
+  text-align: center;
+  padding: 10px;
+  background: var(--bg);
+  border-radius: 6px;
+}
+.score-item .score-value {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: var(--accent);
+}
+.score-item .score-label {
+  font-size: 0.75em;
+  color: var(--text-light);
+  margin-top: 4px;
+}
+
+/* Charts */
+.chart-container {
+  position: relative;
+  margin: 20px 0;
+  padding: 20px;
+  background: var(--card);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+canvas { max-width: 100%; }
+
+/* Scripts/Objections */
+.script-box {
+  background: #f0f4f8;
+  border-right: 4px solid var(--accent);
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 0 8px 8px 0;
+}
+.script-label {
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-size: 0.9em;
+}
+
+/* Checklist */
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  padding-right: 25px;
+  position: relative;
+}
+.checklist li:before {
+  content: "☐";
+  position: absolute;
+  right: 0;
+}
+
+/* Tier system */
+.tier-1 { border-right: 4px solid var(--success); }
+.tier-2 { border-right: 4px solid var(--warning); }
+.tier-3 { border-right: 4px solid var(--danger); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .scorecard { grid-template-columns: repeat(3, 1fr); }
+  .header h1 { font-size: 1.6em; }
+  .nav-sticky a { font-size: 0.7em; padding: 3px 6px; }
+  table { font-size: 0.8em; }
+  th, td { padding: 8px 10px; }
+}
+
+/* Print */
+@media print {
+  .nav-sticky { display: none; }
+  .section { page-break-inside: avoid; }
+}
+
+/* Glossary */
+.glossary-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+}
+.glossary-term {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1.05em;
+}
+.glossary-eng { color: var(--text-light); font-size: 0.85em; }
+
+/* Source list */
+.source-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9em;
+}
+.source-item a { color: var(--accent); }
+
+/* Objection handling */
+.objection-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 15px 0;
+}
+.objection-q {
+  font-weight: 700;
+  color: var(--danger);
+  font-size: 1.05em;
+  margin-bottom: 10px;
+}
+.objection-need {
+  font-size: 0.85em;
+  color: var(--text-light);
+  margin-bottom: 10px;
+}
+.objection-weak {
+  background: #fff5f5;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 8px 0;
+  font-size: 0.9em;
+}
+.objection-strong {
+  background: #f0fff4;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 8px 0;
+  font-size: 0.9em;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+<div class="container">
+<h1>דוח מודיעין נדל"ן - לרנקה, קפריסין</h1>
+<div class="subtitle">מחקר שוק מקיף למשקיע הישראלי - מהדורת 2026</div>
+<div class="subtitle">ניתוח אזורים, מחירים, תשואות, סיכונים, השוואות, ואסטרטגיית מכירה</div>
+<div class="meta">עדכון אחרון: מאי 2026 | רמת סיווג: מודיעין עסקי | לא לפרסום</div>
+</div>
+</header>
+
+<!-- NAVIGATION -->
+<nav class="nav-sticky">
+<div class="container">
+<a href="#exec-summary">תקציר מנהלים</a>
+<a href="#market-overview">תמונת שוק</a>
+<a href="#neighborhoods">מפת אזורים</a>
+<a href="#pricing">מחירים</a>
+<a href="#rental">שוק השכירות</a>
+<a href="#construction">איכות בנייה</a>
+<a href="#glossary">שפה נדל"נית</a>
+<a href="#comparison">השוואות</a>
+<a href="#psychology">פסיכולוגיית משקיע</a>
+<a href="#objections">התנגדויות</a>
+<a href="#risks">סיכונים</a>
+<a href="#opportunities">הזדמנויות</a>
+<a href="#marina">חקירת מרינה</a>
+<a href="#expert-speak">דיבור מומחה</a>
+<a href="#checklist">צ'קליסט</a>
+<a href="#sales-layer">שכבת מכירות</a>
+<a href="#sources">מקורות</a>
+<a href="#conclusions">מסקנות</a>
+</div>
+</nav>
+
+<!-- SECTION 1: EXECUTIVE SUMMARY -->
+<section class="section" id="exec-summary">
+<div class="container">
+<h2 class="section-title">1. תקציר מנהלים</h2>
+
+<div class="card">
+<div class="card-title">מה באמת קורה בלרנקה - מאי 2026</div>
+<p>לרנקה עברה בשנים האחרונות ממעמד של "עיר שנייה שקטה" למעמד של מחוז צמיחה אמיתי. עליית מחירי דירות של 11% בשנה, שיא של 18,114 עסקאות נדל"ן בקפריסין ב-2025, ותנופת פיתוח תשתיות - אלה עובדות. אבל יש פער משמעותי בין מה שיזמים ישראלים מוכרים לבין המציאות בשטח.</p>
+</div>
+
+<div class="grid-2">
+<div class="card tier-1">
+<div class="card-title" style="color: var(--success);">מה אמיתי ומוכח</div>
+<ul style="list-style: none; padding: 0;">
+<li>✓ עליית מחירים עקבית 8-11% שנתי (נתוני בנק מרכזי)</li>
+<li>✓ המחוז הזול ביותר בחוף - €1,330/מ"ר ממוצע</li>
+<li>✓ ביקוש שכירות יציב ממגוון אוכלוסיות</li>
+<li>✓ קרבה לשדה תעופה בינלאומי</li>
+<li>✓ 43% מהעסקאות ב-Q1 2026 - קונים זרים</li>
+<li>✓ אין מס נכס שנתי, אין מס ירושה</li>
+<li>✓ תוכנית תושבות קבע מ-€300K</li>
+</ul>
+</div>
+<div class="card" style="border-right: 4px solid var(--danger);">
+<div class="card-title" style="color: var(--danger);">מה מוגזם או לא מאומת</div>
+<ul style="list-style: none; padding: 0;">
+<li>✗ "תשואה מובטחת 8-10%" - לא ריאלי ברוב המקרים</li>
+<li>✗ "המרינה תשנה הכל" - הפרויקט עבר משבר ועדיין בתכנון</li>
+<li>✗ "לרנקה זו הלימסול הבאה" - שוק שונה לחלוטין</li>
+<li>✗ "אין סיכון" - יש סיכוני נזילות, בנייה, ומיסוי</li>
+<li>✗ "מחירים רק יעלו" - אין ערובה, תלוי באזור ובמוצר</li>
+<li>✗ "ניהול מרחוק פשוט" - דורש מערכת מקצועית</li>
+</ul>
+</div>
+</div>
+
+<h3 class="section-subtitle">20 התובנות הכי חשובות מהמחקר</h3>
+<div class="card">
+<table>
+<thead><tr><th>#</th><th>תובנה</th><th>רמת ביטחון</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>לרנקה היא המחוז הזול ביותר בחוף קפריסין - €1,330/מ"ר ממוצע לעומת €2,140 בלימסול</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>2</td><td>אין אמנת מס כפל בין ישראל לקפריסין - המשמעות: חבות מס כפולה אם לא מתוכנן נכון</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>3</td><td>פרויקט המרינה (€1.2B) הופסק עם Kition Ocean Holdings במאי 2024, עבר לרשות הנמלים</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>4</td><td>מפת דרכים חדשה למרינה צפויה עד סוף יוני 2026</td><td><span class="badge badge-medium">בינונית</span></td></tr>
+<tr><td>5</td><td>תשואת שכירות ארוכה ריאלית: 4-5% ברוטו, 3-4% נטו</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>6</td><td>שכירות קצרה (Airbnb): תפוסה ממוצעת 60-65%, הכנסה שנתית ~€12,000-14,000</td><td><span class="badge badge-medium">בינונית</span></td></tr>
+<tr><td>7</td><td>אין הגבלה על מספר נכסי Airbnb לבעלים אחד בקפריסין</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>8</td><td>מקנזי הוא האזור עם הדינמיקה הגבוהה ביותר - ג'נטריפיקציה פעילה</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>9</td><td>בעיות בנייה נפוצות: איטום, בידוד תרמי, בידוד אקוסטי</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>10</td><td>תושבות קבע: €300K + מע"מ, הכנסה שנתית €50K מחו"ל, אישור תוך 2-6 חודשים</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>11</td><td>קפריסין לא בשנגן - אין חופש תנועה באירופה עם PR קפריסאי</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>12</td><td>יוון מציעה גישה לשנגן, ללא מס רווחי הון על נדל"ן, ללא מע"מ על בנייה חדשה (עד 2026)</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>13</td><td>מס הכנסה על שכירות בקפריסין: ניכוי אוטומטי 20% בלאי, ואז מדרגות 0-35%</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>14</td><td>בישראל: מסלול 15% שטוח או מסלול שולי (31-50%) עם קיזוז מס זר</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>15</td><td>רגישות פוליטית: גל ביקורת בתקשורת הקפריסאית על רכישות ישראליות (2025-2026)</td><td><span class="badge badge-medium">בינונית</span></td></tr>
+<tr><td>16</td><td>43.4% מעסקאות Q1 2026 - קונים זרים, ישראלים בולטים</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>17</td><td>לימסול: מחיר חציוני €478,000 לדירה - יקרה פי 1.5-2 מלרנקה</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>18</td><td>בעיית Title Deeds: נכסים ישנים עלולים לסבול מעיכובים ברישום</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>19</td><td>מע"מ 19% על בנייה חדשה (5% מופחת על 130 מ"ר ראשונים למגורים ראשיים)</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>20</td><td>נזילות מוגבלת: מכירה חוזרת של נכס בלרנקה עשויה לקחת זמן - שוק קטן יחסית</td><td><span class="badge badge-medium">בינונית</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="grid-2">
+<div class="card">
+<div class="card-title">למי לרנקה מתאימה</div>
+<ul style="list-style: none; padding: 0; line-height: 2;">
+<li>• משקיעים עם תקציב €200K-€400K שרוצים כניסה לשוק אירופי</li>
+<li>• מי שמחפש תשואה סבירה (4-5%) עם פוטנציאל עליית ערך</li>
+<li>• משפחות ששוקלות Plan B או בסיס שני באירופה</li>
+<li>• משקיעים סבלניים עם אופק של 5-10 שנים</li>
+<li>• מי שמעוניין בתושבות קבע אירופית בתקציב סביר</li>
+<li>• מי שמוכן ללמוד שוק חדש ולנהל מרחוק באופן מקצועי</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">למי לרנקה לא מתאימה</div>
+<ul style="list-style: none; padding: 0; line-height: 2;">
+<li>• מי שמחפש תשואה מיידית של 8%+ - לא ריאלי</li>
+<li>• מי שלא מוכן להתמודד עם מורכבות מיסוי כפול</li>
+<li>• מי שצריך נזילות גבוהה ויכולת מכירה מהירה</li>
+<li>• מי שמצפה ל"דובאי הבאה" - לרנקה היא עיר שקטה</li>
+<li>• מי שלא מוכן להשקיע בניהול מקצועי מרחוק</li>
+<li>• מי שרוצה גישה לשנגן - קפריסין לא בשנגן</li>
+<li>• מי שמסתמך רק על הבטחות יזמים ישראלים</li>
+</ul>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 2: MARKET OVERVIEW -->
+<section class="section" id="market-overview">
+<div class="container">
+<h2 class="section-title">2. תמונת מצב שוק לרנקה</h2>
+
+<div class="card">
+<div class="card-title">מה השתנה בלרנקה ב-5-10 השנים האחרונות</div>
+<p>לרנקה עברה טרנספורמציה מעיר נמל שקטה ומוזנחת יחסית לאזור צמיחה מוכר. התהליך החל עם הכרזת פרויקט המרינה ב-2015, התגבר עם גל הקונים הזרים מ-2019, ועבר האצה משמעותית אחרי 2022. המגמות העיקריות:</p>
+</div>
+
+<table>
+<thead><tr><th>מדד</th><th>2018-2020</th><th>2021-2023</th><th>2024-2026</th><th>מגמה</th></tr></thead>
+<tbody>
+<tr><td>מחיר ממוצע למ"ר</td><td>~€1,000</td><td>~€1,150</td><td>~€1,330-€2,400</td><td>↑ עלייה מתמדת</td></tr>
+<tr><td>עסקאות שנתיות (כלל קפריסין)</td><td>~10,000</td><td>~14,000</td><td>18,114 (2025)</td><td>↑ שיא מאז 2007</td></tr>
+<tr><td>אחוז קונים זרים</td><td>~25%</td><td>~35%</td><td>43.4% (Q1 2026)</td><td>↑ דומיננטיות זרה</td></tr>
+<tr><td>היתרי בנייה לרנקה</td><td>נמוך</td><td>עלייה</td><td>גבוה</td><td>↑ פיתוח מואץ</td></tr>
+<tr><td>תיירות (כלל קפריסין)</td><td>~3.5M</td><td>~3.8M</td><td>~4M+</td><td>↑ התאוששות מלאה</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">גורמי צמיחה מרכזיים</h3>
+<div class="grid-3">
+<div class="card">
+<div class="card-title">תשתיות</div>
+<p>שדה תעופה בינלאומי (הראשי בקפריסין), פרויקט מרינה/נמל בשווי €1.2B (בתהליך מחודש), שדרוג טיילת פיניקודס, פיתוח אזורי מגורים חדשים בליבדיה ואורוקליני.</p>
+</div>
+<div class="card">
+<div class="card-title">דמוגרפיה</div>
+<p>כ-85,000 תושבים בעיר, ~150,000 במחוז. גידול באוכלוסיית אקספטים, עובדי טק מרחוק, סטודנטים באוניברסיטאות מקומיות, ועובדי שדה התעופה. קהילה ישראלית הולכת וגדלה.</p>
+</div>
+<div class="card">
+<div class="card-title">ביקוש זר</div>
+<p>ישראלים, רוסים, אוקראינים, בריטים, ואירופים. ישראלים בולטים במיוחד מ-2023 - גל רכישות שעורר דיון ציבורי בקפריסין. הביקוש מונע ע"י מחירי נדל"ן בישראל, חיפוש Plan B, ותוכנית PR.</p>
+</div>
+</div>
+
+<div class="alert alert-warning">
+<strong>הבחנה חשובה:</strong> חלק מהצמיחה היא אמיתית (ביקוש, תשתיות, דמוגרפיה) וחלק היא נרטיב שיווקי של יזמים ישראלים שמנפחים ציפיות. יש להפריד בין עליית מחירים אורגנית לבין תמחור מנופח של פרויקטים חדשים.
+</div>
+
+<h3 class="section-subtitle">סטטוס מרינה/נמל - עדכון מאי 2026</h3>
+<div class="card">
+<table>
+<thead><tr><th>אירוע</th><th>תאריך</th><th>סטטוס</th></tr></thead>
+<tbody>
+<tr><td>הסכם מקורי עם Kition Ocean Holdings</td><td>2015-2021</td><td><span class="badge badge-cancelled">הופסק</span></td></tr>
+<tr><td>סיום ההסכם עקב מחלוקות</td><td>מאי 2024</td><td><span class="badge badge-confirmed">מאושר</span></td></tr>
+<tr><td>העברה לרשות הנמלים הקפריסאית</td><td>מאי 2026</td><td><span class="badge badge-confirmed">מאושר</span></td></tr>
+<tr><td>שדרוגים מיידיים למרינה (+200 מקומות עגינה)</td><td>2025-2026</td><td><span class="badge badge-announced">בביצוע</span></td></tr>
+<tr><td>מפת דרכים מלאה לפיתוח</td><td>צפוי יוני 2026</td><td><span class="badge badge-announced">הוכרז</span></td></tr>
+<tr><td>פיתוח מלא (15 שנה)</td><td>2026-2041?</td><td><span class="badge badge-speculative">ספקולטיבי</span></td></tr>
+</tbody>
+</table>
+<div class="confidence conf-medium">רמת ביטחון: בינונית - הכיוון ברור אך לוחות הזמנים לא ודאיים</div>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 3: NEIGHBORHOODS -->
+<section class="section" id="neighborhoods">
+<div class="container">
+<h2 class="section-title">3. מפת אזורים ושכונות</h2>
+
+<p>להלן ניתוח מפורט של האזורים המרכזיים בלרנקה והסביבה. כל אזור מדורג לפי פרמטרים רלוונטיים למשקיע ישראלי.</p>
+
+<!-- MACKENZIE -->
+<div class="card">
+<div class="card-title">מקנזי (Mackenzie)</div>
+<div class="scorecard">
+<div class="score-item"><div class="score-value">9</div><div class="score-label">ביקוש</div></div>
+<div class="score-item"><div class="score-value">6</div><div class="score-label">סיכון</div></div>
+<div class="score-item"><div class="score-value">7</div><div class="score-label">נזילות</div></div>
+<div class="score-item"><div class="score-value">8</div><div class="score-label">השבחה</div></div>
+<div class="score-item"><div class="score-value">8</div><div class="score-label">שכירות</div></div>
+</div>
+<p><strong>מי גר שם:</strong> צעירים, אקספטים, עובדי טק, זוגות ללא ילדים, תיירים. אווירה של שכונה מתג'נטרפת עם בתי קפה, מסעדות, ובארים.</p>
+<p><strong>מי קונה:</strong> משקיעים זרים (ישראלים, בריטים, רוסים), קונים לסגנון חיים, משקיעי Airbnb.</p>
+<p><strong>טווח מחירים:</strong> דירת 2 חדרים חדשה: €250,000-€540,000. דירת 1 חדר/סטודיו: €90,000-€180,000. מחיר למ"ר: €2,500-€4,500 (בנייה חדשה).</p>
+<p><strong>שכירות:</strong> ארוכה €800-€1,400/חודש. קצרה (Airbnb): €80-€150/לילה בעונה, תפוסה 60-70%.</p>
+<p><strong>יתרונות:</strong> חוף ים, ג'נטריפיקציה פעילה, ביקוש גבוה, אווירה צעירה, קרבה לשדה תעופה.</p>
+<p><strong>סיכונים:</strong> רעש מטוסים (מסלול נחיתה סמוך), מחירים כבר עלו משמעותית, תלות בתיירות, תחרות Airbnb גוברת.</p>
+<div class="alert alert-info">
+<strong>למשקיע ישראלי:</strong> מקנזי הוא ה"תל אביב של לרנקה" - אווירה, חוף, בילויים. מתאים למשקיע שמחפש שכירות קצרה או סגנון חיים. לא מתאים למי שמחפש שקט או תשואה ארוכת טווח יציבה בלבד.
+</div>
+</div>
+
+<!-- FINIKOUDES -->
+<div class="card">
+<div class="card-title">פיניקודס (Finikoudes) - טיילת הדקלים</div>
+<div class="scorecard">
+<div class="score-item"><div class="score-value">8</div><div class="score-label">ביקוש</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">סיכון</div></div>
+<div class="score-item"><div class="score-value">8</div><div class="score-label">נזילות</div></div>
+<div class="score-item"><div class="score-value">6</div><div class="score-label">השבחה</div></div>
+<div class="score-item"><div class="score-value">8</div><div class="score-label">שכירות</div></div>
+</div>
+<p><strong>מי גר שם:</strong> תושבים ותיקים, אקספטים אירופים, פנסיונרים, תיירים. הלב המסורתי של לרנקה.</p>
+<p><strong>מי קונה:</strong> קונים לסגנון חיים, משקיעים שרוצים נוף ים, אקספטים שרוצים מרכז עיר.</p>
+<p><strong>טווח מחירים:</strong> דירת 2 חדרים: €200,000-€350,000. נוף ים: פרמיה של 20-40%. מחיר למ"ר: €2,000-€3,500.</p>
+<p><strong>שכירות:</strong> ארוכה €700-€1,200/חודש. קצרה: €70-€130/לילה.</p>
+<p><strong>יתרונות:</strong> מיקום מרכזי, טיילת ים, מסעדות, שירותים, נזילות גבוהה יחסית, ביקוש יציב.</p>
+<p><strong>סיכונים:</strong> בניינים ישנים (בעיות Title Deeds), רעש בקיץ, חניה בעייתית, פחות פוטנציאל השבחה (כבר "בשל").</p>
+</div>
+
+<!-- PORT/MARINA -->
+<div class="card">
+<div class="card-title">אזור הנמל והמרינה (Port/Marina Corridor)</div>
+<div class="scorecard">
+<div class="score-item"><div class="score-value">7</div><div class="score-label">ביקוש</div></div>
+<div class="score-item"><div class="score-value">8</div><div class="score-label">סיכון</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">נזילות</div></div>
+<div class="score-item"><div class="score-value">9</div><div class="score-label">השבחה</div></div>
+<div class="score-item"><div class="score-value">6</div><div class="score-label">שכירות</div></div>
+</div>
+<p><strong>מי גר שם:</strong> תושבים מקומיים, עובדי נמל, אוכלוסייה מעורבת. האזור עדיין בתהליך שינוי.</p>
+<p><strong>מי קונה:</strong> משקיעים ספקולטיביים, יזמים שמהמרים על פרויקט המרינה, קונים שמחפשים מחיר כניסה נמוך עם אפסייד.</p>
+<p><strong>טווח מחירים:</strong> דירת 2 חדרים: €180,000-€300,000. פרויקטים חדשים: €2,200-€3,500/מ"ר.</p>
+<p><strong>שכירות:</strong> ארוכה €600-€1,000/חודש. קצרה: תלוי בהתקדמות הפרויקט.</p>
+<p><strong>יתרונות:</strong> פוטנציאל השבחה הגבוה ביותר אם המרינה תתממש, מחירי כניסה עדיין סבירים.</p>
+<p><strong>סיכונים:</strong> תלות מוחלטת בהתקדמות פרויקט המרינה, לוחות זמנים לא ודאיים, אזור שעדיין לא "נגמר".</p>
+<div class="alert alert-warning">
+<strong>אזהרה:</strong> זהו האזור עם הפער הגדול ביותר בין נרטיב שיווקי ("המרינה תשנה הכל") לבין מציאות (פרויקט שהופסק ונמצא בתכנון מחדש). השקעה כאן היא הימור על עתיד - לא על הווה.
+</div>
+</div>
+
+<!-- LIVADIA -->
+<div class="card">
+<div class="card-title">ליבדיה (Livadia)</div>
+<div class="scorecard">
+<div class="score-item"><div class="score-value">7</div><div class="score-label">ביקוש</div></div>
+<div class="score-item"><div class="score-value">4</div><div class="score-label">סיכון</div></div>
+<div class="score-item"><div class="score-value">6</div><div class="score-label">נזילות</div></div>
+<div class="score-item"><div class="score-value">7</div><div class="score-label">השבחה</div></div>
+<div class="score-item"><div class="score-value">7</div><div class="score-label">שכירות</div></div>
+</div>
+<p><strong>מי גר שם:</strong> משפחות מקומיות, זוגות צעירים, אקספטים שמחפשים שקט עם קרבה לעיר.</p>
+<p><strong>מי קונה:</strong> משקיעים שמחפשים ערך, משפחות, קונים לתושבות קבע.</p>
+<p><strong>טווח מחירים:</strong> דירת 2 חדרים חדשה: €180,000-€280,000. וילות: €350,000+. מחיר למ"ר: €1,800-€2,800.</p>
+<p><strong>שכירות:</strong> ארוכה €650-€1,000/חודש. ביקוש יציב ממשפחות ועובדים.</p>
+<p><strong>יתרונות:</strong> אזור צמיחה עם פרויקטים חדשים, מחירים סבירים, שקט, מתאים למשפחות.</p>
+<p><strong>סיכונים:</strong> פחות "סקסי" למשקיע Airbnb, רחוק מהים, תלוי בהמשך פיתוח האזור.</p>
+</div>
+
+<!-- OROKLINI -->
+<div class="card">
+<div class="card-title">אורוקליני (Oroklini)</div>
+<div class="scorecard">
+<div class="score-item"><div class="score-value">7</div><div class="score-label">ביקוש</div></div>
+<div class="score-item"><div class="score-value">4</div><div class="score-label">סיכון</div></div>
+<div class="score-item"><div class="score-value">6</div><div class="score-label">נזילות</div></div>
+<div class="score-item"><div class="score-value">7</div><div class="score-label">השבחה</div></div>
+<div class="score-item"><div class="score-value">7</div><div class="score-label">שכירות</div></div>
+</div>
+<p><strong>מי גר שם:</strong> משפחות, אקספטים בריטים ורוסים, פנסיונרים. שכונה שקטה צפונית ללרנקה.</p>
+<p><strong>מי קונה:</strong> משקיעים שמחפשים מוצר נופשי, משפחות שרוצות קרבה לים בתקציב סביר.</p>
+<p><strong>טווח מחירים:</strong> דירת 2 חדרים: €160,000-€250,000. מחיר למ"ר: €1,600-€2,500.</p>
+<p><strong>שכירות:</strong> ארוכה €600-€900/חודש. קצרה: פוטנציאל עונתי טוב.</p>
+<p><strong>יתרונות:</strong> מחירים נוחים, קרבה לים, שקט, מתאים למשפחות ולנופש.</p>
+<p><strong>סיכונים:</strong> רחוק ממרכז העיר, פחות שירותים, תלות ברכב.</p>
+</div>
+
+<!-- DROSIA -->
+<div class="card">
+<div class="card-title">דרוסיה (Drosia)</div>
+<div class="scorecard">
+<div class="score-item"><div class="score-value">6</div><div class="score-label">ביקוש</div></div>
+<div class="score-item"><div class="score-value">3</div><div class="score-label">סיכון</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">נזילות</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">השבחה</div></div>
+<div class="score-item"><div class="score-value">6</div><div class="score-label">שכירות</div></div>
+</div>
+<p><strong>מי גר שם:</strong> משפחות מקומיות, מעמד ביניים. שכונת מגורים קלאסית.</p>
+<p><strong>טווח מחירים:</strong> דירת 2 חדרים: €150,000-€220,000. מחיר למ"ר: €1,400-€2,200.</p>
+<p><strong>שכירות:</strong> ארוכה €550-€800/חודש.</p>
+<p><strong>יתרונות:</strong> מחירים נמוכים, סיכון נמוך, ביקוש יציב משכירות ארוכה.</p>
+<p><strong>סיכונים:</strong> פוטנציאל השבחה מוגבל, לא מעניין לתיירים, נזילות נמוכה.</p>
+</div>
+
+<!-- CITY CENTER -->
+<div class="card">
+<div class="card-title">מרכז העיר (City Center / Faneromeni / Sotiros)</div>
+<div class="scorecard">
+<div class="score-item"><div class="score-value">6</div><div class="score-label">ביקוש</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">סיכון</div></div>
+<div class="score-item"><div class="score-value">6</div><div class="score-label">נזילות</div></div>
+<div class="score-item"><div class="score-value">6</div><div class="score-label">השבחה</div></div>
+<div class="score-item"><div class="score-value">7</div><div class="score-label">שכירות</div></div>
+</div>
+<p><strong>מי גר שם:</strong> תושבים מקומיים, סטודנטים, עובדים, אקספטים בתקציב נמוך.</p>
+<p><strong>טווח מחירים:</strong> דירת 2 חדרים: €130,000-€250,000. מחיר למ"ר: €1,500-€2,500.</p>
+<p><strong>שכירות:</strong> ארוכה €550-€900/חודש. ביקוש מסטודנטים ועובדים.</p>
+<p><strong>יתרונות:</strong> מרכזיות, שירותים, תחבורה, ביקוש שכירות יציב, מחירי כניסה נמוכים.</p>
+<p><strong>סיכונים:</strong> בניינים ישנים, בעיות Title Deeds, אזורים מוזנחים, רעש.</p>
+</div>
+
+<!-- ARADIPPOU -->
+<div class="card">
+<div class="card-title">ארדיפו (Aradippou)</div>
+<div class="scorecard">
+<div class="score-item"><div class="score-value">5</div><div class="score-label">ביקוש</div></div>
+<div class="score-item"><div class="score-value">3</div><div class="score-label">סיכון</div></div>
+<div class="score-item"><div class="score-value">4</div><div class="score-label">נזילות</div></div>
+<div class="score-item"><div class="score-value">4</div><div class="score-label">השבחה</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">שכירות</div></div>
+</div>
+<p><strong>מי גר שם:</strong> משפחות מקומיות, מעמד ביניים-נמוך. פרבר מגורים.</p>
+<p><strong>טווח מחירים:</strong> דירת 2 חדרים: €120,000-€180,000. בתים: €200,000-€350,000.</p>
+<p><strong>שכירות:</strong> ארוכה €500-€750/חודש.</p>
+<p><strong>יתרונות:</strong> מחירים הנמוכים ביותר, מתאים לתשואה על שכירות ארוכה בתקציב נמוך.</p>
+<p><strong>סיכונים:</strong> רחוק מהים, לא אטרקטיבי לתיירים, נזילות נמוכה מאוד, פוטנציאל השבחה מוגבל.</p>
+</div>
+
+<!-- PYLA / DHEKELIA -->
+<div class="card">
+<div class="card-title">פילה / דרך דקליה (Pyla / Dhekelia Road)</div>
+<div class="scorecard">
+<div class="score-item"><div class="score-value">6</div><div class="score-label">ביקוש</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">סיכון</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">נזילות</div></div>
+<div class="score-item"><div class="score-value">6</div><div class="score-label">השבחה</div></div>
+<div class="score-item"><div class="score-value">6</div><div class="score-label">שכירות</div></div>
+</div>
+<p><strong>מי גר שם:</strong> אקספטים בריטים (קרבה לבסיס הבריטי), משפחות, פנסיונרים.</p>
+<p><strong>טווח מחירים:</strong> דירת 2 חדרים: €150,000-€250,000. וילות: €300,000+.</p>
+<p><strong>שכירות:</strong> ארוכה €600-€900/חודש. ביקוש מאנשי צבא בריטי ומשפחותיהם.</p>
+<p><strong>יתרונות:</strong> חוף ים, שקט, קהילה בריטית מבוססת, מחירים סבירים.</p>
+<p><strong>סיכונים:</strong> קרבה לבסיס צבאי בריטי (סוברניות בריטית - לא EU), מורכבות משפטית באזורים מסוימים.</p>
+</div>
+
+<!-- PERVOLIA / KITI / MENEOU -->
+<div class="card">
+<div class="card-title">פרבוליה / קיטי / מנאו (Pervolia / Kiti / Meneou)</div>
+<div class="scorecard">
+<div class="score-item"><div class="score-value">5</div><div class="score-label">ביקוש</div></div>
+<div class="score-item"><div class="score-value">4</div><div class="score-label">סיכון</div></div>
+<div class="score-item"><div class="score-value">4</div><div class="score-label">נזילות</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">השבחה</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">שכירות</div></div>
+</div>
+<p><strong>מי גר שם:</strong> משפחות מקומיות, אקספטים שמחפשים שקט, פנסיונרים. כפרים חופיים דרומית ללרנקה.</p>
+<p><strong>טווח מחירים:</strong> דירות: €130,000-€220,000. וילות: €250,000-€450,000.</p>
+<p><strong>שכירות:</strong> ארוכה €500-€800/חודש. קצרה: עונתית בלבד.</p>
+<p><strong>יתרונות:</strong> שקט, טבע, חוף, מחירים נמוכים, מתאים לסגנון חיים.</p>
+<p><strong>סיכונים:</strong> רחוק משירותים, תלות מוחלטת ברכב, נזילות נמוכה, ביקוש שכירות מוגבל.</p>
+</div>
+
+<!-- KAMARES -->
+<div class="card">
+<div class="card-title">קמארס (Kamares)</div>
+<div class="scorecard">
+<div class="score-item"><div class="score-value">6</div><div class="score-label">ביקוש</div></div>
+<div class="score-item"><div class="score-value">3</div><div class="score-label">סיכון</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">נזילות</div></div>
+<div class="score-item"><div class="score-value">5</div><div class="score-label">השבחה</div></div>
+<div class="score-item"><div class="score-value">6</div><div class="score-label">שכירות</div></div>
+</div>
+<p><strong>מי גר שם:</strong> משפחות מבוססות, מעמד ביניים-גבוה מקומי.</p>
+<p><strong>טווח מחירים:</strong> דירות: €160,000-€280,000. בתים: €300,000-€500,000.</p>
+<p><strong>שכירות:</strong> ארוכה €700-€1,100/חודש.</p>
+<p><strong>יתרונות:</strong> שכונה איכותית, שקטה, מתאימה למשפחות, בתי ספר טובים.</p>
+<p><strong>סיכונים:</strong> לא מעניין לתיירים, פוטנציאל Airbnb נמוך.</p>
+</div>
+
+</div>
+</section>
+</body>
+</html>
+
+<!-- SECTION 4: PRICING -->
+<section class="section" id="pricing">
+<div class="container">
+<h2 class="section-title">4. טווחי מחירים ריאליים</h2>
+
+<div class="alert alert-info">
+<strong>הערה מתודולוגית:</strong> המחירים מבוססים על שילוב של נתוני מדד מחירי הנדל"ן של הבנק המרכזי הקפריסאי, מחירי ביקוש בפורטלים (DevelopersCyprus, BuySellCyprus, DOM.com.cy), ומקורות ישראליים. מחירי ביקוש גבוהים ב-5-15% ממחירי עסקה בפועל. אין גישה ישירה למחירי עסקאות סגורות.
+</div>
+
+<h3 class="section-subtitle">מחיר למ"ר לפי אזור וסוג נכס</h3>
+<table>
+<thead><tr><th>אזור</th><th>יד שנייה (€/מ"ר)</th><th>בנייה חדשה (€/מ"ר)</th><th>על הנייר (€/מ"ר)</th><th>פרמיית ים</th></tr></thead>
+<tbody>
+<tr><td>מקנזי</td><td>2,000-3,000</td><td>2,800-4,500</td><td>2,500-4,000</td><td>+30-50%</td></tr>
+<tr><td>פיניקודס</td><td>1,800-2,800</td><td>2,500-3,500</td><td>2,200-3,200</td><td>+20-40%</td></tr>
+<tr><td>נמל/מרינה</td><td>1,600-2,500</td><td>2,200-3,500</td><td>2,000-3,000</td><td>+15-30%</td></tr>
+<tr><td>ליבדיה</td><td>1,400-2,000</td><td>1,800-2,800</td><td>1,700-2,500</td><td>N/A</td></tr>
+<tr><td>אורוקליני</td><td>1,300-2,000</td><td>1,600-2,500</td><td>1,500-2,300</td><td>+15-25%</td></tr>
+<tr><td>מרכז העיר</td><td>1,200-2,000</td><td>1,500-2,500</td><td>1,400-2,200</td><td>N/A</td></tr>
+<tr><td>דרוסיה</td><td>1,100-1,800</td><td>1,400-2,200</td><td>1,300-2,000</td><td>N/A</td></tr>
+<tr><td>ארדיפו</td><td>900-1,400</td><td>1,200-1,800</td><td>1,100-1,600</td><td>N/A</td></tr>
+<tr><td>פרבוליה/קיטי</td><td>1,000-1,600</td><td>1,300-2,000</td><td>1,200-1,800</td><td>+10-20%</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">טווחי מחירים לפי גודל דירה (בנייה חדשה)</h3>
+<table>
+<thead><tr><th>סוג</th><th>שוק נמוך</th><th>שוק ריאלי</th><th>שוק פרמיום</th><th>מנופח/הייפ</th></tr></thead>
+<tbody>
+<tr><td>סטודיו / 1 חדר (35-55 מ"ר)</td><td>€90,000-€120,000</td><td>€120,000-€180,000</td><td>€180,000-€250,000</td><td>€250,000+</td></tr>
+<tr><td>2 חדרים (65-90 מ"ר)</td><td>€150,000-€200,000</td><td>€200,000-€300,000</td><td>€300,000-€450,000</td><td>€450,000+</td></tr>
+<tr><td>3 חדרים (90-130 מ"ר)</td><td>€220,000-€300,000</td><td>€300,000-€450,000</td><td>€450,000-€650,000</td><td>€650,000+</td></tr>
+<tr><td>וילה / בית (150-250 מ"ר)</td><td>€300,000-€400,000</td><td>€400,000-€650,000</td><td>€650,000-€1,000,000</td><td>€1,000,000+</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">גורמים שמשפיעים על מחיר</h3>
+<div class="grid-2">
+<div class="card">
+<div class="card-title">מעלים מחיר</div>
+<ul style="list-style: none; padding: 0;">
+<li>↑ נוף ים / קו ראשון לים: +20-50%</li>
+<li>↑ קומה גבוהה (4+): +5-15%</li>
+<li>↑ Title Deed נקי ומוכן: +5-10%</li>
+<li>↑ חניה + מחסן: +€15,000-€30,000</li>
+<li>↑ מרפסת גדולה: +5-10%</li>
+<li>↑ בריכה במתחם: +10-20%</li>
+<li>↑ דירוג אנרגטי A/B: +5-10%</li>
+<li>↑ מע"מ 5% (תושבות ראשית): חיסכון של 14%</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">מורידים מחיר / סימני אזהרה</div>
+<ul style="list-style: none; padding: 0;">
+<li>↓ אין Title Deed: -10-20% (וסיכון משפטי)</li>
+<li>↓ קומת קרקע ללא גינה: -5-10%</li>
+<li>↓ רעש (כביש ראשי / מטוסים): -10-20%</li>
+<li>↓ בניין ישן (לפני 2000): -15-30%</li>
+<li>↓ ללא חניה: -€10,000-€20,000</li>
+<li>↓ כיוון צפון (ללא שמש): -5-10%</li>
+<li>↓ בעיות רטיבות/עובש: -15-25%</li>
+<li>↓ אזור מוזנח / לא מפותח: -10-20%</li>
+</ul>
+</div>
+</div>
+
+<h3 class="section-subtitle">עלויות רכישה נוספות (מעבר למחיר הנכס)</h3>
+<table>
+<thead><tr><th>עלות</th><th>שיעור / סכום</th><th>הערות</th></tr></thead>
+<tbody>
+<tr><td>מע"מ (בנייה חדשה)</td><td>19% (או 5% מופחת)</td><td>5% על 130 מ"ר ראשונים למגורים ראשיים בלבד</td></tr>
+<tr><td>דמי העברה (Transfer Fees)</td><td>3-8% (מדורג)</td><td>מחצית אם שולם מע"מ. 3% עד €85K, 5% עד €170K, 8% מעל</td></tr>
+<tr><td>בול (Stamp Duty)</td><td>0.15-0.2%</td><td>על חוזה המכירה</td></tr>
+<tr><td>עורך דין</td><td>1-1.5% + מע"מ</td><td>חובה - עו"ד עצמאי, לא של היזם</td></tr>
+<tr><td>רישום משכנתא</td><td>1% משווי המשכנתא</td><td>אם רלוונטי</td></tr>
+<tr><td>סה"כ עלויות נלוות</td><td>5-25%</td><td>תלוי אם חדש (מע"מ) או יד שנייה (Transfer Fees)</td></tr>
+</tbody>
+</table>
+
+<div class="alert alert-danger">
+<strong>טעות נפוצה של משקיעים ישראלים:</strong> חישוב תשואה על מחיר הנכס בלבד, בלי להכניס מע"מ 19%, עלויות משפטיות, ריהוט, ועלויות התאמה. העלות האמיתית של נכס ב-€250,000 יכולה להגיע ל-€300,000+ אחרי כל העלויות.
+</div>
+
+<div class="chart-container">
+<canvas id="priceChart"></canvas>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 5: RENTAL MARKET -->
+<section class="section" id="rental">
+<div class="container">
+<h2 class="section-title">5. שוק השכירות</h2>
+
+<h3 class="section-subtitle">שכירות ארוכת טווח - ממוצעים</h3>
+<table>
+<thead><tr><th>סוג נכס</th><th>מרכז/חוף</th><th>פרברים</th><th>כפרים</th></tr></thead>
+<tbody>
+<tr><td>סטודיו / 1 חדר</td><td>€500-€700</td><td>€400-€550</td><td>€350-€450</td></tr>
+<tr><td>2 חדרים</td><td>€700-€1,000</td><td>€600-€800</td><td>€500-€650</td></tr>
+<tr><td>3 חדרים</td><td>€900-€1,400</td><td>€750-€1,000</td><td>€650-€850</td></tr>
+<tr><td>וילה 3-4 חדרים</td><td>€1,500-€2,500</td><td>€1,200-€1,800</td><td>€1,000-€1,500</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">שכירות קצרה (Airbnb) - נתוני 2025-2026</h3>
+<table>
+<thead><tr><th>מדד</th><th>ממוצע לרנקה</th><th>ביצועים גבוהים</th><th>מקור</th></tr></thead>
+<tbody>
+<tr><td>תפוסה שנתית</td><td>60-65%</td><td>70-80%</td><td>AirDNA, Airbtics, Investropa</td></tr>
+<tr><td>מחיר ללילה (ADR)</td><td>€85-€100</td><td>€120-€180 (עונה)</td><td>AirROI, AirDNA</td></tr>
+<tr><td>הכנסה שנתית ברוטו</td><td>€12,000-€14,000</td><td>€18,000-€25,000</td><td>AirROI, AirDNA</td></tr>
+<tr><td>הכנסה חודשית נטו (ניהול עצמי)</td><td>~€1,000-€1,250</td><td>€1,500-€2,000</td><td>Investropa</td></tr>
+<tr><td>הכנסה חודשית נטו (ניהול מקצועי)</td><td>~€700-€850</td><td>€1,000-€1,500</td><td>Investropa</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">תרחישי תשואה - דוגמאות מעשיות</h3>
+
+<div class="card tier-1">
+<div class="card-title">תרחיש 1: דירת 2 חדרים, מקנזי, בנייה חדשה - שכירות ארוכה</div>
+<table>
+<tbody>
+<tr><td>מחיר רכישה (כולל מע"מ ועלויות)</td><td>€310,000</td></tr>
+<tr><td>שכירות חודשית</td><td>€900</td></tr>
+<tr><td>הכנסה שנתית ברוטו</td><td>€10,800</td></tr>
+<tr><td>הוצאות (ניהול, תחזוקה, ועד, ביטוח, חודש ריק)</td><td>-€2,500</td></tr>
+<tr><td>הכנסה שנתית נטו (לפני מס)</td><td>€8,300</td></tr>
+<tr><td>תשואה ברוטו</td><td>3.5%</td></tr>
+<tr><td>תשואה נטו (לפני מס)</td><td>2.7%</td></tr>
+<tr><td><strong>סיכון עיקרי</strong></td><td>תפוסה לא מלאה, תחזוקה גבוהה מהצפוי</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card tier-1">
+<div class="card-title">תרחיש 2: דירת 2 חדרים, מקנזי - שכירות קצרה (Airbnb)</div>
+<table>
+<tbody>
+<tr><td>מחיר רכישה (כולל מע"מ ועלויות)</td><td>€310,000</td></tr>
+<tr><td>ADR ממוצע</td><td>€95</td></tr>
+<tr><td>תפוסה שנתית</td><td>65%</td></tr>
+<tr><td>הכנסה שנתית ברוטו</td><td>€22,500</td></tr>
+<tr><td>הוצאות (ניהול 20%, ניקיון, תחזוקה, ועד, פלטפורמות)</td><td>-€9,000</td></tr>
+<tr><td>הכנסה שנתית נטו (לפני מס)</td><td>€13,500</td></tr>
+<tr><td>תשואה ברוטו</td><td>7.3%</td></tr>
+<tr><td>תשואה נטו (לפני מס)</td><td>4.4%</td></tr>
+<tr><td><strong>סיכון עיקרי</strong></td><td>תפוסה נמוכה מהצפוי, תחרות גוברת, עונתיות</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card tier-2">
+<div class="card-title">תרחיש 3: דירת 2 חדרים, ליבדיה - שכירות ארוכה (שמרני)</div>
+<table>
+<tbody>
+<tr><td>מחיר רכישה (כולל מע"מ ועלויות)</td><td>€240,000</td></tr>
+<tr><td>שכירות חודשית</td><td>€750</td></tr>
+<tr><td>הכנסה שנתית ברוטו</td><td>€9,000</td></tr>
+<tr><td>הוצאות</td><td>-€2,000</td></tr>
+<tr><td>הכנסה שנתית נטו (לפני מס)</td><td>€7,000</td></tr>
+<tr><td>תשואה ברוטו</td><td>3.75%</td></tr>
+<tr><td>תשואה נטו (לפני מס)</td><td>2.9%</td></tr>
+<tr><td><strong>סיכון עיקרי</strong></td><td>עליית ערך איטית, נזילות מוגבלת</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card tier-2">
+<div class="card-title">תרחיש 4: דירת 1 חדר, מרכז העיר, יד שנייה - שכירות ארוכה</div>
+<table>
+<tbody>
+<tr><td>מחיר רכישה (כולל עלויות)</td><td>€140,000</td></tr>
+<tr><td>שכירות חודשית</td><td>€550</td></tr>
+<tr><td>הכנסה שנתית ברוטו</td><td>€6,600</td></tr>
+<tr><td>הוצאות</td><td>-€1,800</td></tr>
+<tr><td>הכנסה שנתית נטו (לפני מס)</td><td>€4,800</td></tr>
+<tr><td>תשואה ברוטו</td><td>4.7%</td></tr>
+<tr><td>תשואה נטו (לפני מס)</td><td>3.4%</td></tr>
+<tr><td><strong>סיכון עיקרי</strong></td><td>בעיות Title Deed, תחזוקה בבניין ישן</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 class="section-subtitle">מי שוכר בלרנקה</h3>
+<div class="grid-3">
+<div class="card"><div class="card-title">אקספטים ועובדי טק</div><p>ביקוש ל-2-3 חדרים, מרכז/חוף, €700-€1,200. יציבים, חוזים ארוכים.</p></div>
+<div class="card"><div class="card-title">סטודנטים</div><p>ביקוש לסטודיו/1 חדר, מרכז, €400-€600. עונתי (ספט-יוני), תחלופה גבוהה.</p></div>
+<div class="card"><div class="card-title">עובדי שדה תעופה</div><p>ביקוש ל-1-2 חדרים, קרבה לשדה, €500-€800. יציבים.</p></div>
+<div class="card"><div class="card-title">משפחות מקומיות</div><p>ביקוש ל-2-3 חדרים, פרברים, €600-€900. יציבים מאוד.</p></div>
+<div class="card"><div class="card-title">נוודים דיגיטליים</div><p>ביקוש לסטודיו/1 חדר מרוהט, חוף, €600-€1,000. חוזים קצרים (3-6 חודשים).</p></div>
+<div class="card"><div class="card-title">תיירים (Airbnb)</div><p>ביקוש לדירות מרוהטות, חוף/מרכז, €70-€150/לילה. עונתי מאוד (מאי-אוקטובר).</p></div>
+</div>
+
+<div class="alert alert-warning">
+<strong>מה שמשקיעים לא מבינים:</strong> תשואה ברוטו של 5-6% נשמעת טוב, אבל אחרי מע"מ על הרכישה, ניהול, תחזוקה, חודשים ריקים, ומס בקפריסין + מס בישראל - התשואה הנטו האמיתית יכולה לרדת ל-2-3%. חישוב תשואה חייב לכלול את כל העלויות.
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 6: CONSTRUCTION QUALITY -->
+<section class="section" id="construction">
+<div class="container">
+<h2 class="section-title">6. סטנדרט בנייה ואיכות נכסים</h2>
+
+<div class="card">
+<div class="card-title">מה חשוב להבין על בנייה בקפריסין</div>
+<p>הבנייה בקפריסין מבוססת על שלד בטון מזוין (RC frame) - דומה לישראל. אבל יש הבדלים משמעותיים באיכות הגימור, הבידוד, והתחזוקה. הסטנדרט עולה בשנים האחרונות, אבל עדיין יש פער בין "פרמיום" קפריסאי לבין מה שישראלי מצפה לו.</p>
+</div>
+
+<h3 class="section-subtitle">בעיות בנייה נפוצות בקפריסין</h3>
+<table>
+<thead><tr><th>בעיה</th><th>שכיחות</th><th>השפעה</th><th>איך לזהות</th></tr></thead>
+<tbody>
+<tr><td>חדירת רטיבות / איטום לקוי</td><td>גבוהה מאוד</td><td>עובש, נזק מבני, עלויות תיקון</td><td>בדיקת כתמים, ריח, גג/מרפסות</td></tr>
+<tr><td>בידוד תרמי חלש</td><td>גבוהה (בניינים ישנים)</td><td>חשבונות חשמל גבוהים, אי-נוחות</td><td>תעודת אנרגיה, עובי קירות</td></tr>
+<tr><td>בידוד אקוסטי לקוי</td><td>גבוהה</td><td>רעש משכנים, חוסר פרטיות</td><td>ביקור בשעות פעילות</td></tr>
+<tr><td>ניקוז לקוי</td><td>בינונית-גבוהה</td><td>הצפות בגשם, נזקי מים</td><td>בדיקה בעונת גשמים</td></tr>
+<tr><td>סדקים (לא מבניים)</td><td>בינונית</td><td>אסתטי, סימן לבעיות אחרות</td><td>בדיקה ויזואלית, מהנדס</td></tr>
+<tr><td>אינסטלציה באיכות נמוכה</td><td>בינונית</td><td>נזילות, לחץ מים נמוך</td><td>בדיקת לחץ, צנרת חשופה</td></tr>
+<tr><td>חלונות באיכות נמוכה</td><td>בינונית (ישנים)</td><td>רעש, חום, קונדנסציה</td><td>סוג זיגוג, מסגרת</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">מה מגדיר "פרמיום" בקפריסין vs מה שזה באמת</h3>
+<div class="grid-2">
+<div class="card">
+<div class="card-title">מה יזמים קוראים "פרמיום"</div>
+<ul style="list-style: none; padding: 0;">
+<li>• משטחי גרניט/שיש במטבח</li>
+<li>• ריצוף פורצלן גדול</li>
+<li>• מזגן מולטי-ספליט</li>
+<li>• בריכה משותפת</li>
+<li>• חניה תת-קרקעית</li>
+<li>• "Smart Home" (לרוב בסיסי)</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">מה באמת חשוב (ולא תמיד מסופק)</div>
+<ul style="list-style: none; padding: 0;">
+<li>• בידוד תרמי אמיתי (לא רק EPS דק)</li>
+<li>• איטום מקצועי של גג ומרפסות</li>
+<li>• חלונות דאבל גלייזינג איכותיים</li>
+<li>• בידוד אקוסטי בין דירות</li>
+<li>• מערכת ניקוז מתוכננת</li>
+<li>• חשמל תלת-פאזי</li>
+<li>• Title Deed נפרד ומוכן</li>
+</ul>
+</div>
+</div>
+
+<h3 class="section-subtitle">שאלות חובה ליזם / קבלן / סוכן לפני קנייה</h3>
+<div class="card">
+<ol style="line-height: 2.2;">
+<li>מה סטטוס ה-Title Deed? מתי צפוי להיות מוכן? האם יש עיכובים ידועים?</li>
+<li>מה סוג הבידוד התרמי? עובי? חומר? דירוג אנרגטי של הבניין?</li>
+<li>מה מערכת האיטום בגג ובמרפסות? האם יש אחריות?</li>
+<li>האם יש בידוד אקוסטי בין הדירות? מה הסטנדרט?</li>
+<li>מה כלול בדמי הוועד (Common Expenses)? כמה בחודש? מה מכסה?</li>
+<li>האם יש מערכת סולארית לחימום מים? פוטו-וולטאי?</li>
+<li>מה לוח הזמנים למסירה? מה הפיצוי על עיכוב?</li>
+<li>האם יש Specific Performance רשום? (הגנה משפטית לקונה)</li>
+<li>מה ניסיון היזם? כמה פרויקטים סיים? האם אפשר לבקר בפרויקטים קודמים?</li>
+<li>מה מפרט החשמל? תלת-פאזי? נקודות חשמל? הכנה למטען חשמלי?</li>
+<li>האם יש חניה צמודה ומחסן? מה הגודל?</li>
+<li>מה תנאי התשלום? האם מדורג לפי התקדמות?</li>
+<li>מה קורה אם היזם פושט רגל? האם הכסף מוגן?</li>
+<li>האם הנכס רשום ב-Land Registry? מה סטטוס ההיתרים?</li>
+<li>מה עלויות התחזוקה השנתיות הצפויות?</li>
+</ol>
+</div>
+
+<h3 class="section-subtitle">סימני אזהרה באיכות בנייה</h3>
+<div class="alert alert-danger">
+<ul style="list-style: none; padding: 0; line-height: 2;">
+<li>🚩 כתמי רטיבות על תקרות או קירות</li>
+<li>🚩 ריח עובש בחדרים סגורים</li>
+<li>🚩 סדקים אלכסוניים סביב חלונות ודלתות</li>
+<li>🚩 ריצוף לא ישר או מרוצף בצורה לא אחידה</li>
+<li>🚩 חלונות שלא נסגרים היטב או עם קונדנסציה פנימית</li>
+<li>🚩 צנרת חשופה או לא מקצועית</li>
+<li>🚩 חדר מדרגות מוזנח (סימן לניהול בניין גרוע)</li>
+<li>🚩 יזם שמסרב לתת גישה לפרויקטים קודמים</li>
+<li>🚩 "מבצע" שדורש החלטה מיידית ללא זמן בדיקה</li>
+<li>🚩 חוזה שלא כולל Specific Performance</li>
+<li>🚩 תשלום מלא לפני מסירה ללא ערבות בנקאית</li>
+</ul>
+</div>
+
+<div class="alert alert-info">
+<strong>מה ישראלים מניחים בטעות:</strong> ישראלי רגיל לסטנדרט בנייה ישראלי (תקן 1045, בידוד חובה, ממ"ד). בקפריסין אין ממ"ד, הבידוד התרמי היה חלש מאוד עד לשנים האחרונות, ואיכות הגימור משתנה מאוד בין יזמים. אל תניח שמה שנראה טוב בתמונות - באמת טוב בפועל.
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 7: GLOSSARY -->
+<section class="section" id="glossary">
+<div class="container">
+<h2 class="section-title">7. שפה נדל"נית מקומית - מילון מונחים</h2>
+
+<div class="grid-2">
+
+<div class="glossary-item">
+<div class="glossary-term">Title Deed <span class="glossary-eng">(שטר בעלות / טאבו)</span></div>
+<p><strong>מה זה:</strong> מסמך רשמי המעיד על בעלות על הנכס, מונפק ע"י מחלקת הקרקעות (Department of Lands and Surveys).</p>
+<p><strong>למה חשוב:</strong> ללא Title Deed - אין הוכחת בעלות מלאה. נכסים רבים בקפריסין (במיוחד ישנים) סובלים מעיכובים של שנים בהנפקת Title Deed.</p>
+<p><strong>סיכון:</strong> רכישה ללא Title Deed חושפת לסיכון של שעבודים, חובות יזם, או מחלוקות בעלות.</p>
+<p><strong>שאלה לשאול:</strong> "האם יש Title Deed נפרד ומוכן? אם לא - מתי צפוי ומה מעכב?"</p>
+</div>
+
+<div class="glossary-item">
+<div class="glossary-term">Specific Performance <span class="glossary-eng">(אכיפת חוזה)</span></div>
+<p><strong>מה זה:</strong> רישום חוזה המכירה במחלקת הקרקעות, שמגן על הקונה מפני מכירה כפולה או שעבוד הנכס.</p>
+<p><strong>למה חשוב:</strong> זו ההגנה המשפטית החזקה ביותר של הקונה עד לקבלת Title Deed.</p>
+<p><strong>סיכון:</strong> ללא רישום Specific Performance - היזם יכול תיאורטית למכור את הנכס לאחר או לשעבד אותו.</p>
+<p><strong>שאלה לשאול:</strong> "האם החוזה יירשם כ-Specific Performance? תוך כמה זמן מהחתימה?"</p>
+</div>
+
+<div class="glossary-item">
+<div class="glossary-term">VAT / מע"מ <span class="glossary-eng">(Value Added Tax)</span></div>
+<p><strong>מה זה:</strong> מס ערך מוסף של 19% על בנייה חדשה. ניתן לקבל הפחתה ל-5% על 130 מ"ר ראשונים אם הנכס משמש למגורים ראשיים.</p>
+<p><strong>למה חשוב:</strong> 19% מע"מ על נכס של €250,000 = €47,500 נוספים. זה משנה את כל חישוב התשואה.</p>
+<p><strong>סיכון:</strong> משקיעים שמתכננים להשכיר לא זכאים ל-5% מופחת.</p>
+<p><strong>שאלה לשאול:</strong> "האם המחיר כולל מע"מ? האם אני זכאי ל-5%? מה התנאים?"</p>
+</div>
+
+<div class="glossary-item">
+<div class="glossary-term">Transfer Fees <span class="glossary-eng">(דמי העברה)</span></div>
+<p><strong>מה זה:</strong> מס על העברת בעלות: 3% עד €85,430, 5% עד €170,860, 8% מעל. מחצית אם שולם מע"מ.</p>
+<p><strong>למה חשוב:</strong> עלות נוספת שחייבים לחשב. ביד שנייה - זה המס העיקרי.</p>
+<p><strong>שאלה לשאול:</strong> "מה סה"כ דמי ההעברה הצפויים? האם יש פטור חלקי?"</p>
+</div>
+
+<div class="glossary-item">
+<div class="glossary-term">Covered Veranda <span class="glossary-eng">(מרפסת מקורה)</span></div>
+<p><strong>מה זה:</strong> מרפסת עם גג - נספרת ב-50% משטח הדירה לצורכי מס ותכנון.</p>
+<p><strong>למה חשוב:</strong> יזמים מציגים שטח כולל שכולל מרפסות - מה שמנפח את ה"גודל" הנתפס.</p>
+<p><strong>שאלה לשאול:</strong> "מה השטח הפנימי נטו? מה שטח המרפסות בנפרד?"</p>
+</div>
+
+<div class="glossary-item">
+<div class="glossary-term">Common Expenses <span class="glossary-eng">(דמי ועד / הוצאות משותפות)</span></div>
+<p><strong>מה זה:</strong> תשלום חודשי/רבעוני לתחזוקת שטחים משותפים, בריכה, גינון, מעלית, ניקיון.</p>
+<p><strong>למה חשוב:</strong> יכול לנוע בין €30-€300/חודש. בפרויקטים עם בריכה וחדר כושר - גבוה יותר.</p>
+<p><strong>שאלה לשאול:</strong> "כמה דמי ועד בחודש? מה כלול? מי מנהל? האם יש קרן חירום?"</p>
+</div>
+
+<div class="glossary-item">
+<div class="glossary-term">Off-Plan <span class="glossary-eng">(על הנייר)</span></div>
+<p><strong>מה זה:</strong> רכישת נכס לפני או במהלך הבנייה, על בסיס תוכניות.</p>
+<p><strong>למה חשוב:</strong> מחיר נמוך יותר, אבל סיכון עיכובים, שינויים, או כשל יזם.</p>
+<p><strong>שאלה לשאול:</strong> "מה לוח הזמנים? מה הפיצוי על עיכוב? מה מבנה התשלומים?"</p>
+</div>
+
+<div class="glossary-item">
+<div class="glossary-term">Energy Performance Certificate <span class="glossary-eng">(תעודת ביצוע אנרגטי)</span></div>
+<p><strong>מה זה:</strong> דירוג A-G של יעילות אנרגטית הנכס. חובה בכל מכירה/השכרה.</p>
+<p><strong>למה חשוב:</strong> דירוג נמוך = חשבונות חשמל גבוהים = שוכרים פחות מעוניינים.</p>
+<p><strong>שאלה לשאול:</strong> "מה הדירוג האנרגטי? מה עלות החימום/קירור השנתית הצפויה?"</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 8: COMPARISON -->
+<section class="section" id="comparison">
+<div class="container">
+<h2 class="section-title">8. השוואה: לרנקה מול לימסול, פאפוס, ניקוסיה ויוון</h2>
+
+<h3 class="section-subtitle">מטריצת השוואה מרכזית</h3>
+<table>
+<thead><tr><th>פרמטר</th><th>לרנקה</th><th>לימסול</th><th>פאפוס</th><th>ניקוסיה</th><th>אתונה (יוון)</th></tr></thead>
+<tbody>
+<tr><td>מחיר כניסה (2 חד')</td><td>€180-300K</td><td>€300-500K</td><td>€200-350K</td><td>€150-250K</td><td>€150-350K</td></tr>
+<tr><td>מחיר למ"ר ממוצע</td><td>€1,330-2,400</td><td>€2,140-3,500</td><td>€1,780-2,800</td><td>€1,500-2,500</td><td>€2,000-4,000</td></tr>
+<tr><td>תשואת שכירות ברוטו</td><td>4-5%</td><td>3-4%</td><td>4-5%</td><td>4-5%</td><td>4-6%</td></tr>
+<tr><td>פוטנציאל עליית ערך</td><td>בינוני-גבוה</td><td>בינוני (כבר יקר)</td><td>בינוני</td><td>נמוך-בינוני</td><td>בינוני-גבוה</td></tr>
+<tr><td>נזילות (מכירה חוזרת)</td><td>בינונית</td><td>גבוהה</td><td>בינונית</td><td>בינונית</td><td>גבוהה</td></tr>
+<tr><td>ביקוש שכירות</td><td>גבוה</td><td>גבוה מאוד</td><td>בינוני (עונתי)</td><td>בינוני</td><td>גבוה מאוד</td></tr>
+<tr><td>סגנון חיים</td><td>שקט, ים, נמל תעופה</td><td>קוסמופוליטי, יקר</td><td>נופשי, שקט</td><td>עירוני, ללא ים</td><td>עירוני, תרבות</td></tr>
+<tr><td>מרחק מישראל (טיסה)</td><td>50 דקות</td><td>50 דקות</td><td>50 דקות</td><td>50 דקות</td><td>2 שעות</td></tr>
+<tr><td>גישה לשנגן</td><td>❌ לא</td><td>❌ לא</td><td>❌ לא</td><td>❌ לא</td><td>✅ כן</td></tr>
+<tr><td>מורכבות מיסוי</td><td>גבוהה (אין אמנה)</td><td>גבוהה</td><td>גבוהה</td><td>גבוהה</td><td>בינונית (יש אמנה)</td></tr>
+<tr><td>ביורוקרטיה</td><td>בינונית</td><td>בינונית</td><td>בינונית</td><td>בינונית</td><td>גבוהה</td></tr>
+<tr><td>סיכון</td><td>בינוני</td><td>נמוך-בינוני</td><td>בינוני</td><td>נמוך</td><td>בינוני</td></tr>
+<tr><td>PR / תושבות</td><td>€300K + מע"מ</td><td>€300K + מע"מ</td><td>€300K + מע"מ</td><td>€300K + מע"מ</td><td>€250-800K</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">לרנקה מול לימסול - בקצרה</h3>
+<div class="grid-2">
+<div class="card tier-1">
+<div class="card-title">למה לרנקה ולא לימסול</div>
+<ul style="list-style: none; padding: 0; line-height: 2;">
+<li>• מחיר כניסה נמוך ב-40-60%</li>
+<li>• תשואת שכירות גבוהה יותר (יחסית למחיר)</li>
+<li>• פוטנציאל השבחה גבוה יותר (עדיין לא "בשל")</li>
+<li>• שדה תעופה בינלאומי בעיר עצמה</li>
+<li>• פרויקט מרינה כגורם צמיחה עתידי</li>
+<li>• פחות תחרות ממשקיעים רוסים עשירים</li>
+</ul>
+</div>
+<div class="card tier-3">
+<div class="card-title">למה לימסול ולא לרנקה</div>
+<ul style="list-style: none; padding: 0; line-height: 2;">
+<li>• שוק בוגר יותר עם נזילות גבוהה</li>
+<li>• ביקוש שכירות חזק יותר (חברות בינלאומיות)</li>
+<li>• תשתיות מפותחות יותר</li>
+<li>• מרינה פעילה ומוכחת</li>
+<li>• קהילה בינלאומית גדולה ומגוונת</li>
+<li>• "סיפור" קל יותר למכירה למשקיעים</li>
+</ul>
+</div>
+</div>
+
+<h3 class="section-subtitle">קפריסין מול יוון - למשקיע ישראלי</h3>
+<div class="grid-2">
+<div class="card">
+<div class="card-title">יתרונות קפריסין על יוון</div>
+<ul style="list-style: none; padding: 0; line-height: 2;">
+<li>• טיסה של 50 דקות (לעומת 2 שעות)</li>
+<li>• קהילה ישראלית גדולה ומבוססת</li>
+<li>• אנגלית נפוצה מאוד</li>
+<li>• מערכת משפטית בריטית (Common Law)</li>
+<li>• Non-Dom: 0% מס על דיבידנדים 17 שנה</li>
+<li>• אין הגבלה על Airbnb</li>
+<li>• PR קבוע (לא צריך לחדש כל 5 שנים)</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">יתרונות יוון על קפריסין</div>
+<ul style="list-style: none; padding: 0; line-height: 2;">
+<li>• גישה לשנגן - חופש תנועה באירופה</li>
+<li>• אמנת מס כפל עם ישראל</li>
+<li>• אין מס רווחי הון על נדל"ן (כרגע)</li>
+<li>• מע"מ מושהה על בנייה חדשה (עד 2026)</li>
+<li>• שוק גדול יותר עם נזילות גבוהה</li>
+<li>• תיירות חזקה יותר (מיליוני תיירים)</li>
+<li>• אין דרישת הכנסה מינימלית ל-Golden Visa</li>
+</ul>
+</div>
+</div>
+
+<div class="script-box">
+<div class="script-label">סקריפט: "איך להסביר לרנקה מול יוון ב-2 דקות"</div>
+<p>"תראה, יוון וקפריסין זה לא אותו דבר בכלל. יוון נותנת לך שנגן - חופש תנועה באירופה. קפריסין לא. אבל קפריסין נותנת לך טיסה של 50 דקות, אנגלית בכל מקום, מערכת משפטית בריטית, ותושבות קבועה שלא צריך לחדש. ביוון אתה לא יכול להשכיר את הנכס ב-Airbnb אם קנית דרך Golden Visa. בקפריסין - אין הגבלה. מבחינת מיסוי - יוון יותר פשוטה כי יש אמנת מס עם ישראל. בקפריסין אין אמנה, אז צריך תכנון מס מקצועי. השאלה האמיתית היא: מה יותר חשוב לך - שנגן או קרבה ופשטות?"</p>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 9: INVESTOR PSYCHOLOGY -->
+<section class="section" id="psychology">
+<div class="container">
+<h2 class="section-title">9. פסיכולוגיית המשקיע הישראלי</h2>
+
+<div class="card">
+<div class="card-title">מה מניע משקיעים ישראלים לקפריסין</div>
+<p>המשקיע הישראלי שמסתכל על לרנקה מונע בד"כ משילוב של: מחירי נדל"ן בלתי אפשריים בישראל, חיפוש פיזור גיאוגרפי, רצון ב-Plan B (תושבות אירופית), ותחושה ש"הרכבת עוזבת". הפחד המרכזי הוא לא להפסיד - לא להפסיד הזדמנות, לא להפסיד כסף, ולא להיראות טיפש.</p>
+</div>
+
+<h3 class="section-subtitle">סגמנטים של משקיעים ישראלים</h3>
+<table>
+<thead><tr><th>סגמנט</th><th>מוטיבציה</th><th>פחד מרכזי</th><th>צורך רגשי</th><th>תקציב</th><th>אזור מועדף</th></tr></thead>
+<tbody>
+<tr><td>מחפש תשואה</td><td>הכנסה פסיבית, פיזור</td><td>"מה אם לא תהיה שכירות?"</td><td>ודאות, שליטה</td><td>€200-350K</td><td>מקנזי, מרכז, ליבדיה</td></tr>
+<tr><td>מחפש עליית ערך</td><td>רווח הון, הזדמנות</td><td>"אולי המחירים כבר גבוהים?"</td><td>צמיחה, סטטוס</td><td>€250-500K</td><td>מרינה, מקנזי</td></tr>
+<tr><td>מחפש תושבות/סגנון חיים</td><td>Plan B, חופש, בטחון</td><td>"האם באמת נשתמש בזה?"</td><td>הגנה, חופש</td><td>€300-600K</td><td>מקנזי, פיניקודס, אורוקליני</td></tr>
+<tr><td>משפחה ששוקלת רילוקיישן</td><td>איכות חיים, בטחון</td><td>"האם הילדים יסתדרו?"</td><td>ביטחון, שקט נפשי</td><td>€350-700K</td><td>ליבדיה, קמארס, אורוקליני</td></tr>
+<tr><td>משווה ליוון</td><td>שנגן, הזדמנות</td><td>"אולי יוון עדיפה?"</td><td>שליטה, ודאות</td><td>€250-400K</td><td>תלוי בתשובה</td></tr>
+<tr><td>שמרן / סולידי</td><td>שמירה על הון, פיזור</td><td>"מה הסיכון האמיתי?"</td><td>ביטחון, הגנה</td><td>€300-500K</td><td>פיניקודס, ליבדיה</td></tr>
+<tr><td>אגרסיבי / ספקולטיבי</td><td>רווח מהיר, מינוף</td><td>"כמה מהר אני יכול לצאת?"</td><td>צמיחה, סטטוס</td><td>€200-400K</td><td>מרינה, על הנייר</td></tr>
+<tr><td>קונה ראשון בחו"ל</td><td>גיוון, למידה</td><td>"איך אני יודע שלא מרמים אותי?"</td><td>ודאות, שליטה</td><td>€150-300K</td><td>תלוי בליווי</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">צרכים רגשיים ושפה מתאימה</h3>
+<table>
+<thead><tr><th>צורך רגשי</th><th>מה הלקוח באמת אומר</th><th>שפה שמייצרת אמון</th><th>שפה שמייצרת חוסר אמון</th></tr></thead>
+<tbody>
+<tr><td><strong>ודאות</strong></td><td>"אני רוצה לדעת בדיוק מה אני מקבל"</td><td>"בוא נעבור על הנתונים ביחד, אני אראה לך בדיוק..."</td><td>"תסמוך עליי, זה בטוח"</td></tr>
+<tr><td><strong>שליטה</strong></td><td>"אני רוצה להבין הכל לפני שאני מחליט"</td><td>"אני נותן לך את כל הכלים להחליט בעצמך"</td><td>"אתה לא צריך לדאוג, אנחנו מטפלים"</td></tr>
+<tr><td><strong>ביטחון</strong></td><td>"מה הסיכון הכי גרוע?"</td><td>"בוא נדבר על הסיכונים - הנה מה שיכול להשתבש..."</td><td>"אין סיכון כאן"</td></tr>
+<tr><td><strong>חופש</strong></td><td>"אני רוצה אופציה, Plan B"</td><td>"זה נותן לך גמישות - אתה יכול להשכיר, לגור, או למכור"</td><td>"אתה חייב להחליט עכשיו"</td></tr>
+<tr><td><strong>צמיחה</strong></td><td>"אני רוצה שהכסף יעבוד"</td><td>"הנה התרחישים - שמרני, ריאלי, ואופטימי"</td><td>"תשואה מובטחת של 8%"</td></tr>
+<tr><td><strong>הגנה</strong></td><td>"אני רוצה לפזר סיכון"</td><td>"נכס באירופה זה שכבת הגנה - הנה למה..."</td><td>"ישראל הולכת להתמוטט"</td></tr>
+<tr><td><strong>שקט נפשי</strong></td><td>"אני רוצה שזה יהיה פשוט"</td><td>"הנה בדיוק מה שקורה בכל שלב - שקוף"</td><td>"אל תדאג, הכל מסודר"</td></tr>
+<tr><td><strong>סטטוס</strong></td><td>"אני רוצה משהו ברמה"</td><td>"הנה מה שמשקיעים רציניים בוחרים ולמה"</td><td>"כולם קונים פה"</td></tr>
+</tbody>
+</table>
+
+</div>
+</section>
+
+<!-- SECTION 10: OBJECTIONS -->
+<section class="section" id="objections">
+<div class="container">
+<h2 class="section-title">10. התנגדויות ותשובות</h2>
+
+<div class="alert alert-info">
+<strong>עיקרון מנחה:</strong> כל תשובה חייבת להיות כנה, מקצועית, ולא מתלהבת מדי. המטרה היא לבנות אמון - לא לסגור בכוח. אם אין תשובה טובה - עדיף להגיד "זו שאלה לגיטימית, בוא נבדוק ביחד".
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"מה אם לא תהיה שכירות?"</div>
+<div class="objection-need">צורך רגשי: ודאות, ביטחון | חשש אמיתי: הפסד כספי, נכס ריק</div>
+<div class="objection-weak"><strong>תשובה חלשה (להימנע):</strong> "אל תדאג, תמיד יש שכירות בלרנקה" - זה לא נכון ולא מקצועי.</div>
+<div class="objection-strong"><strong>תשובה מקצועית:</strong> "שאלה חשובה. בוא נסתכל על זה ריאלית: בלרנקה יש ביקוש ממספר מקורות - אקספטים, עובדי שדה תעופה, סטודנטים, ותיירים. אף אחד מהם לא מובטח. מה שאנחנו יכולים לעשות: לבחור נכס באזור עם ביקוש מגוון, לתמחר נכון, ולבנות תרחיש שמרני שמניח חודש-חודשיים ריקים בשנה. אם גם בתרחיש הכי שמרני המספרים עובדים בשבילך - זה סימן טוב. אם לא - אולי צריך לבחור אזור אחר או מוצר אחר."</div>
+<p><strong>הוכחה שצריך:</strong> נתוני תפוסה מ-AirDNA, דוגמאות של נכסים דומים מושכרים, ביקוש באזור ספציפי.</p>
+<p><strong>שאלת המשך:</strong> "מה יותר חשוב לך - תשואה שוטפת גבוהה, או שהנכס יעלה בערך לאורך זמן?"</p>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"אולי המחירים כבר עלו יותר מדי?"</div>
+<div class="objection-need">צורך רגשי: שליטה, ודאות | חשש אמיתי: קנייה בשיא, הפסד</div>
+<div class="objection-weak"><strong>תשובה חלשה:</strong> "המחירים רק יעלו!" - אף אחד לא יודע את זה.</div>
+<div class="objection-strong"><strong>תשובה מקצועית:</strong> "שאלה לגיטימית. המחירים בלרנקה עלו 11% בשנה האחרונה - זה עובדה. השאלה היא האם זה ימשיך. הנה מה שאני יודע: לרנקה עדיין הכי זולה בחוף קפריסין - €1,330/מ"ר לעומת €2,140 בלימסול. יש פרויקט מרינה שעדיין לא התממש. יש ביקוש זר שממשיך. אבל - אין ערובה. מה שאני יכול להגיד: אם אתה קונה במחיר ריאלי (לא מנופח), באזור עם ביקוש אמיתי, ובאופק של 5-7 שנים - הסיכוי שתפסיד נמוך. אם אתה מחפש רווח מהיר תוך שנה-שנתיים - זה הימור."</div>
+<p><strong>הוכחה:</strong> גרף מחירים היסטורי, השוואה ללימסול/פאפוס, נתוני עסקאות.</p>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"למה לא לקנות בישראל?"</div>
+<div class="objection-need">צורך רגשי: ודאות, שליטה | חשש: מרחק, חוסר היכרות</div>
+<div class="objection-weak"><strong>תשובה חלשה:</strong> "ישראל יקרה מדי" - זה לא מספיק.</div>
+<div class="objection-strong"><strong>תשובה מקצועית:</strong> "תראה, בישראל דירת 3 חדרים בפריפריה עולה 1.5-2 מיליון שקל ומניבה 2.5-3% תשואה. בלרנקה, באותו תקציב, אתה מקבל נכס חדש, באזור חוף, עם תשואה של 4-5%, ועם פוטנציאל עליית ערך. בנוסף - אתה מקבל פיזור גיאוגרפי, תושבות אירופית, ונכס במטבע יורו. זה לא 'במקום ישראל' - זה 'בנוסף לישראל'. השאלה היא האם אתה רוצה את כל הביצים בסל אחד."</p>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"למה לא יוון?"</div>
+<div class="objection-need">צורך רגשי: שליטה, צמיחה | חשש: בחירה לא אופטימלית</div>
+<div class="objection-weak"><strong>תשובה חלשה:</strong> "יוון מסוכנת" או "קפריסין יותר טובה" - לא מדויק.</div>
+<div class="objection-strong"><strong>תשובה מקצועית:</strong> "יוון ולרנקה זה לא אותו מוצר. יוון נותנת שנגן - אם חופש תנועה באירופה חשוב לך, זה יתרון אמיתי. אבל: ביוון אתה לא יכול להשכיר ב-Airbnb את נכס ה-Golden Visa, הביורוקרטיה כבדה יותר, והשפה לא אנגלית. בקפריסין: טיסה של 50 דקות, אנגלית בכל מקום, אין הגבלה על השכרה, ותושבות קבועה. השאלה האמיתית: מה יותר חשוב לך - שנגן, או קרבה ופשטות תפעולית?"</div>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"מה יקרה אם המרינה לא תתקדם?"</div>
+<div class="objection-need">צורך רגשי: ודאות, הגנה | חשש: הימור על עתיד לא ודאי</div>
+<div class="objection-weak"><strong>תשובה חלשה:</strong> "המרינה בטוח תתקדם, הממשלה הבטיחה" - לא מדויק.</div>
+<div class="objection-strong"><strong>תשובה מקצועית:</strong> "שאלה מצוינת, ואני שמח שאתה שואל אותה. הנה האמת: פרויקט המרינה המקורי נכשל - ההסכם עם Kition Ocean Holdings הופסק במאי 2024. עכשיו הממשלה לקחה את זה לידיים, ומפת דרכים חדשה צפויה ביוני 2026. אבל - אין ערובה ללוחות זמנים. לכן, אני ממליץ לא לקנות 'בגלל המרינה'. תקנה נכס שעובד גם בלי המרינה - שכירות טובה, אזור עם ביקוש קיים. אם המרינה תתקדם - זה בונוס. אם לא - אתה עדיין עם נכס שעובד."</div>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"איך אני יודע שזה לא עוד סיפור מכירה?"</div>
+<div class="objection-need">צורך רגשי: ודאות, שליטה | חשש: הונאה, חוסר אמון</div>
+<div class="objection-weak"><strong>תשובה חלשה:</strong> "אנחנו לא כמו האחרים" - ריק.</div>
+<div class="objection-strong"><strong>תשובה מקצועית:</strong> "אני מבין למה אתה שואל. יש הרבה רעש בשוק הזה. הנה מה שאני יכול לעשות: אני אראה לך נתונים ממקורות עצמאיים - לא מהיזם. אני אתן לך רשימת שאלות לשאול כל יזם. אני אחבר אותך לעורך דין עצמאי שלא קשור אליי. ואני אגיד לך בדיוק מה אני לא יודע ומה צריך לבדוק. אם אחרי כל זה אתה מרגיש שזה לא בשבילך - זה לגיטימי לחלוטין. אני מעדיף שתגיד לא מסיבה טובה, מאשר שתגיד כן מסיבה לא טובה."</div>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"מה הסיכון האמיתי כאן?"</div>
+<div class="objection-need">צורך רגשי: ודאות, ביטחון | חשש: סיכון נסתר</div>
+<div class="objection-strong"><strong>תשובה מקצועית:</strong> "אני אהיה ישיר. הסיכונים העיקריים: 1) אין אמנת מס עם ישראל - מיסוי מורכב, צריך יועץ מס. 2) נזילות - אם תרצה למכור מהר, זה לא תל אביב. 3) ניהול מרחוק - דורש חברת ניהול מקצועית. 4) איכות בנייה - לא כל יזם שווה, צריך לבדוק. 5) המרינה - לא ודאית. 6) שוק קטן - לרנקה היא עיר של 85,000 תושבים. אלה הסיכונים. השאלה היא האם הם מנוהלים - ורובם כן, עם תכנון נכון."</div>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"מה לגבי מיסוי?"</div>
+<div class="objection-need">צורך רגשי: שליטה, ודאות | חשש: הפתעות מס</div>
+<div class="objection-strong"><strong>תשובה מקצועית:</strong> "המיסוי הוא הנושא הכי חשוב שרוב המשקיעים לא מבינים מספיק. הנה התמונה: בקפריסין - אין מס נכס שנתי, אין מס ירושה. על שכירות: ניכוי 20% בלאי ואז מדרגות מס. על מכירה: 20% רווחי הון. בישראל - אתה חייב לדווח על הכנסות מחו"ל. אין אמנת מס כפל, אז צריך תכנון. יש שני מסלולים: 15% שטוח או מסלול שולי עם קיזוז. אני ממליץ בחום: לפני שאתה קונה - תשב עם יועץ מס ישראלי שמתמחה בנדל"ן בחו"ל. זה לא מקום לחסוך."</div>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 11: RISKS -->
+<section class="section" id="risks">
+<div class="container">
+<h2 class="section-title">11. סיכונים, מלכודות ונקודות עיוורון</h2>
+
+<h3 class="section-subtitle">מטריצת סיכונים</h3>
+<table>
+<thead><tr><th>סיכון</th><th>סבירות</th><th>השפעה</th><th>ניתן לניהול?</th><th>פעולה מומלצת</th></tr></thead>
+<tbody>
+<tr><td>מיסוי כפול (אין אמנה)</td><td><span class="badge badge-high">גבוהה</span></td><td><span class="badge badge-high">גבוהה</span></td><td>כן</td><td>יועץ מס לפני רכישה</td></tr>
+<tr><td>עיכוב/כשל פרויקט מרינה</td><td><span class="badge badge-medium">בינונית</span></td><td><span class="badge badge-medium">בינונית</span></td><td>חלקית</td><td>לא לקנות "בגלל" המרינה</td></tr>
+<tr><td>בעיות Title Deed</td><td><span class="badge badge-medium">בינונית</span></td><td><span class="badge badge-high">גבוהה</span></td><td>כן</td><td>בדיקה משפטית מקדימה</td></tr>
+<tr><td>איכות בנייה לקויה</td><td><span class="badge badge-medium">בינונית</span></td><td><span class="badge badge-medium">בינונית</span></td><td>כן</td><td>בדיקת מהנדס, ביקור בפרויקטים</td></tr>
+<tr><td>נזילות נמוכה (קושי במכירה)</td><td><span class="badge badge-medium">בינונית</span></td><td><span class="badge badge-medium">בינונית</span></td><td>חלקית</td><td>קנייה באזורים עם ביקוש</td></tr>
+<tr><td>תפוסה נמוכה מהצפוי</td><td><span class="badge badge-medium">בינונית</span></td><td><span class="badge badge-medium">בינונית</span></td><td>כן</td><td>תרחיש שמרני, ניהול מקצועי</td></tr>
+<tr><td>עיכובי בנייה (Off-Plan)</td><td><span class="badge badge-high">גבוהה</span></td><td><span class="badge badge-low">נמוכה-בינונית</span></td><td>חלקית</td><td>סעיף פיצוי בחוזה</td></tr>
+<tr><td>סיכון מטבע (EUR/ILS)</td><td><span class="badge badge-medium">בינונית</span></td><td><span class="badge badge-low">נמוכה</span></td><td>חלקית</td><td>גידור או קבלת הסיכון</td></tr>
+<tr><td>רגישות פוליטית (ישראלים)</td><td><span class="badge badge-low">נמוכה</span></td><td><span class="badge badge-low">נמוכה</span></td><td>לא</td><td>מודעות, התנהגות מכבדת</td></tr>
+<tr><td>רגולציה עתידית (Airbnb)</td><td><span class="badge badge-low">נמוכה</span></td><td><span class="badge badge-medium">בינונית</span></td><td>לא</td><td>לא להסתמך רק על Airbnb</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">מה רוב המשקיעים הזרים לא מבינים על לרנקה</h3>
+<div class="card">
+<ol style="line-height: 2.5;">
+<li><strong>לרנקה היא עיר קטנה</strong> - 85,000 תושבים. זה לא תל אביב, לא לימסול. הביקוש מוגבל.</li>
+<li><strong>תשואה "מובטחת" לא קיימת</strong> - כל מי שמבטיח 8-10% משקר או מחשב לא נכון.</li>
+<li><strong>מע"מ 19% הוא עלות אמיתית</strong> - על נכס של €250K זה €47,500 נוספים שמשנים את כל החישוב.</li>
+<li><strong>אין אמנת מס</strong> - תשלמו מס בקפריסין וגם בישראל. תכנון מס הוא חובה.</li>
+<li><strong>Title Deed זה לא טריוויאלי</strong> - נכסים ישנים יכולים להיות בלי Title Deed שנים.</li>
+<li><strong>המרינה לא "מחר"</strong> - פרויקט של 15 שנה שכבר נכשל פעם אחת.</li>
+<li><strong>ניהול מרחוק עולה כסף</strong> - 15-25% מההכנסה הולך לניהול.</li>
+<li><strong>מכירה חוזרת לוקחת זמן</strong> - שוק קטן, נזילות מוגבלת.</li>
+<li><strong>לא כל "בנייה חדשה" היא איכותית</strong> - יש פערים עצומים בין יזמים.</li>
+<li><strong>מחיר ביקוש ≠ מחיר עסקה</strong> - יש מקום למשא ומתן של 5-15%.</li>
+</ol>
+</div>
+
+<h3 class="section-subtitle">משפטים שאסור להגיד למשקיע - חושפים חוסר מקצועיות</h3>
+<div class="alert alert-danger">
+<ul style="list-style: none; padding: 0; line-height: 2.5;">
+<li>❌ "תשואה מובטחת של 8%" - אין דבר כזה</li>
+<li>❌ "לרנקה זו הדובאי הבאה" - השוואה מגוחכת</li>
+<li>❌ "המחירים רק יעלו" - אף אחד לא יודע</li>
+<li>❌ "אין סיכון" - תמיד יש סיכון</li>
+<li>❌ "המרינה תהיה מוכנה בעוד שנתיים" - לא נכון</li>
+<li>❌ "כולם קונים פה" - לחץ חברתי, לא מקצועי</li>
+<li>❌ "אל תדאג מהמיסוי" - חוסר אחריות</li>
+<li>❌ "הנכס ישלם את עצמו" - לא בתשואה של 4%</li>
+<li>❌ "אתה חייב להחליט היום" - לחץ מכירה זול</li>
+<li>❌ "זה כמו לקנות בתל אביב ב-2005" - השוואה מטעה</li>
+</ul>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 12: OPPORTUNITIES -->
+<section class="section" id="opportunities">
+<div class="container">
+<h2 class="section-title">12. הזדמנויות אמיתיות לפי אזור</h2>
+
+<h3 class="section-subtitle">מערכת דירוג - Tier System</h3>
+
+<div class="card tier-1">
+<div class="card-title">Tier 1 - הזדמנויות חזקות עכשיו</div>
+<table>
+<thead><tr><th>אזור / מוצר</th><th>למה Tier 1</th><th>סיכון עיקרי</th><th>למי מתאים</th></tr></thead>
+<tbody>
+<tr><td>מקנזי - דירת 2 חד' לשכירות קצרה</td><td>ביקוש Airbnb חזק, ג'נטריפיקציה, חוף</td><td>תחרות גוברת, רעש מטוסים</td><td>משקיע פעיל, מוכן לנהל</td></tr>
+<tr><td>ליבדיה - דירת 2-3 חד' חדשה לשכירות ארוכה</td><td>מחיר כניסה סביר, ביקוש ממשפחות, אזור צמיחה</td><td>עליית ערך איטית</td><td>משקיע סולידי, אופק ארוך</td></tr>
+<tr><td>מרכז העיר - יד שנייה לשיפוץ</td><td>מחיר נמוך, ביקוש שכירות מסטודנטים/עובדים, תשואה גבוהה יחסית</td><td>Title Deed, תחזוקה</td><td>משקיע מנוסה, מוכן לשפץ</td></tr>
+<tr><td>פיניקודס - דירה עם נוף ים</td><td>נזילות גבוהה, ביקוש יציב, סגנון חיים + השקעה</td><td>מחיר גבוה, פחות אפסייד</td><td>משקיע-משתמש, Plan B</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card tier-2">
+<div class="card-title">Tier 2 - טוב, אבל דורש בחירה קפדנית</div>
+<table>
+<thead><tr><th>אזור / מוצר</th><th>למה Tier 2</th><th>סיכון עיקרי</th><th>למי מתאים</th></tr></thead>
+<tbody>
+<tr><td>אורוקליני - דירה/וילה נופשית</td><td>מחיר סביר, חוף, שקט</td><td>רחוק ממרכז, תלות ברכב</td><td>משפחות, נופש + השכרה עונתית</td></tr>
+<tr><td>אזור מרינה - על הנייר</td><td>פוטנציאל השבחה גבוה אם המרינה תתקדם</td><td>אי-ודאות גבוהה, לוחות זמנים</td><td>משקיע ספקולטיבי, סבלני</td></tr>
+<tr><td>דרך דקליה / פילה</td><td>חוף, קהילה בריטית, מחירים סבירים</td><td>קרבה לבסיס בריטי, מורכבות</td><td>משקיע שמכיר את האזור</td></tr>
+<tr><td>קמארס - בית/וילה למשפחה</td><td>שכונה איכותית, שקט</td><td>לא מתאים להשכרה קצרה</td><td>רילוקיישן, משפחות</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card tier-3">
+<div class="card-title">Tier 3 - ספקולטיבי / להימנע אלא אם המחיר מצוין</div>
+<table>
+<thead><tr><th>אזור / מוצר</th><th>למה Tier 3</th><th>סיכון עיקרי</th><th>מתי כן</th></tr></thead>
+<tbody>
+<tr><td>ארדיפו - פרבר פנימי</td><td>רחוק מהים, נזילות נמוכה מאוד</td><td>קושי במכירה, ביקוש מוגבל</td><td>רק אם מחיר נמוך מאוד + שכירות ארוכה מובטחת</td></tr>
+<tr><td>פרבוליה/קיטי - כפרים דרומיים</td><td>רחוק משירותים, עונתי</td><td>נזילות אפסית, ביקוש מוגבל</td><td>רק לסגנון חיים אישי</td></tr>
+<tr><td>נכסים "מובטחי תשואה" מיזמים ישראלים</td><td>לרוב מנופחים, תנאים לא שקופים</td><td>הבטחות ריקות, מחיר מנופח</td><td>כמעט אף פעם</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 class="section-subtitle">נישות ופערים בשוק</h3>
+<div class="grid-2">
+<div class="card">
+<div class="card-title">הזדמנויות שמתחת לרדאר</div>
+<ul style="list-style: none; padding: 0; line-height: 2;">
+<li>• דירות יד שנייה במרכז לשיפוץ - מחיר נמוך, תשואה גבוהה</li>
+<li>• דירות קטנות (סטודיו/1 חדר) ליד אוניברסיטאות - ביקוש יציב</li>
+<li>• נכסים עם Title Deed נקי ביד שנייה - פרמיה מוצדקת</li>
+<li>• דירות קומת קרקע עם גינה - ביקוש ממשפחות עם חיות</li>
+<li>• נכסים מסחריים קטנים באזורי תיירות - תשואה גבוהה יותר</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">מסדרונות צמיחה עתידיים</div>
+<ul style="list-style: none; padding: 0; line-height: 2;">
+<li>• ציר מקנזי-מרינה - אם הפרויקט יתקדם</li>
+<li>• ליבדיה צפון - פרויקטים חדשים בתכנון</li>
+<li>• אורוקליני חוף - פיתוח תיירותי</li>
+<li>• מרכז העיר - שיקום אורבני (תלוי בעירייה)</li>
+</ul>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 13: MARINA INVESTIGATION -->
+<section class="section" id="marina">
+<div class="container">
+<h2 class="section-title">13. חקירה מיוחדת: נמל ומרינת לרנקה</h2>
+
+<div class="alert alert-warning">
+<strong>אזהרה:</strong> זהו הנושא עם הפער הגדול ביותר בין נרטיב שיווקי למציאות. חומרי שיווק ישנים של Kition Ocean Holdings אינם רלוונטיים יותר. יש להתייחס לכל מידע על המרינה בזהירות רבה.
+</div>
+
+<div class="card">
+<div class="card-title">רקע היסטורי</div>
+<p><strong>2015-2016:</strong> ממשלת קפריסין חתמה על הסכם זיכיון עם Kition Ocean Holdings (קונסורציום בהובלת Zenon Group) לפיתוח נמל ומרינת לרנקה. הפרויקט תוכנן כפיתוח מעורב (mixed-use) בשווי €1.2 מיליארד, כולל מרינה ל-650 כלי שיט, מלונות, מסחר, מגורים, ושטחי ציבור.</p>
+<p><strong>2017-2023:</strong> עיכובים חוזרים ונשנים. מחלוקות בין הזכיין לממשלה על תנאים, היתרים, ולוחות זמנים. הפרויקט לא התקדם באופן משמעותי מעבר לתכנון.</p>
+<p><strong>מאי 2024:</strong> ממשלת קפריסין הודיעה על סיום ההסכם עם Kition Ocean Holdings. הסיבות: אי-עמידה בתנאים, עיכובים בלתי סבירים, מחלוקות משפטיות.</p>
+</div>
+
+<div class="card">
+<div class="card-title">מצב נוכחי - מאי 2026</div>
+<table>
+<thead><tr><th>פריט</th><th>סטטוס</th><th>רמת ביטחון</th></tr></thead>
+<tbody>
+<tr><td>הסכם Kition Ocean Holdings</td><td><span class="badge badge-cancelled">הופסק</span></td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>העברה לרשות הנמלים הקפריסאית (CPA)</td><td><span class="badge badge-confirmed">מאושר</span></td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>שדרוגים מיידיים למרינה הקיימת</td><td><span class="badge badge-announced">בביצוע</span></td><td><span class="badge badge-medium">בינונית</span></td></tr>
+<tr><td>הוספת ~200 מקומות עגינה</td><td><span class="badge badge-announced">הוכרז</span></td><td><span class="badge badge-medium">בינונית</span></td></tr>
+<tr><td>מפת דרכים מלאה לפיתוח</td><td><span class="badge badge-announced">צפוי יוני 2026</span></td><td><span class="badge badge-medium">בינונית</span></td></tr>
+<tr><td>גישה חדשה: פיתוח נפרד - נמל בנפרד ממרינה</td><td><span class="badge badge-announced">הוכרז</span></td><td><span class="badge badge-medium">בינונית</span></td></tr>
+<tr><td>לוח זמנים לפיתוח מלא</td><td><span class="badge badge-speculative">10-15 שנה?</span></td><td><span class="badge badge-low">נמוכה</span></td></tr>
+<tr><td>משקיע/זכיין חדש</td><td><span class="badge badge-speculative">לא הוכרז</span></td><td><span class="badge badge-low">נמוכה</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">סיווג טענות נפוצות על המרינה</div>
+<table>
+<thead><tr><th>טענה</th><th>סיווג</th><th>הערה</th></tr></thead>
+<tbody>
+<tr><td>"המרינה תשנה את לרנקה לחלוטין"</td><td><span class="badge badge-speculative">ספקולטיבי</span></td><td>אם תתממש - כן. אבל לוחות זמנים לא ודאיים</td></tr>
+<tr><td>"הפרויקט יהיה מוכן בעוד 3-5 שנים"</td><td><span class="badge badge-cancelled">לא נכון</span></td><td>אפילו בתרחיש אופטימי - 10+ שנים לפיתוח מלא</td></tr>
+<tr><td>"הממשלה מחויבת לפרויקט"</td><td><span class="badge badge-confirmed">מאושר</span></td><td>כן, אבל מחויבות ≠ לוח זמנים</td></tr>
+<tr><td>"מחירי הנדל"ן יכפילו את עצמם בגלל המרינה"</td><td><span class="badge badge-speculative">ספקולטיבי</span></td><td>אין בסיס לטענה כזו. עלייה סבירה - כן. הכפלה - לא מוכח</td></tr>
+<tr><td>"שדרוגים מיידיים כבר מתבצעים"</td><td><span class="badge badge-announced">הוכרז/בביצוע</span></td><td>שדרוגים קטנים - כן. פיתוח מלא - לא</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 class="section-subtitle">איך לדבר על המרינה בלי להישמע כמו איש מכירות שמוכר חלום</h3>
+<div class="script-box">
+<div class="script-label">סקריפט מומלץ:</div>
+<p>"בוא נדבר על המרינה בכנות. הפרויקט המקורי - €1.2 מיליארד, מרינה ענקית, מלונות, מסחר - נכשל. ההסכם הופסק במאי 2024. עכשיו הממשלה לקחה את זה לידיים, ויש מפת דרכים חדשה שצפויה ביוני 2026. יש שדרוגים קטנים שכבר מתבצעים. אבל פיתוח מלא? זה פרויקט של 10-15 שנה, ואין ערובה ללוחות זמנים.</p>
+<p>מה זה אומר בשבילך כמשקיע? אל תקנה נכס 'בגלל המרינה'. תקנה נכס שעובד היום - שכירות טובה, אזור עם ביקוש קיים. אם המרינה תתקדם - מצוין, זה בונוס שיעלה את הערך. אם לא - אתה עדיין עם נכס שעובד. ככה אתה מנהל סיכון נכון."</p>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 14: EXPERT SPEAK -->
+<section class="section" id="expert-speak">
+<div class="container">
+<h2 class="section-title">14. איך לדבר כמו מומחה מקומי</h2>
+
+<h3 class="section-subtitle">ביטויי מומחה - לשימוש בפגישות</h3>
+<div class="grid-2">
+<div class="card">
+<div class="card-title">משפטים שמייצרים אמינות</div>
+<ul style="list-style: none; padding: 0; line-height: 2.5;">
+<li>✓ "בוא נסתכל על מחירי עסקאות בפועל, לא מחירי ביקוש"</li>
+<li>✓ "ה-Title Deed הוא הדבר הראשון שאני בודק"</li>
+<li>✓ "מה הדירוג האנרגטי של הבניין? זה משפיע על עלויות שוטפות"</li>
+<li>✓ "אני מפריד בין תשואה ברוטו לנטו - אחרי כל העלויות"</li>
+<li>✓ "המרינה היא פוטנציאל, לא עובדה - בוא נדבר על מה שמוכח"</li>
+<li>✓ "מה ה-Common Expenses? זה עלות שרוב המשקיעים שוכחים"</li>
+<li>✓ "האם יש Specific Performance רשום? זו ההגנה שלך"</li>
+<li>✓ "בוא נראה את תרחיש הבסיס - בלי אופטימיות מופרזת"</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">משפטים שחושפים חוסר ידע (להימנע!)</div>
+<ul style="list-style: none; padding: 0; line-height: 2.5;">
+<li>✗ "הכל כלול במחיר" (מע"מ? Transfer Fees? ריהוט?)</li>
+<li>✗ "Title Deed זה כמו טאבו בישראל" (לא בדיוק)</li>
+<li>✗ "המרינה תהיה מוכנה בעוד שנתיים"</li>
+<li>✗ "אין מיסוי בקפריסין" (יש, רק שונה)</li>
+<li>✗ "תשואה של 8% מובטחת"</li>
+<li>✗ "לרנקה זו הלימסול הבאה" (שוק שונה)</li>
+<li>✗ "אין סיכון כאן" (תמיד יש)</li>
+<li>✗ "כולם קונים פה" (לחץ חברתי, לא מקצועי)</li>
+</ul>
+</div>
+</div>
+
+<h3 class="section-subtitle">שאלות שמומחה שואל יזם/סוכן</h3>
+<div class="card">
+<ol style="line-height: 2.5;">
+<li>"מה סטטוס ה-Title Deed? נפרד? מתי צפוי? מה מעכב?"</li>
+<li>"מה מחיר העסקה האחרונה שנסגרה בבניין הזה - לא מחיר ביקוש?"</li>
+<li>"מה אחוז התפוסה בפרויקטים הקודמים שלכם?"</li>
+<li>"מה ה-Common Expenses בפועל? לא מה שכתוב בברושור - מה שמשלמים?"</li>
+<li>"האם אפשר לדבר עם בעלי דירות בפרויקטים קודמים שלכם?"</li>
+<li>"מה הפיצוי החוזי על עיכוב במסירה?"</li>
+<li>"מה סוג הבידוד? עובי? חומר? דירוג אנרגטי?"</li>
+<li>"מה קורה אם אני רוצה למכור בעוד 3 שנים - מה הנזילות?"</li>
+<li>"מה שיעור ההשכרה בפרויקטים דומים באזור?"</li>
+<li>"האם יש ערבות בנקאית על התשלומים שלי?"</li>
+</ol>
+</div>
+
+<h3 class="section-subtitle">סקריפטים מוכנים</h3>
+
+<div class="script-box">
+<div class="script-label">הסבר 60 שניות: למה לרנקה</div>
+<p>"לרנקה היא המחוז הזול ביותר בחוף קפריסין - €1,330 למ"ר לעומת €2,140 בלימסול. יש שדה תעופה בינלאומי בעיר עצמה, טיסה של 50 דקות מישראל. יש פרויקט מרינה בשווי מיליארד יורו שנמצא בתהליך מחודש. יש ביקוש שכירות ממגוון מקורות - אקספטים, תיירים, סטודנטים, עובדי שדה תעופה. ויש תוכנית תושבות קבע מ-€300K. זה לא 'הדובאי הבאה' - זו עיר אירופית שקטה עם פוטנציאל צמיחה ריאלי, במחיר שעדיין סביר."</p>
+</div>
+
+<div class="script-box">
+<div class="script-label">הסבר 5 דקות: תמונת שוק מלאה למשקיע רציני</div>
+<p>"בוא אתן לך את התמונה המלאה, בלי הייפ.</p>
+<p><strong>שוק:</strong> קפריסין רשמה שיא של 18,000+ עסקאות ב-2025. 43% קונים זרים. לרנקה צומחת 8-11% בשנה. זה אמיתי.</p>
+<p><strong>מחירים:</strong> דירת 2 חדרים חדשה באזור חוף: €200-350K. יד שנייה: €150-250K. לימסול אותו דבר עולה €350-500K.</p>
+<p><strong>תשואה:</strong> שכירות ארוכה: 4-5% ברוטו, 3-4% נטו. Airbnb: 6-8% ברוטו, 4-5% נטו - אם מנהלים נכון.</p>
+<p><strong>סיכונים:</strong> אין אמנת מס עם ישראל - צריך תכנון. נזילות מוגבלת - זה לא תל אביב. המרינה - פוטנציאל אבל לא ודאי. איכות בנייה - משתנה, צריך לבדוק.</p>
+<p><strong>למי זה:</strong> משקיע עם אופק של 5-7 שנים, תקציב €200-400K, שרוצה פיזור + תשואה סבירה + פוטנציאל עליית ערך. לא למי שמחפש רווח מהיר או תשואה גבוהה מובטחת.</p>
+<p><strong>מה צריך:</strong> עורך דין עצמאי, יועץ מס, בדיקת Title Deed, ביקור בנכס, ניהול מקצועי."</p>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 15: CHECKLIST -->
+<section class="section" id="checklist">
+<div class="container">
+<h2 class="section-title">15. צ'קליסט בדיקת עסקה</h2>
+
+<h3 class="section-subtitle">צ'קליסט לנכס על הנייר (Off-Plan)</h3>
+<div class="card">
+<ul class="checklist">
+<li>בדיקת רקע יזם: ניסיון, פרויקטים קודמים, מצב פיננסי</li>
+<li>ביקור בפרויקטים קודמים של היזם - שיחה עם דיירים</li>
+<li>בדיקת היתר בנייה (Building Permit) - האם קיים ותקף</li>
+<li>בדיקת היתר תכנון (Planning Permit) - האם מאושר</li>
+<li>אישור שהקרקע נקייה משעבודים</li>
+<li>רישום Specific Performance במחלקת הקרקעות</li>
+<li>מבנה תשלומים מדורג לפי התקדמות בנייה</li>
+<li>סעיף פיצוי על עיכוב במסירה בחוזה</li>
+<li>ערבות בנקאית על תשלומים (אם אפשר)</li>
+<li>מפרט טכני מפורט בכתב (בידוד, חשמל, אינסטלציה)</li>
+<li>תאריך מסירה מחייב בחוזה</li>
+<li>בדיקת מע"מ: 19% או 5% מופחת? תנאים?</li>
+<li>בדיקת Title Deed: מתי צפוי? מה מעכב?</li>
+<li>עורך דין עצמאי (לא של היזם)</li>
+<li>בדיקת זכויות ביטול והחזר כספי</li>
+</ul>
+</div>
+
+<h3 class="section-subtitle">צ'קליסט לנכס מוכן (Ready New-Build)</h3>
+<div class="card">
+<ul class="checklist">
+<li>ביקור פיזי בנכס - בדיקת איכות בנייה</li>
+<li>בדיקת Title Deed - האם קיים ונפרד</li>
+<li>בדיקת Final Approval (אישור סופי מהעירייה)</li>
+<li>בדיקת Energy Performance Certificate</li>
+<li>בדיקת Common Expenses בפועל (לא רק מה שכתוב)</li>
+<li>שיחה עם דיירים קיימים בבניין</li>
+<li>בדיקת איטום: גג, מרפסות, חדרי רחצה</li>
+<li>בדיקת מערכות: חשמל, מים, מיזוג, חימום</li>
+<li>בדיקת חניה ומחסן - גודל, נגישות</li>
+<li>בדיקת סביבה: רעש, שכנים, תשתיות</li>
+<li>בדיקת מע"מ / Transfer Fees</li>
+<li>עורך דין עצמאי</li>
+<li>הערכת שווי עצמאית (אם אפשר)</li>
+</ul>
+</div>
+
+<h3 class="section-subtitle">צ'קליסט לנכס יד שנייה (Resale)</h3>
+<div class="card">
+<ul class="checklist">
+<li>בדיקת Title Deed - האם קיים, נקי, ללא שעבודים</li>
+<li>בדיקה במחלקת הקרקעות (Land Registry Search)</li>
+<li>בדיקת חובות על הנכס (ועד, מים, חשמל, עירייה)</li>
+<li>בדיקת היתרים: האם כל השינויים/תוספות חוקיים</li>
+<li>בדיקת מצב פיזי: רטיבות, סדקים, מערכות</li>
+<li>בדיקת גיל הבניין ומצב התחזוקה</li>
+<li>בדיקת Common Expenses ומצב קרן התחזוקה</li>
+<li>בדיקת היסטוריית שכירות (אם רלוונטי)</li>
+<li>השוואת מחיר לעסקאות דומות באזור</li>
+<li>בדיקת Transfer Fees (ללא מע"מ ביד שנייה)</li>
+<li>עורך דין עצמאי</li>
+<li>מהנדס/שמאי עצמאי לבדיקת מצב</li>
+</ul>
+</div>
+
+<h3 class="section-subtitle">צ'קליסט מיסוי (לפני רכישה)</h3>
+<div class="card">
+<ul class="checklist">
+<li>פגישה עם יועץ מס ישראלי המתמחה בנדל"ן בחו"ל</li>
+<li>בחירת מסלול מיסוי: 15% שטוח או שולי עם קיזוז</li>
+<li>בדיקת מבנה החזקה: אישי / חברה ישראלית / חברה קפריסאית</li>
+<li>הבנת חבות SDC ו-GeSY בקפריסין</li>
+<li>הבנת חבות מס רווחי הון בשתי המדינות</li>
+<li>תכנון Exit Strategy מבחינת מס</li>
+<li>בדיקת חובת דיווח שנתית בישראל</li>
+<li>הבנת השלכות Non-Dom regime (אם רלוונטי)</li>
+</ul>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 16: SALES LAYER -->
+<section class="section" id="sales-layer">
+<div class="container">
+<h2 class="section-title">16. שכבת מכירות למשקיעים ישראלים</h2>
+
+<h3 class="section-subtitle">טבלת תרגום: תובנה שוק → שימוש מכירתי</h3>
+<table>
+<thead><tr><th>תובנה</th><th>חשש לקוח</th><th>הסבר פשוט</th><th>שאלת מכירה</th><th>הוכחה נדרשת</th><th>אזהרה</th></tr></thead>
+<tbody>
+<tr><td>לרנקה הכי זולה בחוף</td><td>"אולי זול כי לא שווה?"</td><td>"זול כי עדיין לא 'התגלתה' כמו לימסול"</td><td>"מה חשוב לך יותר - מחיר כניסה נמוך או שוק בוגר?"</td><td>השוואת מחירים בין מחוזות</td><td>אל תגיד "הכי זול = הכי טוב"</td></tr>
+<tr><td>43% קונים זרים</td><td>"אולי יותר מדי זרים?"</td><td>"ביקוש בינלאומי = נזילות עתידית"</td><td>"האם ביקוש זר מרגיע אותך או מדאיג?"</td><td>נתוני מחלקת הקרקעות</td><td>אל תגיד "כולם קונים"</td></tr>
+<tr><td>אין מס נכס שנתי</td><td>"מה המלכודת?"</td><td>"אין ארנונה, אין מס רכוש - רק בקנייה ובמכירה"</td><td>"כמה ארנונה אתה משלם בישראל?"</td><td>חוק מיסוי קפריסין</td><td>אל תשכח להזכיר SDC ו-GeSY</td></tr>
+<tr><td>שדה תעופה בעיר</td><td>"כמה קרוב באמת?"</td><td>"50 דקות טיסה, 10 דקות נסיעה מהנכס לטרמינל"</td><td>"כמה פעמים בשנה אתה מתכנן לטוס?"</td><td>לוח טיסות, מפה</td><td>אל תגיד "כמו לנסוע לאילת"</td></tr>
+<tr><td>PR מ-€300K</td><td>"מה זה באמת נותן?"</td><td>"תושבות קבועה אירופית, כולל המשפחה"</td><td>"האם תושבות אירופית חשובה לך, או רק ההשקעה?"</td><td>תנאי התוכנית, לוחות זמנים</td><td>אל תגיד "אזרחות" - זה PR, לא אזרחות</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">כרטיסי אזור למכירה</h3>
+
+<div class="card">
+<div class="card-title">מקנזי - כרטיס מכירה</div>
+<table>
+<tbody>
+<tr><td><strong>משפט הסבר פשוט</strong></td><td>"מקנזי זה האזור הכי דינמי בלרנקה - חוף, בילויים, ג'נטריפיקציה פעילה. כמו פלורנטין לפני 10 שנים."</td></tr>
+<tr><td><strong>למי מתאים</strong></td><td>משקיע Airbnb, מחפש סגנון חיים, צעירים</td></tr>
+<tr><td><strong>למי לא מתאים</strong></td><td>מי שרוצה שקט, משפחות עם ילדים קטנים, שמרנים</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"המחירים כבר גבוהים, אולי פספסתי?"</td></tr>
+<tr><td><strong>צורך רגשי</strong></td><td>צמיחה, סטטוס, חופש</td></tr>
+<tr><td><strong>ניסוח אמון</strong></td><td>"מקנזי עדיין בתהליך - לא סיים. יש עוד מקום לעלייה, אבל צריך לבחור נכס נכון."</td></tr>
+<tr><td><strong>ניסוח חוסר אמון</strong></td><td>"מקנזי זה בטוח, תקנה עיניים עצומות" - לא מקצועי</td></tr>
+<tr><td><strong>התנגדות צפויה</strong></td><td>"רעש מטוסים לא יפריע לשוכרים?"</td></tr>
+<tr><td><strong>תשובה מקצועית</strong></td><td>"שאלה טובה. כן, יש רעש. אבל תיירי Airbnb לא מתלוננים - הם שם לחופשה קצרה. שוכרים ארוכי טווח - צריך לבדוק את הדירה הספציפית."</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">ליבדיה - כרטיס מכירה</div>
+<table>
+<tbody>
+<tr><td><strong>משפט הסבר פשוט</strong></td><td>"ליבדיה זה אזור הצמיחה השקט של לרנקה - פרויקטים חדשים, מחירים סבירים, ביקוש ממשפחות."</td></tr>
+<tr><td><strong>למי מתאים</strong></td><td>משקיע סולידי, שכירות ארוכה, משפחות, PR</td></tr>
+<tr><td><strong>למי לא מתאים</strong></td><td>מחפש Airbnb, מחפש נוף ים, ספקולנט</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"זה לא מספיק מעניין, אין סקסיות"</td></tr>
+<tr><td><strong>צורך רגשי</strong></td><td>ביטחון, ודאות, שקט נפשי</td></tr>
+<tr><td><strong>ניסוח אמון</strong></td><td>"ליבדיה לא מרגשת - וזה בדיוק היתרון. ביקוש יציב, סיכון נמוך, תשואה צפויה."</td></tr>
+<tr><td><strong>התנגדות צפויה</strong></td><td>"אין ים, אין תיירים - איפה העליית ערך?"</td></tr>
+<tr><td><strong>תשובה מקצועית</strong></td><td>"עליית ערך בליבדיה מגיעה מפיתוח - פרויקטים חדשים, תשתיות, ביקוש ממשפחות. זה לא ספקולציה - זה צמיחה אורגנית. יותר איטי, אבל יותר בטוח."</td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 17: SOURCES -->
+<section class="section" id="sources">
+<div class="container">
+<h2 class="section-title">17. מקורות, רמת אמינות ופערי מידע</h2>
+
+<h3 class="section-subtitle">מקורות עיקריים</h3>
+<table>
+<thead><tr><th>מקור</th><th>שפה</th><th>סוג</th><th>שימוש</th><th>הטיה אפשרית</th><th>אמינות</th></tr></thead>
+<tbody>
+<tr><td>Central Bank of Cyprus - Property Price Index</td><td>EN</td><td>רשמי</td><td>מגמות מחירים</td><td>נמוכה</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>Department of Lands and Surveys</td><td>EN/GR</td><td>רשמי</td><td>נתוני עסקאות</td><td>נמוכה</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>Cyprus Mail</td><td>EN</td><td>עיתונות</td><td>חדשות שוק, מרינה</td><td>נמוכה-בינונית</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>AirDNA / Airbtics</td><td>EN</td><td>נתונים</td><td>תפוסה, ADR, הכנסות Airbnb</td><td>נמוכה</td><td><span class="badge badge-medium">בינונית</span></td></tr>
+<tr><td>DevelopersCyprus.com</td><td>EN</td><td>פורטל</td><td>מחירי ביקוש, פרויקטים</td><td>בינונית (שיווקי)</td><td><span class="badge badge-medium">בינונית</span></td></tr>
+<tr><td>Investropa / SunshadowInvest</td><td>EN</td><td>סוכנות</td><td>ניתוח שוק, שכונות</td><td>בינונית (שיווקי)</td><td><span class="badge badge-medium">בינונית</span></td></tr>
+<tr><td>נדלן מאסטר (nadlanmaster.co.il)</td><td>HE</td><td>פורטל ישראלי</td><td>מדריך למשקיע ישראלי</td><td>גבוהה (שיווקי)</td><td><span class="badge badge-low">נמוכה</span></td></tr>
+<tr><td>IMPK Lawyers</td><td>EN</td><td>משפטי</td><td>מיסוי, השוואת יוון/קפריסין</td><td>נמוכה</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>ID Tax (Israel)</td><td>EN/HE</td><td>מיסוי</td><td>השלכות מס ישראליות</td><td>נמוכה</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>Hinode Engineering</td><td>EN</td><td>הנדסי</td><td>ליקויי בנייה</td><td>נמוכה</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>Cyprus Ports Authority</td><td>EN/GR</td><td>רשמי</td><td>סטטוס מרינה</td><td>נמוכה</td><td><span class="badge badge-high">גבוהה</span></td></tr>
+<tr><td>Reddit r/cyprus</td><td>EN</td><td>קהילה</td><td>חוויות, תלונות, מציאות</td><td>בינונית (אנקדוטלי)</td><td><span class="badge badge-medium">בינונית</span></td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">פערי מידע - מה לא הצלחנו לאמת</h3>
+<div class="alert alert-warning">
+<ul style="list-style: none; padding: 0; line-height: 2.2;">
+<li>⚠️ <strong>מחירי עסקאות בפועל</strong> - אין גישה ציבורית למחירי סגירה. כל המחירים מבוססים על מחירי ביקוש.</li>
+<li>⚠️ <strong>תפוסה ספציפית לאזורים</strong> - נתוני Airbnb הם ממוצע לרנקה, לא לפי שכונה.</li>
+<li>⚠️ <strong>לוח זמנים מדויק למרינה</strong> - מפת הדרכים טרם פורסמה (צפויה יוני 2026).</li>
+<li>⚠️ <strong>נתוני שכירות ארוכה מדויקים</strong> - מבוססים על מודעות, לא על חוזים חתומים.</li>
+<li>⚠️ <strong>מצב פיננסי של יזמים ספציפיים</strong> - לא נבדק (דורש בדיקה ידנית).</li>
+<li>⚠️ <strong>חוויות ישראלים ספציפיות</strong> - מבוסס על פורומים ומקורות שיווקיים, לא ראיונות ישירים.</li>
+</ul>
+</div>
+
+<h3 class="section-subtitle">מה מומלץ לבדוק ידנית</h3>
+<div class="card">
+<ol style="line-height: 2.2;">
+<li>ביקור פיזי בלרנקה - לראות אזורים, לדבר עם מקומיים</li>
+<li>פגישה עם 2-3 סוכנים מקומיים (לא ישראלים) להשוואת מחירים</li>
+<li>פגישה עם עורך דין קפריסאי עצמאי</li>
+<li>פגישה עם יועץ מס ישראלי המתמחה בנדל"ן בחו"ל</li>
+<li>בדיקת פרויקטים ספציפיים - ביקור, שיחה עם דיירים</li>
+<li>בדיקת נתוני Airbnb ספציפיים לנכסים דומים באזור המיועד</li>
+<li>עדכון סטטוס מרינה אחרי פרסום מפת הדרכים (יוני 2026)</li>
+</ol>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 18: CONCLUSIONS -->
+<section class="section" id="conclusions">
+<div class="container">
+<h2 class="section-title">18. מסקנות אסטרטגיות</h2>
+
+<div class="card">
+<div class="card-title">המצב האמיתי של שוק לרנקה - בעמוד אחד</div>
+<p>לרנקה היא שוק צומח אמיתי - לא הייפ ריק. עליית מחירים של 8-11% שנתי, ביקוש זר חזק, ותשתיות בפיתוח. אבל: זו עיר קטנה (85K תושבים), הנזילות מוגבלת, המרינה לא ודאית, ואין אמנת מס עם ישראל. התשואה הנטו האמיתית (אחרי כל העלויות והמיסים) היא 2.5-4.5% - לא 8-10% כמו שיזמים מוכרים. הפוטנציאל האמיתי הוא בשילוב: תשואה סבירה + עליית ערך + תושבות + פיזור גיאוגרפי. מי שמחפש רק תשואה גבוהה - ימצא אלטרנטיבות טובות יותר.</p>
+</div>
+
+<div class="grid-2">
+<div class="card">
+<div class="card-title">מה מוגזם (Overhyped)</div>
+<ul style="list-style: none; padding: 0; line-height: 2;">
+<li>• "תשואה מובטחת 8-10%"</li>
+<li>• "המרינה תשנה הכל בעוד 3 שנים"</li>
+<li>• "לרנקה זו הלימסול הבאה"</li>
+<li>• "אין מיסוי בקפריסין"</li>
+<li>• "ניהול מרחוק פשוט"</li>
+<li>• "מחירים רק יעלו"</li>
+</ul>
+</div>
+<div class="card">
+<div class="card-title">מה לא מוערך מספיק (Underappreciated)</div>
+<ul style="list-style: none; padding: 0; line-height: 2;">
+<li>• קרבה לישראל (50 דקות טיסה)</li>
+<li>• אין מס נכס שנתי + אין מס ירושה</li>
+<li>• Non-Dom regime (0% על דיבידנדים 17 שנה)</li>
+<li>• ביקוש שכירות מגוון (לא רק תיירים)</li>
+<li>• מחיר כניסה נמוך יחסית לאירופה</li>
+<li>• מערכת משפטית בריטית (Common Law)</li>
+</ul>
+</div>
+</div>
+
+<h3 class="section-subtitle">לאן השוק כנראה הולך</h3>
+<div class="card">
+<table>
+<thead><tr><th>תרחיש</th><th>סבירות</th><th>השלכות</th></tr></thead>
+<tbody>
+<tr><td>המשך עלייה מתונה (5-8% שנתי)</td><td><span class="badge badge-high">גבוהה</span></td><td>השקעה סבירה, תשואה יציבה</td></tr>
+<tr><td>האצה חדה (10%+ שנתי)</td><td><span class="badge badge-medium">בינונית</span></td><td>רווח הון, אבל סיכון בועה</td></tr>
+<tr><td>התייצבות/ירידה קלה</td><td><span class="badge badge-low">נמוכה-בינונית</span></td><td>מי שקנה במחיר ריאלי - בסדר. מי שקנה מנופח - בבעיה</td></tr>
+<tr><td>משבר/ירידה חדה</td><td><span class="badge badge-low">נמוכה</span></td><td>רק בתרחיש מאקרו קיצוני</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 class="section-subtitle">מה חייבים להבין לפני שמוכרים/משקיעים</h3>
+<div class="card">
+<ol style="line-height: 2.5; font-weight: 500;">
+<li>אין אמנת מס - כל חישוב תשואה חייב לכלול מס כפול</li>
+<li>מע"מ 19% על בנייה חדשה - זה עלות אמיתית שמשנה את המספרים</li>
+<li>Title Deed הוא לא טריוויאלי - לבדוק לפני כל עסקה</li>
+<li>המרינה היא פוטנציאל, לא עובדה - לא לקנות "בגלל" המרינה</li>
+<li>נזילות מוגבלת - לא תמכור מהר אם תצטרך</li>
+<li>ניהול מרחוק עולה 15-25% מההכנסה</li>
+<li>תשואה נטו אמיתית: 2.5-4.5%, לא 8-10%</li>
+<li>לרנקה היא עיר קטנה - ביקוש מוגבל</li>
+<li>איכות בנייה משתנה - לבדוק כל יזם בנפרד</li>
+<li>קפריסין לא בשנגן - PR לא נותן חופש תנועה באירופה</li>
+</ol>
+</div>
+
+<h3 class="section-subtitle">Playbook אסטרטגי - מה לעשות עכשיו</h3>
+<div class="card">
+<table>
+<thead><tr><th>שלב</th><th>פעולה</th><th>לוח זמנים</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>פגישה עם יועץ מס ישראלי - הבנת מבנה מיסוי</td><td>לפני הכל</td></tr>
+<tr><td>2</td><td>בחירת מבנה החזקה (אישי / חברה)</td><td>לפני רכישה</td></tr>
+<tr><td>3</td><td>ביקור פיזי בלרנקה - 3-4 ימים</td><td>שבוע 1-2</td></tr>
+<tr><td>4</td><td>פגישות עם 2-3 סוכנים מקומיים (לא ישראלים)</td><td>במהלך הביקור</td></tr>
+<tr><td>5</td><td>בחירת עורך דין קפריסאי עצמאי</td><td>במהלך הביקור</td></tr>
+<tr><td>6</td><td>זיהוי 3-5 נכסים פוטנציאליים</td><td>שבוע 2-3</td></tr>
+<tr><td>7</td><td>בדיקת נאותות מלאה (Title Deed, היתרים, יזם)</td><td>שבוע 3-4</td></tr>
+<tr><td>8</td><td>משא ומתן על מחיר (5-15% מתחת לביקוש)</td><td>שבוע 4-5</td></tr>
+<tr><td>9</td><td>חתימה עם Specific Performance</td><td>שבוע 5-6</td></tr>
+<tr><td>10</td><td>הקמת מערכת ניהול (חברת ניהול מקומית)</td><td>לפני מסירה</td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+</section>
+
+<!-- CHARTS JAVASCRIPT -->
+<script>
+// Price comparison chart
+const priceCtx = document.getElementById('priceChart');
+if (priceCtx) {
+  new Chart(priceCtx, {
+    type: 'bar',
+    data: {
+      labels: ['מקנזי', 'פיניקודס', 'נמל/מרינה', 'ליבדיה', 'אורוקליני', 'מרכז', 'דרוסיה', 'ארדיפו'],
+      datasets: [
+        {
+          label: 'יד שנייה (€/מ"ר)',
+          data: [2500, 2300, 2050, 1700, 1650, 1600, 1450, 1150],
+          backgroundColor: 'rgba(49, 130, 206, 0.6)',
+          borderColor: 'rgba(49, 130, 206, 1)',
+          borderWidth: 1
+        },
+        {
+          label: 'בנייה חדשה (€/מ"ר)',
+          data: [3650, 3000, 2850, 2300, 2050, 2000, 1800, 1500],
+          backgroundColor: 'rgba(56, 161, 105, 0.6)',
+          borderColor: 'rgba(56, 161, 105, 1)',
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: { display: true, text: 'מחיר למ"ר לפי אזור - לרנקה 2026', font: { size: 16 } },
+        legend: { position: 'top' }
+      },
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: '€ למ"ר' } }
+      }
+    }
+  });
+}
+</script>
+
+<!-- FOOTER -->
+<footer style="background: var(--primary); color: white; padding: 40px 0; margin-top: 50px;">
+<div class="container">
+<p style="opacity: 0.8; font-size: 0.9em;">דוח מודיעין נדל"ן - לרנקה, קפריסין | מהדורת מאי 2026</p>
+<p style="opacity: 0.6; font-size: 0.8em; margin-top: 10px;">מסמך זה נועד למטרות מידע בלבד ואינו מהווה ייעוץ השקעות, ייעוץ מס, או ייעוץ משפטי. כל החלטת השקעה צריכה להתבסס על ייעוץ מקצועי אישי. הנתונים מבוססים על מקורות ציבוריים ועשויים להשתנות. אין ערובה לדיוק מלא של כל הנתונים.</p>
+<p style="opacity: 0.5; font-size: 0.75em; margin-top: 10px;">נבנה על בסיס מחקר רב-שפתי (אנגלית, עברית, יוונית, רוסית) ממגוון מקורות. רמות ביטחון מצוינות לצד כל טענה מהותית.</p>
+</div>
+</footer>
+
+</body>
+</html>
