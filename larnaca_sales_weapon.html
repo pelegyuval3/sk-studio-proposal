@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>לרנקה - מודיעין מכירות למשקיע הישראלי | 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root {
+  --bg: #0A0A0A;
+  --card: #111111;
+  --card2: #161616;
+  --gold: #C9A84C;
+  --gold-light: #E8C97A;
+  --white: #F0F0F0;
+  --muted: #888888;
+  --red: #D94F4F;
+  --green: #4CAF50;
+  --blue: #3A7BD5;
+  --border: #222222;
+  --accent-bg: #1A1500;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  direction: rtl;
+  text-align: right;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #0A0A0A 0%, #1A1200 50%, #0A0A0A 100%);
+  border-bottom: 2px solid var(--gold);
+  padding: 48px 40px 36px;
+  text-align: center;
+}
+.header .badge-top {
+  display: inline-block;
+  background: var(--gold);
+  color: #000;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  padding: 4px 14px;
+  border-radius: 2px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+.header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.header h1 span { color: var(--gold); }
+.header .subtitle { font-size: 16px; color: var(--muted); margin-bottom: 24px; }
+.header .meta { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+.header .meta-item { text-align: center; }
+.header .meta-item .val { font-size: 22px; font-weight: 800; color: var(--gold); display: block; }
+.header .meta-item .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* NAV */
+.nav-sticky {
+  position: sticky;
+  top: 0;
+  background: #0A0A0A;
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  padding: 10px 0;
+}
+.nav-sticky .container { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; }
+.nav-sticky a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.75em;
+  padding: 4px 10px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-sticky a:hover { border-color: var(--gold); color: var(--gold); }
+
+/* SECTIONS */
+.section { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+.section-num {
+  display: inline-block;
+  background: var(--gold);
+  color: #000;
+  font-size: 12px;
+  font-weight: 800;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 4px;
+  margin-left: 12px;
+}
+.section-title {
+  font-size: 1.6em;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-subtitle {
+  font-size: 1.2em;
+  color: var(--gold);
+  margin: 28px 0 14px;
+  font-weight: 600;
+}
+
+/* CARDS */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 16px 0;
+}
+.card-title {
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+/* TABLES */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+th, td { padding: 10px 14px; text-align: right; border-bottom: 1px solid var(--border); }
+th { background: var(--card2); color: var(--gold); font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px; }
+tr:hover { background: var(--card2); }
+
+/* BADGES */
+.badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 0.72em; font-weight: 700; }
+.badge-green { background: #1a3a1a; color: var(--green); }
+.badge-yellow { background: #3a3000; color: #E8C97A; }
+.badge-red { background: #3a1a1a; color: var(--red); }
+.badge-blue { background: #1a2a3a; color: var(--blue); }
+.badge-gold { background: var(--accent-bg); color: var(--gold); }
+
+/* ALERTS */
+.alert { padding: 14px 18px; border-radius: 6px; margin: 14px 0; border-right: 3px solid; font-size: 0.92em; }
+.alert-gold { background: var(--accent-bg); border-color: var(--gold); }
+.alert-green { background: #0a1a0a; border-color: var(--green); }
+.alert-red { background: #1a0a0a; border-color: var(--red); }
+.alert-blue { background: #0a0a1a; border-color: var(--blue); }
+
+/* SALES BOX - the key differentiator */
+.sales-box {
+  background: linear-gradient(135deg, #1A1500 0%, #111111 100%);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 16px 0;
+}
+.sales-box .sales-label {
+  font-size: 0.75em;
+  font-weight: 800;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+/* SCRIPT BOX */
+.script-box {
+  background: var(--card);
+  border-right: 3px solid var(--gold);
+  padding: 18px;
+  margin: 14px 0;
+  border-radius: 0 6px 6px 0;
+}
+.script-label {
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* CLOSING BOX */
+.close-box {
+  background: #0a1a0a;
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  padding: 18px;
+  margin: 14px 0;
+}
+.close-label {
+  font-size: 0.75em;
+  font-weight: 800;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+/* OBJECTION */
+.objection-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 14px 0;
+}
+.objection-q { font-weight: 700; color: var(--red); font-size: 1em; margin-bottom: 8px; }
+.objection-kill { color: var(--green); font-weight: 600; margin-top: 8px; }
+
+/* SCORECARD */
+.scorecard { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 14px 0; }
+.score-item { text-align: center; padding: 10px 6px; background: var(--card2); border-radius: 6px; border: 1px solid var(--border); }
+.score-item .val { font-size: 1.4em; font-weight: 800; color: var(--gold); }
+.score-item .lbl { font-size: 0.7em; color: var(--muted); margin-top: 3px; }
+
+/* TIER */
+.tier-1 { border-right: 3px solid var(--green); }
+.tier-2 { border-right: 3px solid var(--gold); }
+.tier-3 { border-right: 3px solid var(--red); }
+
+/* BOTTOM LINE */
+.bottom-line {
+  background: var(--accent-bg);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  font-size: 1.05em;
+  line-height: 1.8;
+}
+.bottom-line strong { color: var(--gold); }
+
+/* CHART */
+.chart-container { position: relative; margin: 20px 0; padding: 20px; background: var(--card); border-radius: 8px; border: 1px solid var(--border); }
+canvas { max-width: 100%; }
+
+/* CHECKLIST */
+.checklist { list-style: none; padding: 0; }
+.checklist li { padding: 7px 0; border-bottom: 1px solid var(--border); padding-right: 22px; position: relative; font-size: 0.92em; }
+.checklist li:before { content: "☐"; position: absolute; right: 0; color: var(--gold); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .scorecard { grid-template-columns: repeat(3, 1fr); }
+  .header h1 { font-size: 1.5em; }
+  .header .meta { gap: 16px; }
+  table { font-size: 0.8em; }
+  th, td { padding: 8px 10px; }
+  .nav-sticky a { font-size: 0.68em; padding: 3px 6px; }
+}
+@media print { .nav-sticky { display: none; } .section { page-break-inside: avoid; } body { background: #fff; color: #000; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="badge-top">SALES INTELLIGENCE REPORT</div>
+  <h1>לרנקה - <span>כלי מכירות</span> למשקיע הישראלי</h1>
+  <div class="subtitle">כל מה שאתה צריך לדעת כדי למכור נדל"ן בלרנקה בביטחון מלא</div>
+  <div class="meta">
+    <div class="meta-item"><span class="val">€1,330</span><span class="lbl">מחיר למ"ר ממוצע</span></div>
+    <div class="meta-item"><span class="val">4-5%</span><span class="lbl">תשואה ברוטו</span></div>
+    <div class="meta-item"><span class="val">50 דק'</span><span class="lbl">טיסה מישראל</span></div>
+    <div class="meta-item"><span class="val">+11%</span><span class="lbl">עליית מחירים שנתית</span></div>
+    <div class="meta-item"><span class="val">€300K</span><span class="lbl">PR אירופי</span></div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<nav class="nav-sticky">
+<div class="container">
+  <a href="#executive">תקציר</a>
+  <a href="#why-larnaca">למה לרנקה</a>
+  <a href="#neighborhoods">אזורים</a>
+  <a href="#pricing">מחירים</a>
+  <a href="#rental">שכירות</a>
+  <a href="#comparison">השוואות</a>
+  <a href="#psychology">פסיכולוגיה</a>
+  <a href="#objections">התנגדויות</a>
+  <a href="#scripts">סקריפטים</a>
+  <a href="#marina">מרינה</a>
+  <a href="#construction">בנייה</a>
+  <a href="#tax">מיסוי</a>
+  <a href="#opportunities">הזדמנויות</a>
+  <a href="#checklist">צ'קליסט</a>
+  <a href="#glossary">מילון</a>
+  <a href="#sources">מקורות</a>
+</div>
+</nav>
+
+<!-- SECTION 1: EXECUTIVE SUMMARY - SALES FRAMING -->
+<section class="section" id="executive">
+<div class="container">
+<div class="section-title"><span class="section-num">1</span> תקציר מנהלים - למה לרנקה נמכרת</div>
+
+<div class="bottom-line">
+<strong>שורה תחתונה:</strong> לרנקה היא המוצר הכי קל למכירה למשקיע ישראלי ב-2026. מחיר כניסה נמוך, טיסה של 50 דקות, תשואה סבירה, עליית ערך מוכחת, ותושבות אירופית. זה לא "הדובאי הבאה" - זה מוצר אמיתי עם מספרים אמיתיים שעובד בשיחת מכירה כי הוא עונה על 3 צרכים בו-זמנית: פיזור, תשואה, ו-Plan B.
+</div>
+
+<h3 class="section-subtitle">20 נקודות מכירה שאתה חייב לדעת</h3>
+<div class="grid-2">
+<div class="card">
+<div class="card-title">עובדות שסוגרות עסקאות</div>
+<ol style="line-height: 2.2; padding-right: 20px;">
+<li>50 דקות טיסה מישראל - "כמו לנסוע לאילת, רק עם יורו"</li>
+<li>€180-300K נכס חדש 2 חדרים - שליש ממחיר ישראל</li>
+<li>11% עליית מחירים שנתית - מוכח, לא הבטחה</li>
+<li>4-5% תשואת שכירות ברוטו - יותר מכפול מישראל</li>
+<li>0% מס נכס שנתי - אין ארנונה, אין מס רכוש</li>
+<li>0% מס ירושה - הנכס עובר לילדים בלי מס</li>
+<li>PR אירופי מ-€300K - תושבות קבועה, כולל המשפחה</li>
+<li>43% מהקונים זרים - ביקוש בינלאומי = נזילות עתידית</li>
+<li>שדה תעופה בינלאומי בעיר - 10 דקות מהנכס</li>
+<li>אנגלית בכל מקום - אין בעיית שפה</li>
+</ol>
+</div>
+<div class="card">
+<div class="card-title">יתרונות מבניים</div>
+<ol start="11" style="line-height: 2.2; padding-right: 20px;">
+<li>מערכת משפטית בריטית (Common Law) - מוכרת ואמינה</li>
+<li>Non-Dom: 0% מס על דיבידנדים ל-17 שנה</li>
+<li>אין הגבלה על Airbnb - בניגוד ליוון</li>
+<li>פרויקט מרינה €1.2B - פוטנציאל השבחה עתידי</li>
+<li>לרנקה הכי זולה בחוף - €1,330/מ"ר לעומת €2,140 בלימסול</li>
+<li>ביקוש שכירות מגוון - לא תלוי רק בתיירות</li>
+<li>18,000+ עסקאות ב-2025 - שוק פעיל ובריא</li>
+<li>מע"מ 5% על דירה ראשונה (תנאים) - חיסכון של €25K+</li>
+<li>קהילה ישראלית מבוססת - תשתית חברתית קיימת</li>
+<li>שוק "לפני הפיצוץ" - עדיין לא בשל כמו לימסול</li>
+</ol>
+</div>
+</div>
+
+<h3 class="section-subtitle">למי למכור - ולמי לא</h3>
+<div class="grid-2">
+<div class="card tier-1">
+<div class="card-title">לקוחות שסוגרים מהר</div>
+<ul style="list-style: none; padding: 0; line-height: 2.2;">
+<li>✓ מי שכבר יש לו נכס בישראל ומחפש פיזור</li>
+<li>✓ מי שמחפש Plan B - תושבות אירופית</li>
+<li>✓ מי שמשווה ליוון ורוצה פשטות + קרבה</li>
+<li>✓ משפחות ששוקלות רילוקיישן חלקי</li>
+<li>✓ מי שמתוסכל ממחירי ישראל ורוצה תשואה</li>
+<li>✓ מי שכבר ביקר בקפריסין ואהב</li>
+</ul>
+</div>
+<div class="card tier-3">
+<div class="card-title">לקוחות שיבזבזו לך זמן</div>
+<ul style="list-style: none; padding: 0; line-height: 2.2;">
+<li>✗ מי שמחפש "תשואה מובטחת 10%" - לא קיים</li>
+<li>✗ מי שרוצה למכור תוך שנה ברווח - שוק קטן</li>
+<li>✗ מי שלא מוכן לתקציב של €200K+ - אין מוצר</li>
+<li>✗ מי שמחפש שנגן - צריך יוון, לא קפריסין</li>
+<li>✗ מי שלא מוכן לשלם ליועץ מס - יתחרט</li>
+<li>✗ "חוקר מקצועי" שלעולם לא יסגור - סנן מוקדם</li>
+</ul>
+</div>
+</div>
+
+<div class="sales-box">
+<div class="sales-label">איך למכור את לרנקה במשפט אחד</div>
+<p style="font-size: 1.1em; line-height: 1.8;">"נכס חדש באירופה, 50 דקות טיסה, תשואה של 4-5%, עליית ערך של 11% בשנה, ותושבות אירופית - במחיר של חניה בתל אביב."</p>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 2: WHY LARNACA - THE SALES NARRATIVE -->
+<section class="section" id="why-larnaca">
+<div class="container">
+<div class="section-title"><span class="section-num">2</span> למה לרנקה - הנרטיב שמוכר</div>
+
+<div class="sales-box">
+<div class="sales-label">הנרטיב המרכזי - שנן את זה</div>
+<p>"לרנקה היא החוף הכי זול בקפריסין שעדיין לא 'התגלה'. לימסול כבר יקרה. פאפוס שקטה מדי. לרנקה באמצע - שדה תעופה, חוף, פרויקט מרינה של מיליארד יורו, ומחירים שעדיין נגישים. מי שנכנס עכשיו - נכנס לפני שהשוק מתבגר."</p>
+</div>
+
+<h3 class="section-subtitle">נתוני שוק שמחזקים את הנרטיב</h3>
+<table>
+<thead><tr><th>נתון</th><th>מספר</th><th>מקור</th><th>איך להשתמש במכירה</th></tr></thead>
+<tbody>
+<tr><td>עליית מחירים שנתית</td><td>+8-11%</td><td>CBC Property Index</td><td>"המחירים עולים 11% בשנה - כל יום שאתה מחכה עולה לך כסף"</td></tr>
+<tr><td>עסקאות נדל"ן 2025</td><td>18,000+</td><td>DLS Cyprus</td><td>"שוק פעיל - 18 אלף עסקאות בשנה. זה לא שוק מת"</td></tr>
+<tr><td>אחוז קונים זרים</td><td>43%</td><td>DLS Cyprus</td><td>"כמעט חצי מהקונים זרים - ביקוש בינלאומי מגן על הערך"</td></tr>
+<tr><td>מחיר למ"ר לרנקה</td><td>€1,330</td><td>CBC 2025</td><td>"בלימסול אותו דבר עולה €2,140 - כאן אתה מקבל 60% יותר"</td></tr>
+<tr><td>מחיר למ"ר לימסול</td><td>€2,140</td><td>CBC 2025</td><td>"לימסול כבר 'בשלה' - שם אתה קונה יקר. כאן אתה קונה לפני"</td></tr>
+<tr><td>תשואת שכירות</td><td>4-5% ברוטו</td><td>מחקר שוק</td><td>"יותר מכפול ממה שתקבל בישראל על אותו תקציב"</td></tr>
+<tr><td>זמן טיסה</td><td>50 דקות</td><td>לוח טיסות</td><td>"אתה שם בפחות זמן ממה שלוקח להגיע מת"א לחיפה"</td></tr>
+<tr><td>PR threshold</td><td>€300K</td><td>MoI Cyprus</td><td>"מ-300 אלף יורו אתה מקבל תושבות אירופית לכל המשפחה"</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">5 סיבות שלרנקה מנצחת בשיחת מכירה</h3>
+<div class="grid-2">
+<div class="card">
+<div class="card-title">1. מחיר כניסה נמוך = פחות פחד</div>
+<p>€200-300K זה לא "הימור מפחיד". זה סכום שמשקיע ישראלי ממוצע יכול להרשות לעצמו בלי לסכן את הבית. ככל שהמחיר נמוך יותר - ההתנגדות נמוכה יותר.</p>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"אם היית יכול לקנות נכס באירופה, על חוף הים, ב-200 אלף יורו - מה היה מונע ממך?"
+</div>
+</div>
+<div class="card">
+<div class="card-title">2. קרבה = שליטה</div>
+<p>50 דקות טיסה מנטרלת את הפחד מ"נכס רחוק שאני לא שולט בו". הלקוח מרגיש שהוא יכול לטוס, לבדוק, לחזור. זה נותן תחושת שליטה.</p>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"מה אם הייתי אומר לך שאתה יכול לטוס לבדוק את הנכס שלך בפחות זמן ממה שלוקח לך להגיע לאילת?"
+</div>
+</div>
+</div>
+<div class="grid-2">
+<div class="card">
+<div class="card-title">3. תושבות = Plan B</div>
+<p>אחרי 7 אוקטובר, כל ישראלי חושב על Plan B. תושבות אירופית זה לא "בריחה" - זה "ביטוח". המילה "ביטוח" מנטרלת אשמה.</p>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"אם היית יכול לקבל ביטוח - תושבות אירופית לכל המשפחה - ובמקביל גם להרוויח מהנכס... למה לא?"
+</div>
+</div>
+<div class="card">
+<div class="card-title">4. מספרים פשוטים = ודאות</div>
+<p>4-5% תשואה, 11% עליית ערך, 0% מס נכס. מספרים עגולים, פשוטים, שנכנסים לראש. לקוח שמבין את המספרים מרגיש בטוח.</p>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"בוא נעשה חשבון פשוט ביחד - 4% תשואה + 8% עליית ערך = 12% בשנה על הכסף שלך. איפה עוד אתה מקבל את זה?"
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-title">5. "עדיין לא יקר" = הזדמנות</div>
+<p>הנרטיב של "עדיין לא מאוחר" הוא הנרטיב הכי חזק. לימסול כבר יקרה. אתונה כבר יקרה. לרנקה עדיין לא. זה יוצר דחיפות בלי לחץ.</p>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"אתה יודע מה אנשים שקנו בלימסול לפני 5 שנים אומרים היום? 'למה לא קניתי עוד אחת'. לרנקה היום - זו לימסול של 2020."
+</div>
+</div>
+
+<h3 class="section-subtitle">מה השתנה בלרנקה - ציר זמן למשקיע</h3>
+<table>
+<thead><tr><th>שנה</th><th>מה קרה</th><th>איך להשתמש במכירה</th></tr></thead>
+<tbody>
+<tr><td>2015-2016</td><td>חתימת הסכם מרינה - €1.2B</td><td>"הממשלה השקיעה מיליארד יורו בלרנקה - זה לא סתם עיר"</td></tr>
+<tr><td>2017-2020</td><td>תחילת עליית מחירים, כניסת זרים</td><td>"מי שנכנס ב-2017 הכפיל את עצמו"</td></tr>
+<tr><td>2021-2023</td><td>האצה - רוסים, אוקראינים, ישראלים</td><td>"ביקוש בינלאומי חזק - זה לא רק ישראלים"</td></tr>
+<tr><td>2024</td><td>הסכם מרינה ישן הופסק, ממשלה לוקחת שליטה</td><td>"הממשלה לקחה את זה לידיים - זה סימן שזה רציני"</td></tr>
+<tr><td>2025</td><td>שיא עסקאות, 11% עליית מחירים</td><td>"שנת שיא - השוק מדבר"</td></tr>
+<tr><td>2026</td><td>מפת דרכים חדשה למרינה, המשך צמיחה</td><td>"אנחנו בדיוק בנקודה שלפני ההאצה הגדולה"</td></tr>
+</tbody>
+</table>
+
+</div>
+</section>
+
+<!-- SECTION 3: NEIGHBORHOODS - SALES CARDS -->
+<section class="section" id="neighborhoods">
+<div class="container">
+<div class="section-title"><span class="section-num">3</span> אזורים - כרטיסי מכירה לפי שכונה</div>
+
+<div class="alert alert-gold">
+<strong>איך להשתמש בסקשן הזה:</strong> כל אזור הוא "מוצר" שונה. התאם את האזור ללקוח - לא להפך. שאל קודם מה הלקוח רוצה, ואז הצע את האזור שמתאים.
+</div>
+
+<!-- MACKENZIE -->
+<div class="card tier-1">
+<div class="card-title">מקנזי (Mackenzie) - הכוכב של לרנקה</div>
+<div class="scorecard">
+<div class="score-item"><div class="val">9</div><div class="lbl">ביקוש</div></div>
+<div class="score-item"><div class="val">8</div><div class="lbl">תשואה</div></div>
+<div class="score-item"><div class="val">9</div><div class="lbl">עליית ערך</div></div>
+<div class="score-item"><div class="val">7</div><div class="lbl">נזילות</div></div>
+<div class="score-item"><div class="val">9</div><div class="lbl">קלות מכירה</div></div>
+</div>
+<table>
+<tbody>
+<tr><td><strong>מחיר כניסה</strong></td><td>€220-400K (2 חד')</td></tr>
+<tr><td><strong>תשואה Airbnb</strong></td><td>6-8% ברוטו</td></tr>
+<tr><td><strong>למי למכור</strong></td><td>משקיע Airbnb, מחפש סגנון חיים, צעירים, זוגות</td></tr>
+<tr><td><strong>משפט מכירה</strong></td><td>"מקנזי זה פלורנטין של לרנקה - חוף, בילויים, ג'נטריפיקציה. רק שכאן המחירים עדיין הגיוניים."</td></tr>
+<tr><td><strong>צורך רגשי</strong></td><td>צמיחה + סטטוס + חופש</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"אולי כבר יקר מדי?"</td></tr>
+<tr><td><strong>תשובה</strong></td><td>"מקנזי עדיין €2,500/מ"ר. בלימסול אותו דבר €3,500. יש עוד מרווח."</td></tr>
+</tbody>
+</table>
+<div class="sales-box">
+<div class="sales-label">סקריפט מכירה - מקנזי</div>
+<p>"תראה, מקנזי זה האזור שכל הזרים רוצים. חוף ברגל, מסעדות, בילויים - וגם תשואת Airbnb של 6-8%. דירת 2 חדרים חדשה - €250K. באילת אתה לא מקבל חניה בכסף הזה. והנה הדבר: מקנזי עדיין בתהליך. עוד 3-5 שנים - המחירים יהיו כמו לימסול. השאלה היא אם אתה רוצה להיכנס עכשיו או לשלם יותר אחר כך."</p>
+</div>
+</div>
+
+<!-- FINIKOUDES -->
+<div class="card tier-1">
+<div class="card-title">פיניקודס (Finikoudes) - הטיילת, הלב, הקלאסיקה</div>
+<div class="scorecard">
+<div class="score-item"><div class="val">8</div><div class="lbl">ביקוש</div></div>
+<div class="score-item"><div class="val">7</div><div class="lbl">תשואה</div></div>
+<div class="score-item"><div class="val">7</div><div class="lbl">עליית ערך</div></div>
+<div class="score-item"><div class="val">8</div><div class="lbl">נזילות</div></div>
+<div class="score-item"><div class="val">9</div><div class="lbl">קלות מכירה</div></div>
+</div>
+<table>
+<tbody>
+<tr><td><strong>מחיר כניסה</strong></td><td>€250-450K (2 חד')</td></tr>
+<tr><td><strong>תשואה</strong></td><td>4-6% ברוטו</td></tr>
+<tr><td><strong>למי למכור</strong></td><td>מחפש סגנון חיים + השקעה, Plan B, זוגות מבוגרים</td></tr>
+<tr><td><strong>משפט מכירה</strong></td><td>"פיניקודס זה כמו טיילת תל אביב - רק שכאן אתה קונה דירה עם נוף לים ב-€300K."</td></tr>
+<tr><td><strong>צורך רגשי</strong></td><td>ביטחון + שקט נפשי + סטטוס</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"זה יותר יקר - שווה?"</td></tr>
+<tr><td><strong>תשובה</strong></td><td>"פיניקודס זה הנכס הכי קל למכירה חוזרת. אם תרצה לצאת - תמכור מהר. זו הביטוח שלך."</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- LIVADIA -->
+<div class="card tier-1">
+<div class="card-title">ליבדיה (Livadia) - הסוס השקט</div>
+<div class="scorecard">
+<div class="score-item"><div class="val">7</div><div class="lbl">ביקוש</div></div>
+<div class="score-item"><div class="val">8</div><div class="lbl">תשואה</div></div>
+<div class="score-item"><div class="val">7</div><div class="lbl">עליית ערך</div></div>
+<div class="score-item"><div class="val">6</div><div class="lbl">נזילות</div></div>
+<div class="score-item"><div class="val">8</div><div class="lbl">קלות מכירה</div></div>
+</div>
+<table>
+<tbody>
+<tr><td><strong>מחיר כניסה</strong></td><td>€180-280K (2 חד')</td></tr>
+<tr><td><strong>תשואה ארוכה</strong></td><td>4-5% ברוטו</td></tr>
+<tr><td><strong>למי למכור</strong></td><td>משקיע סולידי, שכירות ארוכה, משפחות, PR</td></tr>
+<tr><td><strong>משפט מכירה</strong></td><td>"ליבדיה זה האזור שמשקיעים חכמים בוחרים - מחיר נמוך, ביקוש יציב, סיכון מינימלי."</td></tr>
+<tr><td><strong>צורך רגשי</strong></td><td>ודאות + ביטחון + שקט נפשי</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"אין ים, אין סקסיות - למה שם?"</td></tr>
+<tr><td><strong>תשובה</strong></td><td>"בדיוק בגלל זה. ליבדיה לא 'סקסית' - היא רווחית. ביקוש ממשפחות מקומיות, אקספטים, עובדים. תפוסה 95%+ בשכירות ארוכה. אתה ישן בשקט."</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- OROKLINI -->
+<div class="card tier-2">
+<div class="card-title">אורוקליני (Oroklini) - חוף + משפחה + מחיר</div>
+<div class="scorecard">
+<div class="score-item"><div class="val">6</div><div class="lbl">ביקוש</div></div>
+<div class="score-item"><div class="val">7</div><div class="lbl">תשואה</div></div>
+<div class="score-item"><div class="val">6</div><div class="lbl">עליית ערך</div></div>
+<div class="score-item"><div class="val">5</div><div class="lbl">נזילות</div></div>
+<div class="score-item"><div class="val">7</div><div class="lbl">קלות מכירה</div></div>
+</div>
+<table>
+<tbody>
+<tr><td><strong>מחיר כניסה</strong></td><td>€160-260K (2 חד')</td></tr>
+<tr><td><strong>למי למכור</strong></td><td>משפחות, נופש + השכרה עונתית, תקציב נמוך יותר</td></tr>
+<tr><td><strong>משפט מכירה</strong></td><td>"אורוקליני זה חוף + שקט + מחיר נמוך. בשביל משפחה שרוצה גם לגור וגם להשכיר - זה מושלם."</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"רחוק ממרכז, לא?"</td></tr>
+<tr><td><strong>תשובה</strong></td><td>"10 דקות נסיעה. ובקפריסין כולם נוסעים ברכב. אתה מקבל חוף, שקט, ומחיר נמוך ב-30% ממקנזי."</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- MARINA AREA -->
+<div class="card tier-2">
+<div class="card-title">אזור הנמל / מרינה - ההימור הגדול</div>
+<div class="scorecard">
+<div class="score-item"><div class="val">6</div><div class="lbl">ביקוש</div></div>
+<div class="score-item"><div class="val">5</div><div class="lbl">תשואה</div></div>
+<div class="score-item"><div class="val">9</div><div class="lbl">עליית ערך</div></div>
+<div class="score-item"><div class="val">5</div><div class="lbl">נזילות</div></div>
+<div class="score-item"><div class="val">7</div><div class="lbl">קלות מכירה</div></div>
+</div>
+<table>
+<tbody>
+<tr><td><strong>מחיר כניסה</strong></td><td>€200-350K (2 חד')</td></tr>
+<tr><td><strong>למי למכור</strong></td><td>משקיע ספקולטיבי, מחפש עליית ערך, סבלני</td></tr>
+<tr><td><strong>משפט מכירה</strong></td><td>"אזור המרינה זה ההימור הכי גדול בלרנקה. אם הפרויקט יתקדם - מי שקנה עכשיו ירוויח הכי הרבה."</td></tr>
+<tr><td><strong>צורך רגשי</strong></td><td>צמיחה + סטטוס</td></tr>
+<tr><td><strong>אזהרה פנימית</strong></td><td>למכור רק למי שמבין שזה ספקולטיבי. לא להבטיח לוחות זמנים.</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- DROSIA / CITY CENTER -->
+<div class="card tier-2">
+<div class="card-title">מרכז העיר / דרוסיה - תשואה גבוהה, מחיר נמוך</div>
+<div class="scorecard">
+<div class="score-item"><div class="val">7</div><div class="lbl">ביקוש</div></div>
+<div class="score-item"><div class="val">9</div><div class="lbl">תשואה</div></div>
+<div class="score-item"><div class="val">6</div><div class="lbl">עליית ערך</div></div>
+<div class="score-item"><div class="val">6</div><div class="lbl">נזילות</div></div>
+<div class="score-item"><div class="val">6</div><div class="lbl">קלות מכירה</div></div>
+</div>
+<table>
+<tbody>
+<tr><td><strong>מחיר כניסה</strong></td><td>€120-200K (2 חד')</td></tr>
+<tr><td><strong>למי למכור</strong></td><td>משקיע תשואה, מנוסה, מוכן לשפץ</td></tr>
+<tr><td><strong>משפט מכירה</strong></td><td>"מרכז העיר - מחיר הכי נמוך, תשואה הכי גבוהה. סטודנטים, עובדים, אקספטים - תמיד יש ביקוש."</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"זה לא אזור 'נחמד'"</td></tr>
+<tr><td><strong>תשובה</strong></td><td>"אתה לא גר שם - אתה משכיר שם. השוכרים לא מחפשים 'נחמד' - הם מחפשים מחיר ומיקום. וזה בדיוק מה שיש."</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- QUICK REFERENCE TABLE -->
+<h3 class="section-subtitle">טבלת התאמה מהירה: לקוח → אזור</h3>
+<table>
+<thead><tr><th>סוג לקוח</th><th>אזור ראשי</th><th>אזור חלופי</th><th>משפט פתיחה</th></tr></thead>
+<tbody>
+<tr><td>משקיע Airbnb</td><td>מקנזי</td><td>פיניקודס</td><td>"אתה רוצה תשואה גבוהה? מקנזי - 6-8% Airbnb."</td></tr>
+<tr><td>משקיע סולידי</td><td>ליבדיה</td><td>דרוסיה</td><td>"אתה רוצה שקט? ליבדיה - ביקוש יציב, סיכון נמוך."</td></tr>
+<tr><td>Plan B / תושבות</td><td>פיניקודס</td><td>מקנזי</td><td>"אתה רוצה Plan B? פיניקודס - סגנון חיים + PR."</td></tr>
+<tr><td>משפחה / רילוקיישן</td><td>אורוקליני</td><td>ליבדיה / קמארס</td><td>"למשפחה? אורוקליני - חוף, שקט, בתי ספר."</td></tr>
+<tr><td>ספקולנט / עליית ערך</td><td>אזור מרינה</td><td>מקנזי</td><td>"אתה רוצה את ההימור הגדול? אזור המרינה."</td></tr>
+<tr><td>תקציב נמוך</td><td>מרכז / דרוסיה</td><td>ליבדיה</td><td>"ב-€150K אתה כבר בפנים. מרכז העיר - תשואה מיידית."</td></tr>
+</tbody>
+</table>
+
+</div>
+</section>
+
+<!-- SECTION 4: PRICING - SALES FRAMING -->
+<section class="section" id="pricing">
+<div class="container">
+<div class="section-title"><span class="section-num">4</span> מחירים - מה להגיד ומה לא</div>
+
+<div class="sales-box">
+<div class="sales-label">כלל זהב במכירת מחיר</div>
+<p>לעולם אל תגיד מחיר בלי הקשר. תמיד תשווה: "€250K כאן = דירת 3 חדרים חדשה על חוף הים. בישראל זה חניה בתל אביב או דירת 2 חדרים בפריפריה."</p>
+</div>
+
+<h3 class="section-subtitle">מחירים לפי אזור - מה להגיד ללקוח</h3>
+<table>
+<thead><tr><th>אזור</th><th>2 חד' חדש</th><th>3 חד' חדש</th><th>€/מ"ר</th><th>משפט מכירה</th></tr></thead>
+<tbody>
+<tr><td>מקנזי</td><td>€220-350K</td><td>€300-500K</td><td>€2,500-3,650</td><td>"הכי מבוקש - ועדיין 40% פחות מלימסול"</td></tr>
+<tr><td>פיניקודס</td><td>€250-400K</td><td>€350-550K</td><td>€2,300-3,000</td><td>"נוף לים, טיילת, סגנון חיים - ב-€300K"</td></tr>
+<tr><td>אזור מרינה</td><td>€200-350K</td><td>€280-450K</td><td>€2,050-2,850</td><td>"לפני שהמרינה מוכנה - מחיר של היום, ערך של מחר"</td></tr>
+<tr><td>ליבדיה</td><td>€180-280K</td><td>€250-380K</td><td>€1,700-2,300</td><td>"מחיר הכי הגיוני - ביקוש הכי יציב"</td></tr>
+<tr><td>אורוקליני</td><td>€160-260K</td><td>€220-350K</td><td>€1,650-2,050</td><td>"חוף + שקט + מחיר נמוך = משפחות אוהבות"</td></tr>
+<tr><td>מרכז / דרוסיה</td><td>€120-200K</td><td>€170-280K</td><td>€1,450-2,000</td><td>"מחיר כניסה הכי נמוך - תשואה הכי גבוהה"</td></tr>
+<tr><td>ארדיפו</td><td>€130-180K</td><td>€170-250K</td><td>€1,150-1,500</td><td>"תקציב מינימלי - אבל רק לשכירות ארוכה"</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">פרמיות ותוספות - מה משפיע על מחיר</h3>
+<table>
+<thead><tr><th>פרמטר</th><th>השפעה על מחיר</th><th>איך להסביר ללקוח</th></tr></thead>
+<tbody>
+<tr><td>נוף ים</td><td>+15-30%</td><td>"נוף ים = תשואת Airbnb גבוהה יותר + מכירה חוזרת קלה יותר"</td></tr>
+<tr><td>מרחק הליכה לים</td><td>+10-20%</td><td>"ברגל לחוף = הנכס הכי קל להשכרה"</td></tr>
+<tr><td>קומה גבוהה</td><td>+5-15%</td><td>"קומה גבוהה = נוף + שקט + ערך מכירה"</td></tr>
+<tr><td>חניה + מחסן</td><td>+€15-30K</td><td>"בלי חניה - קשה למכור. תמיד תקנה עם חניה"</td></tr>
+<tr><td>בנייה חדשה vs יד שנייה</td><td>+30-50%</td><td>"חדש = אחריות, Title Deed נקי, מע"מ 5% אפשרי"</td></tr>
+<tr><td>Title Deed נפרד</td><td>+5-10%</td><td>"Title Deed = ביטחון. בלי זה - סיכון. שווה את הפרמיה"</td></tr>
+</tbody>
+</table>
+
+<div class="sales-box">
+<div class="sales-label">סקריפט: איך להציג מחיר בלי שהלקוח יברח</div>
+<p>"תשמע, דירת 2 חדרים חדשה, 75 מ"ר, 5 דקות הליכה מהחוף, עם חניה ומחסן - €250K. עכשיו בוא נשים את זה בפרספקטיבה: בישראל, ב-250 אלף יורו - שזה בערך מיליון שקל - אתה לא קונה כלום בגוש דן. כאן אתה מקבל נכס חדש, על חוף הים, שמניב 4-5% תשואה, ועולה בערך 11% בשנה. ובנוסף - תושבות אירופית. זה לא 'זול' - זה 'חכם'."</p>
+</div>
+
+<h3 class="section-subtitle">מה לא להגיד על מחירים</h3>
+<div class="alert alert-red">
+<ul style="list-style: none; padding: 0; line-height: 2.2;">
+<li>❌ "זה זול" - זה מוריד ערך. תגיד "זה חכם" או "זה הזדמנות"</li>
+<li>❌ "המחירים רק יעלו" - אתה לא נביא. תגיד "המגמה של 5 שנים היא עלייה"</li>
+<li>❌ "בלימסול זה כפול" - בלי להסביר למה. תוסיף "כי לימסול כבר בשלה"</li>
+<li>❌ מחיר בלי לכלול מע"מ - תמיד תגיד "לפני/אחרי מע"מ"</li>
+<li>❌ "מחיר סופי" - תמיד יש Transfer Fees, עו"ד, ריהוט</li>
+</ul>
+</div>
+
+<h3 class="section-subtitle">עלויות נלוות - להציג בשקיפות (בונה אמון)</h3>
+<table>
+<thead><tr><th>עלות</th><th>סכום</th><th>איך להציג</th></tr></thead>
+<tbody>
+<tr><td>מע"מ (בנייה חדשה)</td><td>19% (או 5% מופחת)</td><td>"יש אפשרות ל-5% מע"מ על דירה ראשונה - חיסכון של €25K+"</td></tr>
+<tr><td>Transfer Fees</td><td>3-8% (הנחה 50% אם יש מע"מ)</td><td>"עלות חד-פעמית, לא שנתית"</td></tr>
+<tr><td>עורך דין</td><td>€1,500-3,000</td><td>"ביטוח - לא הוצאה. עו"ד טוב חוסך לך הרבה יותר"</td></tr>
+<tr><td>Stamp Duty</td><td>0.15-0.2%</td><td>"זניח - שקלים בודדים"</td></tr>
+<tr><td>ריהוט (אם להשכרה)</td><td>€8-15K</td><td>"השקעה שמחזירה את עצמה בשנה הראשונה"</td></tr>
+<tr><td>סה"כ עלויות נלוות</td><td>~8-12% מעל מחיר הנכס</td><td>"תכנן 10% מעל מחיר הנכס - ככה אין הפתעות"</td></tr>
+</tbody>
+</table>
+
+</div>
+</section>
+
+<!-- SECTION 5: RENTAL - HOW TO SELL THE YIELD STORY -->
+<section class="section" id="rental">
+<div class="container">
+<div class="section-title"><span class="section-num">5</span> שכירות ותשואה - איך למכור את הסיפור</div>
+
+<div class="sales-box">
+<div class="sales-label">כלל זהב בהצגת תשואה</div>
+<p>לעולם אל תבטיח תשואה. תמיד תציג 3 תרחישים: שמרני, ריאלי, אופטימי. הלקוח יבחר את האמצעי - וירגיש שהוא החליט בעצמו.</p>
+</div>
+
+<h3 class="section-subtitle">תרחיש 1: דירת 2 חד' במקנזי - Airbnb</h3>
+<div class="card">
+<table>
+<thead><tr><th>פרמטר</th><th>שמרני</th><th>ריאלי</th><th>אופטימי</th></tr></thead>
+<tbody>
+<tr><td>מחיר רכישה</td><td colspan="3">€250,000</td></tr>
+<tr><td>ADR (מחיר ללילה)</td><td>€70</td><td>€85</td><td>€100</td></tr>
+<tr><td>תפוסה</td><td>55%</td><td>65%</td><td>75%</td></tr>
+<tr><td>הכנסה שנתית ברוטו</td><td>€14,053</td><td>€20,166</td><td>€27,375</td></tr>
+<tr><td>הוצאות (ניהול, ניקיון, תחזוקה)</td><td>-€5,600 (40%)</td><td>-€7,060 (35%)</td><td>-€8,213 (30%)</td></tr>
+<tr><td>הכנסה נטו לפני מס</td><td>€8,453</td><td>€13,106</td><td>€19,162</td></tr>
+<tr><td><strong>תשואה ברוטו</strong></td><td><strong>5.6%</strong></td><td><strong>8.1%</strong></td><td><strong>10.9%</strong></td></tr>
+<tr><td><strong>תשואה נטו (לפני מס)</strong></td><td><strong>3.4%</strong></td><td><strong>5.2%</strong></td><td><strong>7.7%</strong></td></tr>
+</tbody>
+</table>
+<div class="close-box">
+<div class="close-label">איך להציג</div>
+"אני מראה לך 3 תרחישים. גם בתרחיש הכי שמרני - 3.4% נטו - אתה מקבל יותר ממה שתקבל בישראל. ובתרחיש הריאלי - 5.2% נטו. ועכשיו תוסיף לזה 8-11% עליית ערך בשנה. ביחד? 13-16% תשואה כוללת."
+</div>
+</div>
+
+<h3 class="section-subtitle">תרחיש 2: דירת 2 חד' בליבדיה - שכירות ארוכה</h3>
+<div class="card">
+<table>
+<thead><tr><th>פרמטר</th><th>שמרני</th><th>ריאלי</th><th>אופטימי</th></tr></thead>
+<tbody>
+<tr><td>מחיר רכישה</td><td colspan="3">€200,000</td></tr>
+<tr><td>שכירות חודשית</td><td>€750</td><td>€850</td><td>€950</td></tr>
+<tr><td>תפוסה שנתית</td><td>11 חודשים</td><td>11.5 חודשים</td><td>12 חודשים</td></tr>
+<tr><td>הכנסה שנתית ברוטו</td><td>€8,250</td><td>€9,775</td><td>€11,400</td></tr>
+<tr><td>הוצאות (ניהול, תחזוקה, ועד)</td><td>-€1,650 (20%)</td><td>-€1,466 (15%)</td><td>-€1,140 (10%)</td></tr>
+<tr><td>הכנסה נטו לפני מס</td><td>€6,600</td><td>€8,309</td><td>€10,260</td></tr>
+<tr><td><strong>תשואה ברוטו</strong></td><td><strong>4.1%</strong></td><td><strong>4.9%</strong></td><td><strong>5.7%</strong></td></tr>
+<tr><td><strong>תשואה נטו (לפני מס)</strong></td><td><strong>3.3%</strong></td><td><strong>4.2%</strong></td><td><strong>5.1%</strong></td></tr>
+</tbody>
+</table>
+<div class="close-box">
+<div class="close-label">איך להציג</div>
+"שכירות ארוכה = שקט. אין ניהול יומיומי, אין ניקיונות, אין תחלופה. €850 בחודש נכנסים לחשבון כמו שעון. ועם עליית ערך של 8% - תוך 5 שנים הנכס שווה €295K. רווח הון של €95K + הכנסה שוטפת."
+</div>
+</div>
+
+<h3 class="section-subtitle">מי שוכר בלרנקה - ולמה זה חשוב למכירה</h3>
+<table>
+<thead><tr><th>קבוצה</th><th>% מהביקוש</th><th>מה מחפשים</th><th>איך להשתמש במכירה</th></tr></thead>
+<tbody>
+<tr><td>אקספטים (בריטים, רוסים, אירופים)</td><td>~30%</td><td>שכירות ארוכה, איכות, שקט</td><td>"ביקוש קבוע - לא תלוי בעונה"</td></tr>
+<tr><td>עובדי שדה תעופה / חברות</td><td>~15%</td><td>קרבה לשדה, מחיר סביר</td><td>"שדה תעופה = ביקוש מובנה שלא ייעלם"</td></tr>
+<tr><td>סטודנטים (UCLan, אוניברסיטאות)</td><td>~15%</td><td>מחיר נמוך, מרכז</td><td>"סטודנטים = תפוסה 100% ספטמבר-יוני"</td></tr>
+<tr><td>תיירים (Airbnb)</td><td>~20%</td><td>חוף, מיקום, ניקיון</td><td>"תיירות = תשואה גבוהה בעונה"</td></tr>
+<tr><td>משפחות מקומיות</td><td>~10%</td><td>שכונה שקטה, בתי ספר</td><td>"ביקוש מקומי = יציבות"</td></tr>
+<tr><td>דיגיטל נומדים / Remote</td><td>~10%</td><td>אינטרנט, קפה, חוף</td><td>"מגמה עולמית שמגיעה ללרנקה"</td></tr>
+</tbody>
+</table>
+
+<div class="sales-box">
+<div class="sales-label">משפט מפתח למכירה</div>
+<p>"הביקוש בלרנקה מגיע מ-6 מקורות שונים - לא רק תיירים. זה אומר שגם אם מקור אחד נחלש, יש 5 אחרים. זה מה שעושה את ההשקעה בטוחה."</p>
+</div>
+
+<h3 class="section-subtitle">תשואה כוללת - הסיפור שסוגר עסקאות</h3>
+<div class="card">
+<div class="card-title">חישוב תשואה כוללת (Total Return)</div>
+<table>
+<thead><tr><th>מרכיב</th><th>שמרני</th><th>ריאלי</th><th>אופטימי</th></tr></thead>
+<tbody>
+<tr><td>תשואת שכירות נטו</td><td>3.3%</td><td>4.5%</td><td>5.5%</td></tr>
+<tr><td>עליית ערך שנתית</td><td>5%</td><td>8%</td><td>11%</td></tr>
+<tr><td><strong>תשואה כוללת</strong></td><td><strong>8.3%</strong></td><td><strong>12.5%</strong></td><td><strong>16.5%</strong></td></tr>
+</tbody>
+</table>
+<div class="close-box">
+<div class="close-label">סקריפט סגירה</div>
+"בוא נסכם: גם בתרחיש הכי שמרני - 8.3% תשואה כוללת. בריאלי - 12.5%. איפה עוד אתה מקבל את זה? פיקדון בבנק? 4%. בורסה? תנודתי. נדל"ן בישראל? 2.5% תשואה. כאן אתה מקבל את שניהם - הכנסה שוטפת + עליית ערך. ביחד."
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 6: COMPARISON - WINNING ARGUMENTS -->
+<section class="section" id="comparison">
+<div class="container">
+<div class="section-title"><span class="section-num">6</span> השוואות - איך לנצח כל ויכוח</div>
+
+<div class="sales-box">
+<div class="sales-label">עיקרון מנחה</div>
+<p>לעולם אל תדבר רע על האלטרנטיבה. תגיד "שניהם טובים - השאלה היא מה מתאים לך". ואז תשאל שאלה שהתשובה עליה מובילה ללרנקה.</p>
+</div>
+
+<h3 class="section-subtitle">לרנקה מול לימסול</h3>
+<table>
+<thead><tr><th>פרמטר</th><th>לרנקה</th><th>לימסול</th><th>מה להגיד</th></tr></thead>
+<tbody>
+<tr><td>מחיר כניסה 2 חד'</td><td>€200-300K</td><td>€350-500K</td><td>"באותו תקציב - כאן אתה מקבל יותר"</td></tr>
+<tr><td>€/מ"ר</td><td>€1,330-2,500</td><td>€2,140-3,500</td><td>"40-60% פחות - על אותו ים"</td></tr>
+<tr><td>תשואה</td><td>4-5%</td><td>3-4%</td><td>"תשואה גבוהה יותר כי מחיר כניסה נמוך"</td></tr>
+<tr><td>פוטנציאל עליית ערך</td><td>גבוה</td><td>בינוני (כבר יקר)</td><td>"לימסול כבר 'בשלה' - לרנקה עדיין בדרך"</td></tr>
+<tr><td>שדה תעופה</td><td>בעיר</td><td>45 דק' נסיעה</td><td>"שדה תעופה בעיר = נוחות + ביקוש שכירות"</td></tr>
+</tbody>
+</table>
+<div class="close-box">
+<div class="close-label">שאלת ניצחון</div>
+"מה יותר חשוב לך - לקנות בשוק שכבר 'בשל' ולשלם פרמיה, או להיכנס לשוק שעדיין צומח ולקנות במחיר של היום?"
+</div>
+
+<h3 class="section-subtitle">לרנקה מול יוון</h3>
+<table>
+<thead><tr><th>פרמטר</th><th>לרנקה</th><th>אתונה/יוון</th><th>מה להגיד</th></tr></thead>
+<tbody>
+<tr><td>טיסה מישראל</td><td>50 דקות</td><td>2 שעות</td><td>"50 דקות - אתה שם ובחזרה באותו יום"</td></tr>
+<tr><td>שפה</td><td>אנגלית בכל מקום</td><td>יוונית (אנגלית מוגבלת)</td><td>"בלי בעיית שפה - הכל באנגלית"</td></tr>
+<tr><td>Airbnb</td><td>ללא הגבלה</td><td>אסור ב-Golden Visa</td><td>"ביוון אתה לא יכול להשכיר Airbnb אם קנית דרך GV"</td></tr>
+<tr><td>תושבות</td><td>PR קבוע (לא צריך לחדש)</td><td>5 שנים (צריך לחדש)</td><td>"כאן PR קבוע - לא צריך לחדש כל 5 שנים"</td></tr>
+<tr><td>שנגן</td><td>❌ לא</td><td>✅ כן</td><td>"אם שנגן קריטי - יוון. אם לא - קפריסין עדיפה בכל השאר"</td></tr>
+<tr><td>מערכת משפטית</td><td>Common Law (בריטית)</td><td>Civil Law</td><td>"מערכת בריטית - מוכרת, שקופה, אמינה"</td></tr>
+<tr><td>אמנת מס עם ישראל</td><td>❌ אין</td><td>✅ יש</td><td>"ביוון יש אמנת מס - יתרון. אבל בקפריסין יש Non-Dom"</td></tr>
+</tbody>
+</table>
+<div class="close-box">
+<div class="close-label">שאלת ניצחון</div>
+"בוא נעשה את זה פשוט: מה יותר חשוב לך - שנגן, או קרבה + פשטות + חופש להשכיר? כי אם שנגן לא קריטי - קפריסין מנצחת בכל פרמטר אחר."
+</div>
+
+<h3 class="section-subtitle">לרנקה מול ישראל</h3>
+<div class="card">
+<table>
+<thead><tr><th>פרמטר</th><th>לרנקה</th><th>ישראל</th></tr></thead>
+<tbody>
+<tr><td>דירת 2 חד' חדשה</td><td>€200-300K (₪750K-1.1M)</td><td>₪1.5-2.5M (מרכז)</td></tr>
+<tr><td>תשואת שכירות</td><td>4-5%</td><td>2-3%</td></tr>
+<tr><td>מס נכס שנתי</td><td>0%</td><td>ארנונה ₪5-15K/שנה</td></tr>
+<tr><td>מס ירושה</td><td>0%</td><td>0% (אבל שבח)</td></tr>
+<tr><td>עליית ערך שנתית</td><td>8-11%</td><td>5-8% (תלוי אזור)</td></tr>
+<tr><td>פיזור גיאוגרפי</td><td>✅ יורו, אירופה</td><td>❌ הכל בסל אחד</td></tr>
+<tr><td>תושבות נוספת</td><td>✅ PR אירופי</td><td>❌</td></tr>
+</tbody>
+</table>
+<div class="close-box">
+<div class="close-label">סקריפט סגירה</div>
+"אני לא אומר 'במקום ישראל'. אני אומר 'בנוסף לישראל'. אתה כבר יודע שבישראל המחירים מטורפים ותשואה 2.5%. כאן אתה מקבל יותר תשואה, יותר עליית ערך, פיזור גיאוגרפי, ותושבות אירופית. השאלה היא לא 'אם' - השאלה היא 'כמה מהתיק שלך אתה רוצה באירופה'."
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 7: INVESTOR PSYCHOLOGY - HOW TO READ AND CLOSE -->
+<section class="section" id="psychology">
+<div class="container">
+<div class="section-title"><span class="section-num">7</span> פסיכולוגיית המשקיע - איך לקרוא ולסגור</div>
+
+<div class="bottom-line">
+<strong>עיקרון מנחה:</strong> אל תמכור נכס. תמכור את מה שהנכס נותן: ביטחון, חופש, שליטה, צמיחה, שקט נפשי. תזהה את הצורך - ותדבר אליו.
+</div>
+
+<h3 class="section-subtitle">6 סגמנטים - איך לזהות ולסגור כל אחד</h3>
+
+<div class="card">
+<div class="card-title">סגמנט 1: מחפש תשואה</div>
+<table>
+<tbody>
+<tr><td><strong>מה הוא אומר</strong></td><td>"כמה תשואה? מה ההחזר?"</td></tr>
+<tr><td><strong>מה הוא באמת רוצה</strong></td><td>ודאות. שליטה. לדעת שהכסף עובד.</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"מה אם לא תהיה שכירות?"</td></tr>
+<tr><td><strong>איך לדבר</strong></td><td>מספרים, תרחישים, הוכחות. אל תרגש - תוכיח.</td></tr>
+<tr><td><strong>שאלת אבחון</strong></td><td>"מה יותר חשוב לך - הכנסה שוטפת חודשית, או עליית ערך לאורך זמן?"</td></tr>
+<tr><td><strong>שאלת סגירה</strong></td><td>"אם אני מראה לך נכס שמניב 4.5% נטו גם בתרחיש שמרני - זה מספיק בשבילך?"</td></tr>
+<tr><td><strong>אזור מומלץ</strong></td><td>ליבדיה (ארוכה), מקנזי (Airbnb), מרכז (תשואה מקסימלית)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">סגמנט 2: מחפש Plan B / תושבות</div>
+<table>
+<tbody>
+<tr><td><strong>מה הוא אומר</strong></td><td>"אני רוצה אופציה", "אחרי 7 באוקטובר..."</td></tr>
+<tr><td><strong>מה הוא באמת רוצה</strong></td><td>הגנה. ביטחון. שקט נפשי שיש לאן ללכת.</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"האם באמת נשתמש בזה?"</td></tr>
+<tr><td><strong>איך לדבר</strong></td><td>"ביטוח" - לא "בריחה". "אופציה" - לא "הכרח". שפה רכה, לא מפחידה.</td></tr>
+<tr><td><strong>שאלת אבחון</strong></td><td>"מה היית רוצה שיהיה לך אם מחר הייתה צריך לעזוב?"</td></tr>
+<tr><td><strong>שאלת סגירה</strong></td><td>"אם אתה יכול לקבל תושבות אירופית לכל המשפחה, ובמקביל גם להרוויח מהנכס - למה לחכות?"</td></tr>
+<tr><td><strong>אזור מומלץ</strong></td><td>פיניקודס (סגנון חיים), מקנזי (חוף), אורוקליני (משפחה)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">סגמנט 3: מחפש עליית ערך / ספקולנט</div>
+<table>
+<tbody>
+<tr><td><strong>מה הוא אומר</strong></td><td>"כמה זה יעלה?", "מה הפוטנציאל?"</td></tr>
+<tr><td><strong>מה הוא באמת רוצה</strong></td><td>צמיחה. סטטוס. להרגיש שהוא חכם.</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"אולי המחירים כבר גבוהים?"</td></tr>
+<tr><td><strong>איך לדבר</strong></td><td>מגמות, השוואות, "לפני/אחרי". תן לו להרגיש שהוא מגלה משהו.</td></tr>
+<tr><td><strong>שאלת אבחון</strong></td><td>"מה האופק שלך - 3 שנים? 5? 10?"</td></tr>
+<tr><td><strong>שאלת סגירה</strong></td><td>"אם לרנקה תעשה מה שלימסול עשתה ב-5 שנים האחרונות - אתה מוכן להיכנס עכשיו?"</td></tr>
+<tr><td><strong>אזור מומלץ</strong></td><td>אזור מרינה, מקנזי, על הנייר</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">סגמנט 4: שמרן / סולידי</div>
+<table>
+<tbody>
+<tr><td><strong>מה הוא אומר</strong></td><td>"מה הסיכון?", "מה יכול להשתבש?"</td></tr>
+<tr><td><strong>מה הוא באמת רוצה</strong></td><td>ביטחון. ודאות. לא להפסיד.</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"מה אם אני מפסיד כסף?"</td></tr>
+<tr><td><strong>איך לדבר</strong></td><td>שקוף, כנה, מראה סיכונים ואיך מנהלים אותם. אל תמעיט.</td></tr>
+<tr><td><strong>שאלת אבחון</strong></td><td>"מה היה גורם לך להרגיש בטוח עם ההשקעה הזו?"</td></tr>
+<tr><td><strong>שאלת סגירה</strong></td><td>"אם אני מראה לך שגם בתרחיש הכי גרוע אתה לא מפסיד - זה מספיק?"</td></tr>
+<tr><td><strong>אזור מומלץ</strong></td><td>ליבדיה (יציב), פיניקודס (נזיל), יד שנייה עם Title Deed</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">סגמנט 5: משווה ליוון</div>
+<table>
+<tbody>
+<tr><td><strong>מה הוא אומר</strong></td><td>"למה לא יוון?", "שם יש שנגן"</td></tr>
+<tr><td><strong>מה הוא באמת רוצה</strong></td><td>שליטה. לדעת שהוא בוחר את הטוב ביותר.</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"אולי אני בוחר לא נכון?"</td></tr>
+<tr><td><strong>איך לדבר</strong></td><td>אל תתקוף יוון. תשאל "מה חשוב לך?" - ותראה שקפריסין מנצחת ברוב.</td></tr>
+<tr><td><strong>שאלת אבחון</strong></td><td>"מה בדיוק מושך אותך ביוון - השנגן, או משהו אחר?"</td></tr>
+<tr><td><strong>שאלת סגירה</strong></td><td>"אם שנגן לא קריטי - מה עוד מחזיק אותך ביוון?"</td></tr>
+<tr><td><strong>אזור מומלץ</strong></td><td>תלוי בתשובה - אם PR חשוב: פיניקודס/מקנזי. אם תשואה: ליבדיה.</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<div class="card-title">סגמנט 6: קונה ראשון בחו"ל</div>
+<table>
+<tbody>
+<tr><td><strong>מה הוא אומר</strong></td><td>"אני לא מכיר את זה", "איך אני יודע שלא מרמים?"</td></tr>
+<tr><td><strong>מה הוא באמת רוצה</strong></td><td>ודאות. שליטה. מישהו שילווה אותו.</td></tr>
+<tr><td><strong>פחד מרכזי</strong></td><td>"אני לא מבין מספיק כדי להחליט"</td></tr>
+<tr><td><strong>איך לדבר</strong></td><td>תן לו כלים, לא לחץ. תראה שאתה שקוף. תן לו להרגיש חכם.</td></tr>
+<tr><td><strong>שאלת אבחון</strong></td><td>"מה הדבר שהכי מטריד אותך בקנייה בחו"ל?"</td></tr>
+<tr><td><strong>שאלת סגירה</strong></td><td>"אם היה לך מישהו שמלווה אותך בכל שלב - עורך דין, יועץ מס, ניהול - מה היה מונע ממך?"</td></tr>
+<tr><td><strong>אזור מומלץ</strong></td><td>ליבדיה (פשוט), פיניקודס (מובן), בנייה חדשה עם Title Deed</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 class="section-subtitle">טבלת צרכים רגשיים - שפה שסוגרת</h3>
+<table>
+<thead><tr><th>צורך</th><th>מה הלקוח אומר</th><th>מה לענות</th><th>שאלה שפותחת</th></tr></thead>
+<tbody>
+<tr><td><strong>ודאות</strong></td><td>"אני רוצה לדעת בדיוק"</td><td>"הנה המספרים - 3 תרחישים, שקוף"</td><td>"מה היית צריך לראות כדי להרגיש בטוח?"</td></tr>
+<tr><td><strong>שליטה</strong></td><td>"אני רוצה להבין הכל"</td><td>"אני נותן לך את כל הכלים - אתה מחליט"</td><td>"מה עוד אתה צריך כדי להחליט?"</td></tr>
+<tr><td><strong>ביטחון</strong></td><td>"מה הסיכון?"</td><td>"הנה הסיכונים - והנה איך מנהלים אותם"</td><td>"מה היה גורם לך להרגיש מוגן?"</td></tr>
+<tr><td><strong>חופש</strong></td><td>"אני רוצה אופציה"</td><td>"זה נותן לך גמישות - להשכיר, לגור, למכור"</td><td>"מה החופש שאתה מחפש?"</td></tr>
+<tr><td><strong>צמיחה</strong></td><td>"אני רוצה שהכסף יעבוד"</td><td>"12.5% תשואה כוללת בתרחיש ריאלי"</td><td>"מה היעד שלך - הכנסה שוטפת או רווח הון?"</td></tr>
+<tr><td><strong>הגנה</strong></td><td>"אני רוצה לפזר"</td><td>"נכס באירופה = שכבת הגנה על ההון"</td><td>"כמה מהתיק שלך אתה רוצה מחוץ לישראל?"</td></tr>
+<tr><td><strong>שקט נפשי</strong></td><td>"אני רוצה שזה יהיה פשוט"</td><td>"ניהול מקצועי - אתה לא נוגע בכלום"</td><td>"מה 'פשוט' אומר בשבילך?"</td></tr>
+<tr><td><strong>סטטוס</strong></td><td>"אני רוצה משהו ברמה"</td><td>"מקנזי / פיניקודס - הכתובות הכי טובות"</td><td>"מה חשוב לך בנכס מעבר למספרים?"</td></tr>
+</tbody>
+</table>
+
+</div>
+</section>
+
+<!-- SECTION 8: OBJECTIONS - NEUTRALIZE AND CLOSE -->
+<section class="section" id="objections">
+<div class="container">
+<div class="section-title"><span class="section-num">8</span> התנגדויות - נטרל וסגור</div>
+
+<div class="sales-box">
+<div class="sales-label">עיקרון מנחה</div>
+<p>התנגדות = סימן עניין. מי שלא מעוניין לא מתנגד - הוא פשוט הולך. כל התנגדות היא הזדמנות לבנות אמון ולהתקדם לסגירה. הנוסחה: הכר → נטרל → הוכח → שאל.</p>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"מה אם לא תהיה שכירות?"</div>
+<p><strong>צורך:</strong> ודאות, ביטחון | <strong>פחד אמיתי:</strong> נכס ריק שעולה כסף</p>
+<div class="objection-kill">
+<strong>נטרול:</strong> "שאלה חשובה. בוא נסתכל על זה ריאלית: בלרנקה יש 6 מקורות ביקוש - אקספטים, עובדי שדה תעופה, סטודנטים, תיירים, משפחות מקומיות, ודיגיטל נומדים. גם אם מקור אחד נחלש - יש 5 אחרים. ובתרחיש הכי שמרני שלי - אני מניח חודש-חודשיים ריקים בשנה - והמספרים עדיין עובדים."
+</div>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"אם אני מראה לך שגם עם חודשיים ריקים בשנה התשואה עדיין 3.5% נטו - זה מספיק בשבילך, או שאתה צריך יותר?"
+</div>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"אולי המחירים כבר עלו יותר מדי?"</div>
+<p><strong>צורך:</strong> שליטה, ודאות | <strong>פחד אמיתי:</strong> קנייה בשיא</p>
+<div class="objection-kill">
+<strong>נטרול:</strong> "שאלה לגיטימית. הנה העובדות: לרנקה עדיין €1,330/מ"ר. לימסול - €2,140. פאפוס - €1,780. לרנקה היא עדיין הכי זולה בחוף. האם היא יכולה לרדת? תיאורטית - כן. אבל בשוק עם 43% קונים זרים, ביקוש שכירות חזק, ופרויקט מרינה בדרך - הסיכוי נמוך. השאלה האמיתית: אם המחירים ימשיכו לעלות 8% בשנה - כמה יותר תשלם בעוד שנה?"
+</div>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"בוא נעשה חשבון: 8% עלייה על €250K = €20K בשנה. כל שנה שאתה מחכה עולה לך €20K. השאלה היא - מה אתה מחכה לו?"
+</div>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"למה לא לקנות בישראל?"</div>
+<p><strong>צורך:</strong> ודאות, שליטה | <strong>פחד אמיתי:</strong> מרחק, חוסר היכרות</p>
+<div class="objection-kill">
+<strong>נטרול:</strong> "שאלה מצוינת. בוא נשווה: בישראל, מיליון שקל קונה לך דירת 2 חדרים בפריפריה עם תשואה של 2.5%. כאן, באותו כסף - דירה חדשה על חוף הים, 4.5% תשואה, 11% עליית ערך, ותושבות אירופית. אני לא אומר 'במקום' - אני אומר 'בנוסף'. פיזור. אתה שם את כל הביצים בסל אחד?"
+</div>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"כמה מהתיק שלך אתה רוצה באירופה? 20%? 30%? בוא נראה מה זה אומר במספרים."
+</div>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"למה לא יוון?"</div>
+<p><strong>צורך:</strong> שליטה | <strong>פחד אמיתי:</strong> בחירה לא אופטימלית</p>
+<div class="objection-kill">
+<strong>נטרול:</strong> "יוון מצוינת - אם שנגן קריטי לך. אבל בוא נבדוק: ביוון אתה לא יכול להשכיר Airbnb אם קנית דרך Golden Visa. הטיסה 2 שעות במקום 50 דקות. השפה יוונית. התושבות צריך לחדש כל 5 שנים. בקפריסין: Airbnb חופשי, 50 דקות, אנגלית, PR קבוע. השאלה היחידה: האם שנגן שווה את כל הוויתורים האלה?"
+</div>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"מה בדיוק אתה מתכנן לעשות עם שנגן? אם התשובה היא 'לטייל באירופה' - יש לך דרכון ישראלי, אתה לא צריך שנגן לזה. אם התשובה היא 'לעבוד באירופה' - אז כן, יוון. מה המקרה שלך?"
+</div>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"מה יקרה אם המרינה לא תתקדם?"</div>
+<p><strong>צורך:</strong> ודאות | <strong>פחד אמיתי:</strong> הימור על עתיד לא ודאי</p>
+<div class="objection-kill">
+<strong>נטרול:</strong> "שאלה מצוינת - ואני שמח שאתה שואל. הנה הגישה שלי: אל תקנה 'בגלל' המרינה. תקנה נכס שעובד היום - שכירות טובה, אזור עם ביקוש קיים. אם המרינה תתקדם - בונוס. אם לא - אתה עדיין עם נכס שמניב 4-5%. ככה אתה לא מהמר - אתה משקיע עם אפסייד."
+</div>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"אם אני מראה לך נכס שעובד גם בלי המרינה - ואם המרינה תתקדם הוא יעלה עוד 20-30% - זה מעניין אותך?"
+</div>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"איך אני יודע שזה לא עוד סיפור מכירה?"</div>
+<p><strong>צורך:</strong> ודאות, שליטה | <strong>פחד אמיתי:</strong> חוסר אמון</p>
+<div class="objection-kill">
+<strong>נטרול:</strong> "אני מבין. יש הרבה רעש בשוק. הנה מה שאני עושה אחרת: אני לא מבטיח תשואות. אני מראה 3 תרחישים - כולל הגרוע. אני אומר לך מה אני לא יודע. אני ממליץ על עורך דין עצמאי שלא קשור אליי. ואם אחרי הכל אתה מרגיש שזה לא בשבילך - לגיטימי. אני מעדיף 'לא' כנה מ'כן' מאולץ."
+</div>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"מה היית צריך לראות כדי להרגיש שזה אמיתי? בוא נבדוק את זה ביחד."
+</div>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"מה לגבי מיסוי?"</div>
+<p><strong>צורך:</strong> שליטה, ודאות | <strong>פחד אמיתי:</strong> הפתעות מס</p>
+<div class="objection-kill">
+<strong>נטרול:</strong> "המיסוי הוא נושא חשוב - ואני לא יועץ מס. מה שאני יכול להגיד: בקפריסין אין מס נכס שנתי, אין מס ירושה. על שכירות - יש מדרגות מס עם ניכויים. על מכירה - 20% רווחי הון. בישראל - חייב לדווח. אין אמנת מס כפל, אז צריך תכנון. מה שאני ממליץ: לפני שאתה קונה - פגישה עם יועץ מס. אני יכול להפנות אותך."
+</div>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"אם אני מחבר אותך ליועץ מס שמתמחה בנדל"ן בקפריסין - ואתה מקבל תמונה ברורה - נוכל להתקדם?"
+</div>
+</div>
+
+<div class="objection-card">
+<div class="objection-q">"מה הסיכון האמיתי?"</div>
+<p><strong>צורך:</strong> ודאות, ביטחון | <strong>פחד אמיתי:</strong> סיכון נסתר</p>
+<div class="objection-kill">
+<strong>נטרול:</strong> "אני אהיה ישיר. 5 סיכונים עיקריים: 1) מיסוי - צריך תכנון. 2) נזילות - אם תרצה למכור מהר, ייקח זמן. 3) ניהול מרחוק - צריך חברת ניהול. 4) איכות בנייה - לא כל יזם שווה. 5) המרינה - לא ודאית. כל אחד מהם ניתן לניהול. אף אחד מהם לא 'הורס עסקה'. השאלה היא האם אתה מוכן לנהל אותם - או שאתה מחפש השקעה בלי סיכון. כי בלי סיכון - אין תשואה."
+</div>
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"מבין 5 הסיכונים שהזכרתי - איזה הכי מטריד אותך? בוא נפתור אותו."
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 9: READY SCRIPTS -->
+<section class="section" id="scripts">
+<div class="container">
+<div class="section-title"><span class="section-num">9</span> סקריפטים מוכנים - העתק והדבק</div>
+
+<div class="script-box">
+<div class="script-label">60 שניות - למה לרנקה (פתיחת שיחה)</div>
+<p>"תשמע, אני אתן לך את זה ב-60 שניות: לרנקה היא החוף הכי זול בקפריסין - €1,330 למ"ר לעומת €2,140 בלימסול. טיסה של 50 דקות מישראל. תשואה של 4-5%. עליית ערך של 11% בשנה. אין מס נכס שנתי. אין מס ירושה. ויש תוכנית תושבות מ-€300K. זה לא 'הדובאי הבאה' - זה נכס אמיתי, במספרים אמיתיים, שעובד. השאלה היא - מה אתה מחפש? תשואה? עליית ערך? Plan B? כי לרנקה נותנת את שלושתם."</p>
+</div>
+
+<div class="script-box">
+<div class="script-label">2 דקות - למה לרנקה ולא יוון</div>
+<p>"בוא נעשה סדר. יוון וקפריסין - שני מוצרים שונים לחלוטין.</p>
+<p>יוון נותנת שנגן - חופש תנועה באירופה. זה יתרון אמיתי. אבל: ביוון אתה לא יכול להשכיר Airbnb את נכס ה-Golden Visa. הטיסה 2 שעות. השפה יוונית. הביורוקרטיה כבדה. התושבות צריך לחדש כל 5 שנים.</p>
+<p>בקפריסין: טיסה 50 דקות. אנגלית בכל מקום. Airbnb בלי הגבלה. PR קבוע - לא צריך לחדש. מערכת משפטית בריטית. Non-Dom - 0% מס על דיבידנדים 17 שנה.</p>
+<p>השאלה היחידה: האם שנגן שווה את כל הוויתורים? אם כן - יוון. אם לא - קפריסין מנצחת בכל פרמטר אחר. מה יותר חשוב לך?"</p>
+</div>
+
+<div class="script-box">
+<div class="script-label">2 דקות - למה לרנקה ולא לימסול</div>
+<p>"לימסול מצוינת - אני לא אגיד אחרת. אבל הנה ההבדל: לימסול כבר 'בשלה'. המחירים שם €2,140/מ"ר. הרוסים העשירים כבר שם. החברות הבינלאומיות כבר שם. אתה קונה בשיא.</p>
+<p>לרנקה - €1,330/מ"ר. 40% פחות. שדה תעופה בעיר. פרויקט מרינה של מיליארד יורו בדרך. ביקוש שכירות חזק. ומחירים שעדיין עולים 11% בשנה.</p>
+<p>זה כמו לקנות בלימסול לפני 5 שנים - רק שעכשיו אתה יודע מה קורה. השאלה: אתה רוצה לקנות בשוק שכבר יקר, או בשוק שעדיין צומח?"</p>
+</div>
+
+<div class="script-box">
+<div class="script-label">5 דקות - תמונת שוק מלאה למשקיע רציני</div>
+<p>"בוא אתן לך תמונה מלאה, בלי הייפ.</p>
+<p><strong>שוק:</strong> קפריסין רשמה שיא של 18,000+ עסקאות ב-2025. 43% קונים זרים. לרנקה צומחת 8-11% בשנה. זה לא שיווק - זה נתוני הבנק המרכזי.</p>
+<p><strong>מחירים:</strong> דירת 2 חדרים חדשה באזור חוף: €200-350K. לימסול אותו דבר: €350-500K. אתה חוסך €100-150K על אותו מוצר.</p>
+<p><strong>תשואה:</strong> שכירות ארוכה: 4-5% ברוטו. Airbnb: 6-8% ברוטו. תשואה כוללת (שכירות + עליית ערך): 12-16% בתרחיש ריאלי.</p>
+<p><strong>תושבות:</strong> מ-€300K + מע"מ אתה מקבל PR אירופי לכל המשפחה. קבוע. לא צריך לחדש.</p>
+<p><strong>מיסוי:</strong> 0% מס נכס שנתי. 0% מס ירושה. על שכירות - מדרגות מס עם ניכויים. על מכירה - 20% רווחי הון. בישראל צריך לדווח - אין אמנת מס, אז צריך יועץ.</p>
+<p><strong>סיכונים:</strong> נזילות מוגבלת, מיסוי כפול (צריך תכנון), המרינה לא ודאית, איכות בנייה משתנה. כולם ניתנים לניהול.</p>
+<p><strong>למי זה:</strong> משקיע עם אופק 5+ שנים, תקציב €200-400K, שרוצה פיזור + תשואה + Plan B. לא למי שמחפש רווח מהיר או תשואה מובטחת.</p>
+<p>מה חשוב לך מכל מה שאמרתי?"</p>
+</div>
+
+<div class="script-box">
+<div class="script-label">סקריפט סגירה - אחרי שהלקוח אמר "מעניין"</div>
+<p>"טוב, אז בוא נעשה את הצעד הבא. אני מציע שנעשה אחד מהשניים:</p>
+<p><strong>אופציה א':</strong> אני שולח לך 3 נכסים ספציפיים שמתאימים למה שאמרת - עם מספרים, תמונות, ותרחישי תשואה. אתה מסתכל בשקט ונדבר בעוד יומיים.</p>
+<p><strong>אופציה ב':</strong> אם אתה רציני - נקבע טיסה. יום-יומיים בלרנקה, אני מראה לך 4-5 נכסים, אתה רואה את האזורים, מרגיש את המקום, ומחליט מתוך ידע.</p>
+<p>מה מרגיש לך יותר נכון - א' או ב'?"</p>
+</div>
+
+<div class="script-box">
+<div class="script-label">סקריפט - כשהלקוח אומר "אני צריך לחשוב"</div>
+<p>"בסדר גמור. חשיבה זה חשוב. רק שאלה אחת: מה בדיוק אתה צריך לחשוב עליו? כי אם יש משהו שלא ברור - בוא נפתור את זה עכשיו. ואם אתה צריך זמן - לגיטימי. רק תדע שהמחירים עולים 8-11% בשנה. כל חודש שעובר - זה עוד €1,500-2,000 על המחיר. אני לא לוחץ - אני רק אומר את העובדות. מתי נוח לדבר שוב?"</p>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 10: MARINA - HOW TO USE IT IN SALES -->
+<section class="section" id="marina">
+<div class="container">
+<div class="section-title"><span class="section-num">10</span> המרינה - איך להשתמש בזה בלי להישרף</div>
+
+<div class="alert alert-gold">
+<strong>כלל ברזל:</strong> המרינה היא תוספת לנרטיב - לא הנרטיב עצמו. אל תמכור "בגלל המרינה". תמכור נכס שעובד היום, והמרינה היא הבונוס.
+</div>
+
+<div class="card">
+<div class="card-title">מה באמת קורה - עדכון מאי 2026</div>
+<table>
+<thead><tr><th>עובדה</th><th>סטטוס</th><th>איך להגיד</th></tr></thead>
+<tbody>
+<tr><td>הסכם Kition Ocean Holdings</td><td><span class="badge badge-red">הופסק (מאי 2024)</span></td><td>"הפרויקט הישן נכשל - הממשלה לקחה שליטה"</td></tr>
+<tr><td>הממשלה מחויבת לפיתוח</td><td><span class="badge badge-green">מאושר</span></td><td>"הממשלה לקחה את זה לידיים - זה רציני"</td></tr>
+<tr><td>שדרוגים מיידיים למרינה</td><td><span class="badge badge-green">בביצוע</span></td><td>"כבר עכשיו יש שדרוגים - זה לא רק דיבורים"</td></tr>
+<tr><td>מפת דרכים חדשה</td><td><span class="badge badge-yellow">צפוי יוני 2026</span></td><td>"מפת דרכים חדשה יוצאת בקרוב - זה הזמן להיכנס לפני"</td></tr>
+<tr><td>פיתוח מלא</td><td><span class="badge badge-blue">10-15 שנה</span></td><td>"פרויקט ארוך טווח - מי שנכנס עכשיו נהנה מכל שלב"</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="script-box">
+<div class="script-label">סקריפט: איך לדבר על המרינה</div>
+<p>"הנה הסיפור של המרינה בקצרה: הפרויקט המקורי - מיליארד יורו, מרינה ענקית - לא הצליח. הממשלה סיימה את ההסכם ב-2024 ולקחה את זה לידיים. עכשיו יש שדרוגים שכבר מתבצעים, ומפת דרכים חדשה יוצאת ביוני 2026.</p>
+<p>מה זה אומר בשבילך? שיש פוטנציאל השבחה רציני - אבל בטווח של שנים, לא חודשים. לכן הגישה שלי: תקנה נכס שעובד היום. שכירות טובה, אזור עם ביקוש. אם המרינה תתקדם - מצוין, הנכס שלך יעלה עוד 20-30%. אם לא - אתה עדיין עם השקעה שמניבה. ככה אתה לא מהמר - אתה משקיע עם אפסייד."</p>
+</div>
+
+<div class="close-box">
+<div class="close-label">שאלת סגירה</div>
+"אם אני מראה לך נכס שמניב 4.5% היום - ואם המרינה תתקדם הוא יעלה עוד 30% - אתה מוכן להיכנס?"
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 11: CONSTRUCTION - WHAT TO KNOW -->
+<section class="section" id="construction">
+<div class="container">
+<div class="section-title"><span class="section-num">11</span> בנייה ואיכות - מה לדעת ומה להגיד</div>
+
+<div class="sales-box">
+<div class="sales-label">למה זה חשוב למכירה</div>
+<p>לקוח שמרגיש שאתה מבין באיכות בנייה - סומך עליך יותר. תדע לשאול את השאלות הנכונות ליזם - והלקוח יראה שאתה מקצועי.</p>
+</div>
+
+<h3 class="section-subtitle">מה לדעת על בנייה בקפריסין</h3>
+<table>
+<thead><tr><th>נושא</th><th>מה קורה בפועל</th><th>איך להציג ללקוח</th></tr></thead>
+<tbody>
+<tr><td>בידוד תרמי</td><td>חובה מ-2020, אבל איכות משתנה</td><td>"נכסים חדשים חייבים בידוד - חוסך חשמל"</td></tr>
+<tr><td>בידוד אקוסטי</td><td>חלש יחסית לישראל</td><td>"צריך לבדוק - לא כל יזם משקיע בזה"</td></tr>
+<tr><td>איטום</td><td>בעיה נפוצה בנכסים ישנים</td><td>"בנייה חדשה = אחריות. יד שנייה = צריך בדיקה"</td></tr>
+<tr><td>מיזוג</td><td>Split units סטנדרטי, VRV בפרימיום</td><td>"מיזוג בכל חדר - סטנדרט"</td></tr>
+<tr><td>דירוג אנרגטי</td><td>A-B בחדש, C-D בישן</td><td>"דירוג A = חשבון חשמל נמוך = שוכרים מעדיפים"</td></tr>
+<tr><td>עמידות רעידות</td><td>Eurocode 8 - תקן אירופי</td><td>"תקן אירופי לרעידות - כמו בכל אירופה"</td></tr>
+<tr><td>חניה</td><td>חובה בבנייה חדשה</td><td>"חניה כלולה - בניגוד לישראל"</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">10 שאלות שמראות שאתה מקצועי (לשאול יזם)</h3>
+<div class="card">
+<ol style="line-height: 2.5; padding-right: 20px;">
+<li>"מה סטטוס ה-Title Deed? נפרד? מתי?"</li>
+<li>"מה סוג הבידוד ומה העובי?"</li>
+<li>"מה הדירוג האנרגטי?"</li>
+<li>"מה ה-Common Expenses בפועל - לא בברושור?"</li>
+<li>"מה הפיצוי על עיכוב במסירה?"</li>
+<li>"האם יש ערבות בנקאית על התשלומים?"</li>
+<li>"אפשר לדבר עם בעלי דירות בפרויקטים קודמים?"</li>
+<li>"מה אחוז התפוסה בפרויקטים הקודמים שלכם?"</li>
+<li>"מה מבנה התשלומים - לפי התקדמות?"</li>
+<li>"האם יש Specific Performance רשום?"</li>
+</ol>
+</div>
+
+<div class="sales-box">
+<div class="sales-label">איך זה עוזר לך למכור</div>
+<p>כשאתה שואל את השאלות האלה מול הלקוח - הוא רואה שאתה לא "סוכן שמוכר" אלא "מומחה שמגן עליו". זה בונה אמון מיידי. תגיד: "אני שואל את השאלות האלה בשבילך - כדי שלא תקנה בעיות."</p>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 12: TAX - SIMPLE AND CLEAR -->
+<section class="section" id="tax">
+<div class="container">
+<div class="section-title"><span class="section-num">12</span> מיסוי - פשוט, ברור, בלי פחד</div>
+
+<div class="sales-box">
+<div class="sales-label">כלל זהב</div>
+<p>אל תנסה להיות יועץ מס. תדע את הבסיס, תציג בפשטות, ותפנה ליועץ. הלקוח מעריך שקיפות - לא "אני יודע הכל".</p>
+</div>
+
+<h3 class="section-subtitle">מיסוי בקפריסין - מה שהלקוח צריך לדעת</h3>
+<table>
+<thead><tr><th>מס</th><th>שיעור</th><th>איך להגיד</th></tr></thead>
+<tbody>
+<tr><td>מס נכס שנתי</td><td><strong>0%</strong></td><td>"אפס. אין ארנונה. אין מס רכוש. נקודה."</td></tr>
+<tr><td>מס ירושה</td><td><strong>0%</strong></td><td>"הנכס עובר לילדים בלי מס. אפס."</td></tr>
+<tr><td>מע"מ (בנייה חדשה)</td><td>19% (או 5% מופחת)</td><td>"יש אפשרות ל-5% - חיסכון של €25K+. צריך תנאים."</td></tr>
+<tr><td>Transfer Fees</td><td>3-8%</td><td>"עלות חד-פעמית ברכישה. אם יש מע"מ - הנחה 50%."</td></tr>
+<tr><td>מס שכירות</td><td>מדרגות (0-35%)</td><td>"ניכוי 20% בלאי + הוצאות. אפקטיבי נמוך."</td></tr>
+<tr><td>מס רווחי הון</td><td>20%</td><td>"רק על הרווח, לא על הסכום. ויש פטורים."</td></tr>
+<tr><td>SDC (Special Defence)</td><td>2.25% על שכירות</td><td>"מס קטן נוסף - כמה עשרות יורו בחודש."</td></tr>
+<tr><td>GeSY (ביטוח בריאות)</td><td>2.65% על שכירות</td><td>"דומה לביטוח לאומי - אחוז קטן."</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">מיסוי בישראל - מה להגיד</h3>
+<div class="card">
+<table>
+<tbody>
+<tr><td><strong>חובת דיווח</strong></td><td>כן - חייב לדווח על הכנסות מחו"ל</td></tr>
+<tr><td><strong>אמנת מס כפל</strong></td><td>אין עם קפריסין - צריך תכנון</td></tr>
+<tr><td><strong>מסלול 15%</strong></td><td>15% שטוח על הכנסות שכירות מחו"ל (בלי קיזוז)</td></tr>
+<tr><td><strong>מסלול שולי</strong></td><td>מס שולי עם קיזוז הוצאות ומס ששולם בחו"ל</td></tr>
+<tr><td><strong>רווחי הון</strong></td><td>25% בישראל (עם קיזוז מס ששולם בקפריסין)</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="script-box">
+<div class="script-label">סקריפט: כשלקוח שואל על מיסוי</div>
+<p>"בוא אתן לך את התמונה הגדולה: בקפריסין - אין מס נכס שנתי, אין מס ירושה. זה כבר יתרון ענק על ישראל. על שכירות - יש מס, אבל עם ניכויים זה אפקטיבי נמוך. בישראל - חייב לדווח, ויש שני מסלולים. אין אמנת מס כפל, אז צריך יועץ מס שיבנה את המבנה הנכון. אני ממליץ על פגישה עם יועץ לפני הרכישה - זה חוסך הרבה כסף בטווח הארוך. רוצה שאפנה אותך?"</p>
+</div>
+
+<div class="close-box">
+<div class="close-label">נקודת מפתח</div>
+"המיסוי הוא לא סיבה לא לקנות - הוא סיבה לתכנן נכון. עם יועץ מס טוב, המס האפקטיבי נמוך. בלי יועץ - אתה משלם כפול. ההבדל הוא €5-10K בשנה."
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 13: OPPORTUNITIES - WHERE TO POINT CLIENTS -->
+<section class="section" id="opportunities">
+<div class="container">
+<div class="section-title"><span class="section-num">13</span> הזדמנויות - לאן להפנות כל לקוח</div>
+
+<h3 class="section-subtitle">Tier 1 - הכי קל למכור, הכי חזק</h3>
+<div class="card tier-1">
+<table>
+<thead><tr><th>מוצר</th><th>תקציב</th><th>תשואה</th><th>למי</th><th>משפט מכירה</th></tr></thead>
+<tbody>
+<tr><td>2 חד' מקנזי - Airbnb</td><td>€220-350K</td><td>6-8% ברוטו</td><td>משקיע פעיל</td><td>"הכי מבוקש + הכי רווחי"</td></tr>
+<tr><td>2 חד' ליבדיה - ארוכה</td><td>€180-280K</td><td>4-5% ברוטו</td><td>סולידי</td><td>"שקט, יציב, בלי כאב ראש"</td></tr>
+<tr><td>2 חד' פיניקודס - נוף ים</td><td>€250-400K</td><td>4-6% ברוטו</td><td>Plan B + סגנון חיים</td><td>"סגנון חיים + השקעה + PR"</td></tr>
+<tr><td>3 חד' אורוקליני - משפחה</td><td>€220-350K</td><td>4-5% ברוטו</td><td>רילוקיישן</td><td>"חוף + שקט + מחיר הגיוני"</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 class="section-subtitle">Tier 2 - טוב, אבל צריך להתאים</h3>
+<div class="card tier-2">
+<table>
+<thead><tr><th>מוצר</th><th>תקציב</th><th>תשואה</th><th>למי</th><th>אזהרה</th></tr></thead>
+<tbody>
+<tr><td>אזור מרינה - על הנייר</td><td>€200-350K</td><td>ספקולטיבי</td><td>משקיע סבלני</td><td>רק למי שמבין שזה 5+ שנים</td></tr>
+<tr><td>מרכז/דרוסיה - יד שנייה</td><td>€120-200K</td><td>5-7% ברוטו</td><td>משקיע מנוסה</td><td>צריך לבדוק Title Deed + מצב</td></tr>
+<tr><td>דקליה / פילה</td><td>€160-280K</td><td>4-5%</td><td>מכיר את האזור</td><td>נזילות נמוכה</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3 class="section-subtitle">Tier 3 - להימנע (אלא אם מחיר מצוין)</h3>
+<div class="card tier-3">
+<table>
+<thead><tr><th>מוצר</th><th>למה להימנע</th><th>מתי כן</th></tr></thead>
+<tbody>
+<tr><td>ארדיפו - פרבר פנימי</td><td>רחוק מהים, נזילות אפסית</td><td>רק אם מחיר נמוך מאוד + שכירות מובטחת</td></tr>
+<tr><td>פרבוליה/קיטי</td><td>רחוק משירותים, עונתי</td><td>רק לסגנון חיים אישי</td></tr>
+<tr><td>"תשואה מובטחת" מיזמים ישראלים</td><td>מנופח, לא שקוף</td><td>כמעט אף פעם</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="sales-box">
+<div class="sales-label">איך לבחור מוצר ללקוח - 3 שאלות</div>
+<ol style="line-height: 2.5; padding-right: 20px;">
+<li><strong>"מה יותר חשוב - הכנסה שוטפת או עליית ערך?"</strong> → הכנסה = ליבדיה/מרכז. עליית ערך = מקנזי/מרינה.</li>
+<li><strong>"אתה מתכנן להשתמש בנכס בעצמך, או רק להשקיע?"</strong> → שימוש עצמי = פיניקודס/אורוקליני. רק השקעה = ליבדיה/מקנזי.</li>
+<li><strong>"מה התקציב - כולל עלויות נלוות?"</strong> → עד €200K = מרכז. €200-350K = ליבדיה/מקנזי. €350K+ = פיניקודס/מקנזי פרימיום.</li>
+</ol>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 14: CHECKLIST - BUILDS TRUST -->
+<section class="section" id="checklist">
+<div class="container">
+<div class="section-title"><span class="section-num">14</span> צ'קליסט - תראה ללקוח שאתה מגן עליו</div>
+
+<div class="sales-box">
+<div class="sales-label">למה צ'קליסט = כלי מכירה</div>
+<p>כשאתה מראה ללקוח צ'קליסט מסודר - הוא מבין שאתה לא "מוכר" אלא "מלווה". זה בונה אמון מיידי ומנטרל את ה"איך אני יודע שלא מרמים אותי?"</p>
+</div>
+
+<h3 class="section-subtitle">צ'קליסט לנכס על הנייר (Off-Plan)</h3>
+<div class="card">
+<ul class="checklist">
+<li>בדיקת רקע יזם - ניסיון, פרויקטים קודמים, מצב פיננסי</li>
+<li>ביקור בפרויקטים קודמים של היזם</li>
+<li>בדיקת היתר בנייה (Building Permit) תקף</li>
+<li>בדיקת היתר תכנון (Planning Permit) מאושר</li>
+<li>אישור שהקרקע נקייה משעבודים</li>
+<li>רישום Specific Performance במחלקת הקרקעות</li>
+<li>מבנה תשלומים מדורג לפי התקדמות</li>
+<li>סעיף פיצוי על עיכוב במסירה</li>
+<li>ערבות בנקאית על תשלומים</li>
+<li>מפרט טכני מפורט בכתב</li>
+<li>תאריך מסירה מחייב בחוזה</li>
+<li>בדיקת מע"מ: 19% או 5%? תנאים?</li>
+<li>בדיקת Title Deed: מתי צפוי?</li>
+<li>עורך דין עצמאי (לא של היזם!)</li>
+</ul>
+</div>
+
+<h3 class="section-subtitle">צ'קליסט לנכס מוכן</h3>
+<div class="card">
+<ul class="checklist">
+<li>ביקור פיזי - בדיקת איכות בנייה</li>
+<li>Title Deed - קיים ונפרד?</li>
+<li>Final Approval מהעירייה</li>
+<li>Energy Performance Certificate</li>
+<li>Common Expenses בפועל</li>
+<li>שיחה עם דיירים קיימים</li>
+<li>בדיקת איטום: גג, מרפסות, חדרי רחצה</li>
+<li>בדיקת מערכות: חשמל, מים, מיזוג</li>
+<li>בדיקת חניה ומחסן</li>
+<li>בדיקת סביבה: רעש, שכנים</li>
+<li>עורך דין עצמאי</li>
+</ul>
+</div>
+
+<div class="script-box">
+<div class="script-label">איך להשתמש בצ'קליסט במכירה</div>
+<p>"תראה, הנה הצ'קליסט שאני עובר עליו בכל עסקה. 14 נקודות. אני בודק כל אחת מהן בשבילך - לפני שאתה שם שקל. ככה אתה יודע שאתה מוגן. אם משהו לא עובר - אני אומר לך 'לא'. כי אני מעדיף שתקנה נכס טוב - מאשר שתקנה נכס ותתחרט."</p>
+</div>
+
+</div>
+</section>
+
+<!-- SECTION 15: GLOSSARY - SOUND LIKE AN EXPERT -->
+<section class="section" id="glossary">
+<div class="container">
+<div class="section-title"><span class="section-num">15</span> מילון מקצועי - דבר כמו מומחה</div>
+
+<div class="alert alert-gold">
+<strong>טיפ:</strong> כשאתה משתמש במונחים מקצועיים בשיחה - ומיד מסביר אותם בפשטות - הלקוח מרגיש שאתה מומחה שגם דואג שהוא יבין.
+</div>
+
+<table>
+<thead><tr><th>מונח</th><th>הסבר פשוט</th><th>למה חשוב</th><th>משפט לשיחה</th></tr></thead>
+<tbody>
+<tr><td><strong>Title Deed</strong></td><td>שטר בעלות - כמו טאבו</td><td>בלי זה - אין הוכחה שהנכס שלך</td><td>"הדבר הראשון שאני בודק - Title Deed נפרד ונקי"</td></tr>
+<tr><td><strong>Specific Performance</strong></td><td>רישום בטאבו שמגן על הקונה</td><td>מונע מהיזם למכור לאחר</td><td>"אני דורש SP על כל עסקה - זו ההגנה שלך"</td></tr>
+<tr><td><strong>Off-Plan</strong></td><td>קנייה על הנייר - לפני שנבנה</td><td>מחיר נמוך יותר, סיכון יותר גבוה</td><td>"על הנייר = מחיר טוב, אבל צריך לבדוק יזם"</td></tr>
+<tr><td><strong>Common Expenses</strong></td><td>ועד בית - תחזוקה משותפת</td><td>עלות שוטפת שמשפיעה על תשואה</td><td>"כמה ועד בית? €50-150/חודש - תלוי בבניין"</td></tr>
+<tr><td><strong>Transfer Fees</strong></td><td>מס העברה - כמו מס רכישה</td><td>עלות חד-פעמית ברכישה</td><td>"3-8% - חד פעמי, לא שנתי"</td></tr>
+<tr><td><strong>VAT 5%</strong></td><td>מע"מ מופחת על דירה ראשונה</td><td>חיסכון של €25K+ על נכס €250K</td><td>"יש אפשרות ל-5% במקום 19% - חיסכון ענק"</td></tr>
+<tr><td><strong>Non-Dom</strong></td><td>סטטוס מס - 0% על דיבידנדים 17 שנה</td><td>יתרון מס ענק למי שעובר</td><td>"אם אתה שוקל רילוקיישן - Non-Dom שווה זהב"</td></tr>
+<tr><td><strong>PR (Permanent Residency)</strong></td><td>תושבות קבועה - לא אזרחות</td><td>זכות לגור, לא זכות להצביע</td><td>"PR = ביטוח. תושבות אירופית לכל המשפחה"</td></tr>
+<tr><td><strong>Energy Certificate</strong></td><td>דירוג אנרגטי A-G</td><td>A = חשבון חשמל נמוך</td><td>"דירוג A = שוכרים מעדיפים = תשואה גבוהה"</td></tr>
+<tr><td><strong>Final Approval</strong></td><td>אישור סופי מהעירייה</td><td>בלי זה - הנכס לא "חוקי" לגמרי</td><td>"אני בודק Final Approval - זה מה שמאשר שהכל תקין"</td></tr>
+</tbody>
+</table>
+
+</div>
+</section>
+
+<!-- SECTION 16: SOURCES -->
+<section class="section" id="sources">
+<div class="container">
+<div class="section-title"><span class="section-num">16</span> מקורות ורמת ביטחון</div>
+
+<div class="alert alert-gold">
+<strong>למה מקורות חשובים למכירה:</strong> כשלקוח שואל "מאיפה המספרים?" - ויש לך תשובה - זה בונה אמון מיידי. "הנתון הזה מהבנק המרכזי של קפריסין" > "קראתי את זה באיזה אתר".
+</div>
+
+<table>
+<thead><tr><th>מקור</th><th>מה נותן</th><th>אמינות</th><th>איך להשתמש</th></tr></thead>
+<tbody>
+<tr><td>Central Bank of Cyprus</td><td>מדד מחירי נדל"ן</td><td><span class="badge badge-green">גבוהה</span></td><td>"לפי הבנק המרכזי - עלייה של 11%"</td></tr>
+<tr><td>Department of Lands & Surveys</td><td>נתוני עסקאות</td><td><span class="badge badge-green">גבוהה</span></td><td>"18,000 עסקאות - נתון רשמי"</td></tr>
+<tr><td>Cyprus Mail</td><td>חדשות שוק, מרינה</td><td><span class="badge badge-green">גבוהה</span></td><td>"לפי Cyprus Mail..."</td></tr>
+<tr><td>AirDNA</td><td>נתוני Airbnb, תפוסה</td><td><span class="badge badge-yellow">בינונית</span></td><td>"לפי נתוני Airbnb - תפוסה של 65%"</td></tr>
+<tr><td>Cyprus Ports Authority</td><td>סטטוס מרינה</td><td><span class="badge badge-green">גבוהה</span></td><td>"לפי רשות הנמלים..."</td></tr>
+<tr><td>IMPK Lawyers</td><td>מיסוי, משפט</td><td><span class="badge badge-green">גבוהה</span></td><td>"לפי משרד עורכי דין מקומי..."</td></tr>
+<tr><td>ID Tax Israel</td><td>מיסוי ישראלי</td><td><span class="badge badge-green">גבוהה</span></td><td>"לפי יועצי מס ישראליים..."</td></tr>
+</tbody>
+</table>
+
+<h3 class="section-subtitle">מה אני לא יודע - שקיפות שבונה אמון</h3>
+<div class="card">
+<p>הנה מה שלא הצלחתי לאמת - ואם לקוח שואל, תגיד בכנות:</p>
+<ul style="line-height: 2.2; padding-right: 20px;">
+<li>• מחירי עסקאות בפועל (רק מחירי ביקוש זמינים)</li>
+<li>• תפוסת Airbnb ספציפית לשכונה (רק ממוצע עירוני)</li>
+<li>• לוח זמנים מדויק למרינה (מפת דרכים טרם פורסמה)</li>
+<li>• מצב פיננסי של יזמים ספציפיים (דורש בדיקה ידנית)</li>
+</ul>
+<p style="margin-top: 12px; color: var(--gold);"><strong>כשלקוח שואל משהו שאתה לא יודע - תגיד "שאלה טובה, אני אבדוק ואחזור אליך". זה בונה יותר אמון מלהמציא תשובה.</strong></p>
+</div>
+
+</div>
+</section>
+
+<!-- CHARTS -->
+<section class="section">
+<div class="container">
+<div class="section-title"><span class="section-num">+</span> גרפים ונתונים ויזואליים</div>
+<div class="chart-container">
+<canvas id="priceChart" height="300"></canvas>
+</div>
+<div class="chart-container">
+<canvas id="yieldChart" height="300"></canvas>
+</div>
+<div class="chart-container">
+<canvas id="compChart" height="300"></canvas>
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer style="border-top: 1px solid var(--border); padding: 40px 0; text-align: center;">
+<div class="container">
+<p style="color: var(--gold); font-weight: 700; margin-bottom: 8px;">LARNACA SALES INTELLIGENCE | 2026</p>
+<p style="color: var(--muted); font-size: 0.8em;">מסמך פנימי למכירות. לא להפצה ללקוחות. כל הנתונים מבוססים על מקורות ציבוריים - מאי 2026.</p>
+<p style="color: var(--muted); font-size: 0.75em; margin-top: 8px;">אין במסמך זה ייעוץ השקעות, ייעוץ מס, או ייעוץ משפטי. כל עסקה דורשת בדיקה עצמאית.</p>
+</div>
+</footer>
+
+<!-- JAVASCRIPT: CHARTS -->
+<script>
+// Price by area chart
+const priceCtx = document.getElementById('priceChart');
+if (priceCtx) {
+  new Chart(priceCtx, {
+    type: 'bar',
+    data: {
+      labels: ['מקנזי', 'פיניקודס', 'מרינה', 'ליבדיה', 'אורוקליני', 'מרכז/דרוסיה', 'ארדיפו'],
+      datasets: [{
+        label: 'מחיר כניסה 2 חד\' (€K)',
+        data: [220, 250, 200, 180, 160, 120, 130],
+        backgroundColor: 'rgba(201, 168, 76, 0.7)',
+        borderColor: 'rgba(201, 168, 76, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { title: { display: true, text: 'מחיר כניסה לפי אזור (€K) - דירת 2 חדרים חדשה', color: '#F0F0F0', font: { size: 14 } }, legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { color: '#888' }, grid: { color: '#222' } }, x: { ticks: { color: '#888' }, grid: { color: '#222' } } }
+    }
+  });
+}
+
+// Yield comparison chart
+const yieldCtx = document.getElementById('yieldChart');
+if (yieldCtx) {
+  new Chart(yieldCtx, {
+    type: 'bar',
+    data: {
+      labels: ['לרנקה Airbnb', 'לרנקה ארוכה', 'לימסול', 'פאפוס', 'ישראל מרכז', 'ישראל פריפריה'],
+      datasets: [{
+        label: 'תשואה ברוטו (%)',
+        data: [7, 4.5, 3.5, 4.5, 2.5, 3.5],
+        backgroundColor: ['rgba(76, 175, 80, 0.7)', 'rgba(76, 175, 80, 0.5)', 'rgba(58, 123, 213, 0.5)', 'rgba(58, 123, 213, 0.5)', 'rgba(217, 79, 79, 0.5)', 'rgba(217, 79, 79, 0.5)'],
+        borderColor: ['rgba(76, 175, 80, 1)', 'rgba(76, 175, 80, 1)', 'rgba(58, 123, 213, 1)', 'rgba(58, 123, 213, 1)', 'rgba(217, 79, 79, 1)', 'rgba(217, 79, 79, 1)'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { title: { display: true, text: 'השוואת תשואות ברוטו (%)', color: '#F0F0F0', font: { size: 14 } }, legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { color: '#888' }, grid: { color: '#222' } }, x: { ticks: { color: '#888' }, grid: { color: '#222' } } }
+    }
+  });
+}
+
+// Comparison chart - total return
+const compCtx = document.getElementById('compChart');
+if (compCtx) {
+  new Chart(compCtx, {
+    type: 'bar',
+    data: {
+      labels: ['לרנקה', 'לימסול', 'פאפוס', 'אתונה', 'ישראל מרכז'],
+      datasets: [
+        { label: 'תשואת שכירות', data: [4.5, 3.5, 4.5, 5, 2.5], backgroundColor: 'rgba(201, 168, 76, 0.7)' },
+        { label: 'עליית ערך שנתית', data: [9, 6, 5, 7, 6], backgroundColor: 'rgba(76, 175, 80, 0.7)' }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { title: { display: true, text: 'תשואה כוללת: שכירות + עליית ערך (%)', color: '#F0F0F0', font: { size: 14 } }, legend: { labels: { color: '#888' } } },
+      scales: { y: { beginAtZero: true, stacked: true, ticks: { color: '#888' }, grid: { color: '#222' } }, x: { stacked: true, ticks: { color: '#888' }, grid: { color: '#222' } } }
+    }
+  });
+}
+</script>
+
+</body>
+</html>
